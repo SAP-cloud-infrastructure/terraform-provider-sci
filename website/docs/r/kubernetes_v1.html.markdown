@@ -120,6 +120,11 @@ The following arguments are supported:
 * `advertise_port` - (Optional) The port on which to advertise the API server 
   to members of the cluster. Defaults to `6443`. 
 
+* `audit` - (Optional) Enables API server audit logging if set to one of
+  `swift`, `stdout`, `http` or `elasticsearch`. Defaults to an empty string,
+  which disables audit logging. Changing this forces a new resource to be
+  created.
+
 * `cluster_cidr` - (Optional) CIDR Range for Pods in cluster. When `cluster_cidr`
   is set to an empty string (allowed only, when `no_cloud` is set to true), the
   pod CIDR allocation will be disabled. Defaults to `100.100.0.0/16`. Changing

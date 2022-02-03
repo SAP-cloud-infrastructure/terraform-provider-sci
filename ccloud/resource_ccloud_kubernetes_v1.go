@@ -70,6 +70,14 @@ func resourceCCloudKubernetesV1() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 65536),
 			},
 
+			"audit": {
+				Type:         schema.TypeString,
+				Optional:     true,
+				ForceNew:     true,
+				Computed:     true,
+				ValidateFunc: validation.StringInSlice([]string{"elasticsearch", "swift", "http", "stdout"}, false),
+			},
+
 			"cluster_cidr": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -354,6 +362,10 @@ func resourceCCloudKubernetesV1Create(d *schema.ResourceData, meta interface{}) 
 	cluster.Name = d.Get("name").(string)
 	cluster.Spec.AdvertiseAddress = d.Get("advertise_address").(string)
 	cluster.Spec.AdvertisePort = int64(d.Get("advertise_port").(int))
+	if v, ok := d.GetOk("audit"); ok {
+		auditStr := v.(string)
+		cluster.Spec.Audit = &auditStr
+	}
 	if v, ok := d.Get("cluster_cidr").(string); ok {
 		cluster.Spec.ClusterCIDR = &v
 	}
@@ -431,6 +443,7 @@ func resourceCCloudKubernetesV1Read(d *schema.ResourceData, meta interface{}) er
 
 	d.Set("advertise_address", result.Payload.Spec.AdvertiseAddress)
 	d.Set("advertise_port", result.Payload.Spec.AdvertisePort)
+	d.Set("audit", result.Payload.Spec.Audit)
 	d.Set("cluster_cidr", result.Payload.Spec.ClusterCIDR)
 	d.Set("dns_address", result.Payload.Spec.DNSAddress)
 	d.Set("dns_domain", result.Payload.Spec.DNSDomain)
@@ -482,6 +495,11 @@ func resourceCCloudKubernetesV1Update(d *schema.ResourceData, meta interface{}) 
 	}
 
 	cluster.Name = d.Id()
+
+	if v, ok := d.GetOk("audit"); ok {
+		auditStr := v.(string)
+		cluster.Spec.Audit = &auditStr
+	}
 
 	if v, ok := d.GetOk("ssh_public_key"); ok {
 		cluster.Spec.SSHPublicKey = v.(string)
