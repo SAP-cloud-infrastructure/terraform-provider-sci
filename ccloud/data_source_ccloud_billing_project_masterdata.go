@@ -125,6 +125,37 @@ func dataSourceCCloudBillingProjectMasterdata() *schema.Resource {
 				Computed: true,
 			},
 
+			"inventory_role": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+			"responsible_inventory_role_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+			"responsible_inventory_role_email": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+			"infrastructure_coordinator": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+			"responsible_infrastructure_coordinator_id": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+			"responsible_infrastructure_coordinator_email": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+
+
 			"cost_object": {
 				Type:     schema.TypeList,
 				Computed: true,

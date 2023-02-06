@@ -116,6 +116,23 @@ The `cost_object` block supports:
   (cost center), `WBS` (Work Breakdown Structure element) or `SO` (sales order).
   Required, if `inherited` not true.
 
+* `inventory_role` - ID of the Person/entity responsible to correctly maintain
+  assets in Hardware inventory.
+
+* `responsible_inventory_role_id` - ID of the Person/entity responsible to correctly
+  maintain assets in Hardware inventory.
+
+* `responsible_inventory_role_email` - Email of the Person/entity responsible to
+  correctly maintain assets in Hardware inventory.
+
+* `infrastructure_coordinator` - (Optional) ID of the infrastructure coordinator.
+
+* `responsible_infrastructure_coordinator_id` - (Optional) ID of the infrastructure
+  coordinator.
+
+* `responsible_infrastructure_coordinator_email` - (Optional) Email address of the
+  infrastructure coordinator.
+
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
