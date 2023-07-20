@@ -7,11 +7,11 @@ require (
 	github.com/go-openapi/runtime v0.19.31
 	github.com/go-openapi/strfmt v0.21.1
 	github.com/go-openapi/validate v0.21.0
-	github.com/gophercloud/gophercloud v1.3.0
+	github.com/gophercloud/gophercloud v1.5.0
 	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.25.0
-	github.com/sapcc/go-api-declarations v1.4.3
-	github.com/sapcc/gophercloud-sapcc v0.0.0-20230322110909-f80b8cdaca9e
+	github.com/sapcc/go-api-declarations v1.7.0
+	github.com/sapcc/gophercloud-sapcc v0.0.0-20230714164029-731493e3d996
 	github.com/sapcc/kubernikus v1.0.1-0.20230315145322-320848252003
 	k8s.io/client-go v0.24.2
 )
