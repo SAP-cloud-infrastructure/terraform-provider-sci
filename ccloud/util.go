@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
@@ -67,6 +68,17 @@ func expandToStringSlice(v []interface{}) []string {
 	for i, val := range v {
 		if strVal, ok := val.(string); ok {
 			s[i] = strVal
+		}
+	}
+
+	return s
+}
+
+func expandToStrFmtUUIDSlice(v []interface{}) []strfmt.UUID {
+	s := make([]strfmt.UUID, len(v))
+	for i, val := range v {
+		if strVal, ok := val.(string); ok {
+			s[i] = strfmt.UUID(strVal)
 		}
 	}
 
@@ -170,4 +182,16 @@ func validateKubernetesVersion(v interface{}, k string) ([]string, []error) {
 	}
 
 	return nil, nil
+}
+
+func ptr[T any](v T) *T {
+	return &v
+}
+
+func ptrValue[T any](p *T) T {
+	if p != nil {
+		return *p
+	}
+	var t T
+	return t
 }

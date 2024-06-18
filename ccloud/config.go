@@ -1,6 +1,7 @@
 package ccloud
 
 import (
+	"github.com/sapcc/andromeda/client"
 	"github.com/sapcc/gophercloud-sapcc/clients"
 
 	"github.com/gophercloud/gophercloud"
@@ -19,6 +20,18 @@ func (c *Config) kubernikusV1Client(region string, isAdmin bool) (*kubernikus, e
 
 	return newKubernikusV1(c, gophercloud.EndpointOpts{
 		Type:         serviceType,
+		Region:       c.DetermineRegion(region),
+		Availability: clientconfig.GetEndpointType(c.EndpointType),
+	})
+}
+
+func (c *Config) andromedaV1Client(region string) (*client.Andromeda, error) {
+	if err := c.Authenticate(); err != nil {
+		return nil, err
+	}
+
+	return newAndromedaV1(c, gophercloud.EndpointOpts{
+		Type:         "gtm",
 		Region:       c.DetermineRegion(region),
 		Availability: clientconfig.GetEndpointType(c.EndpointType),
 	})

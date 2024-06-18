@@ -258,6 +258,7 @@ func Provider() *schema.Provider {
 			"ccloud_automation_v1":              dataSourceCCloudAutomationV1(),
 			"ccloud_billing_domain_masterdata":  dataSourceCCloudBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": dataSourceCCloudBillingProjectMasterdata(),
+			"ccloud_gslb_services_v1":           dataSourceCCloudGSLBServicesV1(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -270,6 +271,13 @@ func Provider() *schema.Provider {
 			"ccloud_billing_project_masterdata": resourceCCloudBillingProjectMasterdata(),
 			"ccloud_kubernetes_v1":              resourceCCloudKubernetesV1(),
 			"ccloud_bgpvpn_interconnection_v2":  resourceCCloudBGPVPNInterconnectionV2(),
+			"ccloud_gslb_datacenter_v1":         resourceCCloudGSLBDatacenterV1(),
+			"ccloud_gslb_domain_v1":             resourceCCloudGSLBDomainV1(),
+			"ccloud_gslb_pool_v1":               resourceCCloudGSLBPoolV1(),
+			"ccloud_gslb_member_v1":             resourceCCloudGSLBMemberV1(),
+			"ccloud_gslb_monitor_v1":            resourceCCloudGSLBMonitorV1(),
+			"ccloud_gslb_quota_v1":              resourceCCloudGSLBQuotaV1(),
+			"ccloud_gslb_geomap_v1":             resourceCCloudGSLBGeoMapV1(),
 		},
 	}
 

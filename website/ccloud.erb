@@ -30,6 +30,9 @@
             <li<%= sidebar_current("docs-ccloud-datasource-billing-project-masterdata") %>>
               <%= link_to 'ccloud_billing_project_masterdata', '/docs/providers/ccloud/d/billing_project_masterdata.html', :relative => true %>
             </li>
+            <li<%= sidebar_current("docs-ccloud-datasource-services-v1") %>>
+              <%= link_to 'ccloud_gslb_services_v1', '/docs/providers/ccloud/d/gslb_services_v1.html', :relative => true %>
+            </li>
           </ul>
         </li>
 
@@ -90,6 +93,32 @@
           </ul>
         </li>
 
+        <li class="active"<%= sidebar_current("docs-ccloud-resource-gslb") %>>
+          <a href="#">Andromeda GSLB Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-datacenter-v1") %>>
+              <%= link_to 'ccloud_gslb_datacenter', '/docs/providers/ccloud/r/gslb_datacenter_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-domain-v1") %>>
+              <%= link_to 'ccloud_gslb_domain_v1', '/docs/providers/ccloud/r/gslb_domain_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-geomap-v1") %>>
+              <%= link_to 'ccloud_gslb_geomap_v1', '/docs/providers/ccloud/r/gslb_geomap_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-member-v1") %>>
+              <%= link_to 'ccloud_gslb_member_v1', '/docs/providers/ccloud/r/gslb_member_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-monitor-v1") %>>
+              <%= link_to 'ccloud_gslb_monitor_v1', '/docs/providers/ccloud/r/gslb_monitor_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-pool-v1") %>>
+              <%= link_to 'ccloud_gslb_pool_v1', '/docs/providers/ccloud/r/gslb_pool_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-gslb-quota-v1") %>>
+              <%= link_to 'ccloud_gslb_quota_v1', '/docs/providers/ccloud/r/gslb_quota_v1.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   <% end %>

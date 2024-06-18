@@ -29,6 +29,7 @@ additional services:
   * Arc for Arc resources management
   * Lyra for Automation management
   * Billing for Billing management
+  * Andromeda for GSLB / GTM (Global Server Load Balancing / Global Traffic Management)
 
 The provider needs to be configured with the proper OpenStack credentials
 before it can be used. For details see the OpenStack provider.
