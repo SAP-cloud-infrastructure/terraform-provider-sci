@@ -1257,6 +1257,8 @@ github.com/sapcc/go-api-declarations v1.4.3 h1:RYJujw/NizuJepIU60E9da5JxGnWqn4FG
 github.com/sapcc/go-api-declarations v1.4.3/go.mod h1:EA4x5xxJGyG/3JTteUOYBg6cJLJgsBHrDj3ryfNU4dQ=
 github.com/sapcc/go-api-declarations v1.7.0 h1:fABKw/dw300ZQ5TKEjVnKPqMSH5aCOSbJ06XnfWtpuw=
 github.com/sapcc/go-api-declarations v1.7.0/go.mod h1:3OCDo75YJwpytM/I0SjwcZJf1ZNu89KeAZ55kdOTSqE=
+github.com/sapcc/go-api-declarations v1.11.3 h1:A8JgeSmOdziYXuiOes9Lp3LKZ0FsU2lc9FOxoM3kRR0=
+github.com/sapcc/go-api-declarations v1.11.3/go.mod h1:83R3hTANhuRXt/pXDby37IJetw8l7DG41s33Tp9NXxI=
 github.com/sapcc/gophercloud-sapcc v0.0.0-20230322110909-f80b8cdaca9e h1:yOR3loqC/6SfY5syiesK7Y4n/WJooofZ7scJiMgJMhU=
 github.com/sapcc/gophercloud-sapcc v0.0.0-20230322110909-f80b8cdaca9e/go.mod h1:Cbv506/ZragTVTrW5gt1yLAIRYOFpyDwPDklaaZFzdg=
 github.com/sapcc/gophercloud-sapcc v0.0.0-20230714164029-731493e3d996 h1:IQrDoa4xqsP1Wy3p9UY1R9wv5mDZzBNDic77qitMts8=

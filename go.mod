@@ -1,6 +1,8 @@
 module github.com/sapcc/terraform-provider-ccloud
 
-go 1.20
+go 1.21
+
+toolchain go1.22.4
 
 require (
 	github.com/ghodss/yaml v1.0.0
@@ -10,7 +12,7 @@ require (
 	github.com/gophercloud/gophercloud v1.5.0
 	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0
-	github.com/sapcc/go-api-declarations v1.7.0
+	github.com/sapcc/go-api-declarations v1.11.3
 	github.com/sapcc/gophercloud-sapcc v0.0.0-20230714164029-731493e3d996
 	github.com/sapcc/kubernikus v1.0.1-0.20230315145322-320848252003
 	k8s.io/client-go v0.27.4
