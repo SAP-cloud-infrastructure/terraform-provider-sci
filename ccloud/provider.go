@@ -269,6 +269,7 @@ func Provider() *schema.Provider {
 			"ccloud_billing_domain_masterdata":  resourceCCloudBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": resourceCCloudBillingProjectMasterdata(),
 			"ccloud_kubernetes_v1":              resourceCCloudKubernetesV1(),
+			"ccloud_bgpvpn_interconnection_v2":  resourceCCloudBGPVPNInterconnectionV2(),
 		},
 	}
 
