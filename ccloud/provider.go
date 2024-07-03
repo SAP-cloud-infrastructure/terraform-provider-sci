@@ -268,7 +268,6 @@ func Provider() *schema.Provider {
 			"ccloud_automation_run_v1":          resourceCCloudAutomationRunV1(),
 			"ccloud_billing_domain_masterdata":  resourceCCloudBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": resourceCCloudBillingProjectMasterdata(),
-			"ccloud_kubernetes":                 resourceCCloudKubernetesV1Deprecated(),
 			"ccloud_kubernetes_v1":              resourceCCloudKubernetesV1(),
 		},
 	}

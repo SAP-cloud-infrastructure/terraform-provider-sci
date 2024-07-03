@@ -151,42 +151,6 @@ func resourceCCloudBillingProjectMasterdata() *schema.Resource {
 				Optional: true,
 			},
 
-			"responsible_security_expert_id": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_security_expert_email": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_product_owner_id": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_product_owner_email": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_controller_id": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_controller_email": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
 			"cost_object": {
 				Type:     schema.TypeList,
 				Optional: true,

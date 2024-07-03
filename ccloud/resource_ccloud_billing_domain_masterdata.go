@@ -64,18 +64,6 @@ func resourceCCloudBillingDomainMasterdata() *schema.Resource {
 				Optional: true,
 			},
 
-			"responsible_controller_id": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
-			"responsible_controller_email": {
-				Type:       schema.TypeString,
-				Optional:   true,
-				Deprecated: "This field has been deprecated",
-			},
-
 			"cost_object": {
 				Type:     schema.TypeList,
 				Optional: true,
