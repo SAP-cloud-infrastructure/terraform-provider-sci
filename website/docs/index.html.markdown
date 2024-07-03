@@ -202,7 +202,6 @@ Identity/Keystone service catalog. This provider supports:
 
 * `arc`: Arc / Arc v1
 * `automation`: Automation / Lyra v1
-* `resources`: Quota / Limes v1
 * `kubernikus`: Kubernetes / Kubernikus
 * `sapcc-billing`: Billing
 

@@ -25,7 +25,6 @@ Provider](https://github.com/terraform-provider-openstack/terraform-provider-ope
 It provides resources that allow to use Terraform for Converged Cloud's
 additional services:
 
-  * Limes for Quota Management
   * Kubernikus (Kubernetes as a Service)
   * Arc for Arc resources management
   * Lyra for Automation management

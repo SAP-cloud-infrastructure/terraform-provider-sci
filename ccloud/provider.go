@@ -258,10 +258,6 @@ func Provider() *schema.Provider {
 			"ccloud_automation_v1":              dataSourceCCloudAutomationV1(),
 			"ccloud_billing_domain_masterdata":  dataSourceCCloudBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": dataSourceCCloudBillingProjectMasterdata(),
-			"ccloud_domain_quota_v1":            dataSourceCCloudQuotaDomainV1Deprecated(),
-			"ccloud_project_quota_v1":           dataSourceCCloudQuotaProjectV1Deprecated(),
-			"ccloud_quota_domain_v1":            dataSourceCCloudQuotaDomainV1(),
-			"ccloud_quota_project_v1":           dataSourceCCloudQuotaProjectV1(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -272,12 +268,6 @@ func Provider() *schema.Provider {
 			"ccloud_automation_run_v1":          resourceCCloudAutomationRunV1(),
 			"ccloud_billing_domain_masterdata":  resourceCCloudBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": resourceCCloudBillingProjectMasterdata(),
-			"ccloud_quota":                      resourceCCloudQuotaProjectV1Deprecated(),
-			"ccloud_quota_v1":                   resourceCCloudQuotaProjectV1Deprecated(),
-			"ccloud_domain_quota_v1":            resourceCCloudQuotaDomainV1Deprecated(),
-			"ccloud_project_quota_v1":           resourceCCloudQuotaProjectV1Deprecated(),
-			"ccloud_quota_domain_v1":            resourceCCloudQuotaDomainV1(),
-			"ccloud_quota_project_v1":           resourceCCloudQuotaProjectV1(),
 			"ccloud_kubernetes":                 resourceCCloudKubernetesV1Deprecated(),
 			"ccloud_kubernetes_v1":              resourceCCloudKubernetesV1(),
 		},

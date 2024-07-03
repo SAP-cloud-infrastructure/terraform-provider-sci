@@ -7,10 +7,6 @@ import (
 	"github.com/gophercloud/utils/openstack/clientconfig"
 )
 
-func (c *Config) limesV1Client(region string) (*gophercloud.ServiceClient, error) {
-	return c.CommonServiceClientInit(clients.NewLimesV1, region, "resources")
-}
-
 func (c *Config) kubernikusV1Client(region string, isAdmin bool) (*kubernikus, error) {
 	if err := c.Authenticate(); err != nil {
 		return nil, err
