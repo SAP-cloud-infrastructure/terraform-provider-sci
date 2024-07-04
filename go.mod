@@ -1,17 +1,19 @@
 module github.com/sapcc/terraform-provider-ccloud
 
-go 1.20
+go 1.21
+
+toolchain go1.22.5
 
 require (
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/runtime v0.26.0
 	github.com/go-openapi/strfmt v0.21.7
 	github.com/go-openapi/validate v0.22.1
-	github.com/gophercloud/gophercloud v1.5.0
-	github.com/gophercloud/utils v0.0.0-20230523080330-de873b9cf00d
+	github.com/gophercloud/gophercloud v1.12.0
+	github.com/gophercloud/utils v0.0.0-20231010081019-80377eca5d56
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.27.0
-	github.com/sapcc/go-api-declarations v1.7.0
-	github.com/sapcc/gophercloud-sapcc v0.0.0-20230714164029-731493e3d996
+	github.com/sapcc/go-api-declarations v1.11.3
+	github.com/sapcc/gophercloud-sapcc v0.0.0-20240704041054-f99dfb41057d
 	github.com/sapcc/kubernikus v1.0.1-0.20230315145322-320848252003
 	k8s.io/client-go v0.27.4
 )
@@ -86,8 +88,8 @@ require (
 	golang.org/x/crypto v0.10.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/net v0.11.0 // indirect
-	golang.org/x/sys v0.9.0 // indirect
-	golang.org/x/text v0.10.0 // indirect
+	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
 	google.golang.org/grpc v1.56.0 // indirect
