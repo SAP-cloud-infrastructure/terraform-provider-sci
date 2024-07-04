@@ -2,7 +2,7 @@ module github.com/sapcc/terraform-provider-ccloud
 
 go 1.21
 
-toolchain go1.22.3
+toolchain go1.22.5
 
 require (
 	github.com/ghodss/yaml v1.0.0
