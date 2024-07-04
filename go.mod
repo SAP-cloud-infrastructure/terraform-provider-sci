@@ -13,7 +13,7 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 	github.com/sapcc/andromeda v0.0.2-0.20240703201843-d4b95e0cad93
 	github.com/sapcc/gophercloud-sapcc v1.0.0
-	github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c
+	github.com/sapcc/kubernikus v1.5.0
 	gopkg.in/yaml.v3 v3.0.1
 	k8s.io/client-go v0.30.2
 )
