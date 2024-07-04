@@ -15,7 +15,7 @@ require (
 	github.com/sapcc/gophercloud-sapcc v1.0.0
 	github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c
 	gopkg.in/yaml.v3 v3.0.1
-	k8s.io/client-go v0.30.0
+	k8s.io/client-go v0.30.2
 )
 
 require (
@@ -93,7 +93,7 @@ require (
 	google.golang.org/grpc v1.58.3 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	k8s.io/apimachinery v0.30.0 // indirect
+	k8s.io/apimachinery v0.30.2 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
