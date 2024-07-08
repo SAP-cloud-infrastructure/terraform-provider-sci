@@ -3,6 +3,7 @@ package ccloud
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"net/url"
 	"strings"
 	"time"
@@ -38,7 +39,17 @@ func GetRegion(d *schema.ResourceData, config *Config) string {
 	return config.Region
 }
 
-// IsSliceContainsStr returns true if the string exists in given slice, ignore case.
+// sliceContains returns true if the element exists in the slice.
+func sliceContains[T comparable](sl []T, el T) bool {
+	for _, s := range sl {
+		if s == el {
+			return true
+		}
+	}
+	return false
+}
+
+// strSliceContains returns true if the string exists in given slice, ignore case.
 func strSliceContains(sl []string, str string) bool {
 	str = strings.ToLower(str)
 	for _, s := range sl {
@@ -182,6 +193,38 @@ func validateKubernetesVersion(v interface{}, k string) ([]string, []error) {
 	}
 
 	return nil, nil
+}
+
+func removePrefixIPAddress(ip string) string {
+	res, _, _ := net.ParseCIDR(ip)
+	if res == nil {
+		ip = ip + "/32"
+		res, _, _ = net.ParseCIDR(ip)
+		if res == nil {
+			return ""
+		}
+	}
+	return res.String()
+}
+
+func expandToStrFmtIPv4Slice(v []interface{}) []strfmt.IPv4 {
+	s := make([]strfmt.IPv4, len(v))
+	for i, val := range v {
+		if strVal, ok := val.(string); ok {
+			s[i] = strfmt.IPv4(removePrefixIPAddress(strVal))
+		}
+	}
+
+	return s
+}
+
+func flattenToStrFmtIPv4Slice(v []strfmt.IPv4) []string {
+	s := make([]string, len(v))
+	for i, val := range v {
+		s[i] = removePrefixIPAddress(string(val))
+	}
+
+	return s
 }
 
 func ptr[T any](v T) *T {

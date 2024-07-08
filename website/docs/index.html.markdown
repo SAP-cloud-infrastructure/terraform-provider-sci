@@ -186,9 +186,10 @@ configuration:
 provider "ccloud" {
 
   endpoint_overrides = {
-    "arc"        = "https://arc.example.com/api/v1/"
-    "automation" = "https://lyra.example.com:8776/api/v1/"
-    "gtm"        = "https://gtm.example.com/v1"
+    "arc"               = "https://arc.example.com/api/v1/"
+    "automation"        = "https://lyra.example.com:8776/api/v1/"
+    "gtm"               = "https://gtm.example.com/v1"
+    "endpoint-services" = "https://archer.example.com/v1"
   }
 
 }
@@ -206,6 +207,7 @@ Identity/Keystone service catalog. This provider supports:
 * `kubernikus`: Kubernetes / Kubernikus
 * `sapcc-billing`: Billing
 * `gtm`: Andromeda a GSLB / GTM (Global Server Load Balancing / Global Traffic Management) service
+* `endpoint-services`: Archer / Endpoint Services
 
 Please use this feature at your own risk. If you are unsure about needing
 to override an endpoint, you most likely do not need to override one.

@@ -37,6 +37,18 @@ func (c *Config) andromedaV1Client(region string) (*client.Andromeda, error) {
 	})
 }
 
+func (c *Config) archerV1Client(region string) (*archer, error) {
+	if err := c.Authenticate(); err != nil {
+		return nil, err
+	}
+
+	return newArcherV1(c, gophercloud.EndpointOpts{
+		Type:         "endpoint-services",
+		Region:       c.DetermineRegion(region),
+		Availability: clientconfig.GetEndpointType(c.EndpointType),
+	})
+}
+
 func (c *Config) arcV1Client(region string) (*gophercloud.ServiceClient, error) {
 	return c.CommonServiceClientInit(clients.NewArcV1, region, "arc")
 }

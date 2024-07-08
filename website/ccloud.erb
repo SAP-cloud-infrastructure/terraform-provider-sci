@@ -33,6 +33,9 @@
             <li<%= sidebar_current("docs-ccloud-datasource-gslb-services-v1") %>>
               <%= link_to 'ccloud_gslb_services_v1', '/docs/providers/ccloud/d/gslb_services_v1.html', :relative => true %>
             </li>
+            <li<%= sidebar_current("docs-ccloud-data-source-endpoint-service-v1") %>>
+              <%= link_to 'ccloud_endpoint_service_v1', '/docs/providers/ccloud/d/endpoint_service_v1.html', :relative => true %>
+            </li>
           </ul>
         </li>
 
@@ -119,6 +122,28 @@
             </li>
           </ul>
         </li>
+
+        <li class="active"<%= sidebar_current("docs-ccloud-resource-endpoint") %>>
+          <a href="#">Archer Endpoint Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-ccloud-resource-endpoint-service-v1") %>>
+              <%= link_to 'ccloud_endpoint_service_v1', '/docs/providers/ccloud/r/endpoint_service_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-endpoint-quota-v1") %>>
+              <%= link_to 'ccloud_endpoint_quota_v1', '/docs/providers/ccloud/r/endpoint_quota_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-endpoint-accept-v1") %>>
+              <%= link_to 'ccloud_endpoint_accept_v1', '/docs/providers/ccloud/r/endpoint_accept_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-endpoint-v1") %>>
+	      <%= link_to 'ccloud_endpoint_v1', '/docs/providers/ccloud/r/endpoint_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-ccloud-resource-endpoint-rbac-policy-v1") %>>
+	      <%= link_to 'ccloud_endpoint_rbac_policy_v1', '/docs/providers/ccloud/r/endpoint_rbac_policy_v1.html', :relative => true %>
+	    </li>
+          </ul>
+        </li>
+
       </ul>
     </div>
   <% end %>
