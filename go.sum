@@ -84,6 +84,8 @@ github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/gophercloud/gophercloud v1.3.0/go.mod h1:aAVqcocTSXh2vYFZ1JTvx4EQmfgzxRcNupUfxZbBNDM=
 github.com/gophercloud/gophercloud v1.12.1-0.20240626021613-7c0ae2f72529 h1:0QQzs4ZGANlS2wVUzx12YUME1LEGWEGRcmf1X6zbtGk=
 github.com/gophercloud/gophercloud v1.12.1-0.20240626021613-7c0ae2f72529/go.mod h1:aAVqcocTSXh2vYFZ1JTvx4EQmfgzxRcNupUfxZbBNDM=
+github.com/gophercloud/gophercloud v1.13.0 h1:8iY9d1DAbzMW6Vok1AxbbK5ZaUjzMp0tdyt4fX9IeJ0=
+github.com/gophercloud/gophercloud v1.13.0/go.mod h1:aAVqcocTSXh2vYFZ1JTvx4EQmfgzxRcNupUfxZbBNDM=
 github.com/gophercloud/utils v0.0.0-20231010081019-80377eca5d56 h1:sH7xkTfYzxIEgzq1tDHIMKRh1vThOEOGNsettdEeLbE=
 github.com/gophercloud/utils v0.0.0-20231010081019-80377eca5d56/go.mod h1:VSalo4adEk+3sNkmVJLnhHoOyOYYS8sTWLG4mv5BKto=
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
@@ -194,6 +196,8 @@ github.com/rogpeppe/go-internal v1.11.0 h1:cWPaGQEPrBb5/AsnsZesgZZ9yb1OQ+GOISoDN
 github.com/rogpeppe/go-internal v1.11.0/go.mod h1:ddIwULY96R17DhadqLgMfk9H9tvdUzkipdSkR5nkCZA=
 github.com/sapcc/andromeda v0.0.2-0.20240708030448-e1ee3841282e h1:lMWB/41odcIid1jxNcKEhVSNUFWSOzu4Fj7j5OXONOQ=
 github.com/sapcc/andromeda v0.0.2-0.20240708030448-e1ee3841282e/go.mod h1:7uTlgV56JprJAAk6xYQ5L+wjuPCOpkOFpCVPdpuPY5U=
+github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395 h1:3N52RabcT4i+S2oNuQFIFnv2FSjpU+LDoE7aJwk5om8=
+github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395/go.mod h1:+gQJT0K0NF7P/CydFpEFhnfYrdQnUKBMhd1+2wzuesQ=
 github.com/sapcc/gophercloud-sapcc v1.0.0 h1:jPPIygmrHNS/d1fGEmxfSK99TgfL2p8UX+l6veYHcJw=
 github.com/sapcc/gophercloud-sapcc v1.0.0/go.mod h1:dTBCGEVxdxL9gYLSl5oLOKHexw7nSuKgHquOK6Z36V8=
 github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c h1:pFKySc7H9nGwTJEtaNoCiFsy60VPHnjGDyYapakfa4c=
