@@ -49,7 +49,6 @@ resource "ccloud_endpoint_service_v1" "service_1" {
 resource "ccloud_endpoint_accept_v1" "accept_1" {
   service_id  = ccloud_endpoint_service_v1.service_1.id
   endpoint_id = ccloud_endpoint_v1.endpoint_1.id
-  project_id  = ccloud_endpoint_v1.endpoint_1.project_id
 }
 ```
 
@@ -66,9 +65,6 @@ The following arguments are supported:
 
 * `endpoint_id` - (Required) The ID of the endpoint to accept.
 
-* `project_id` - (Required) The ID of the project in which the endpoint is
-  located.
-
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
@@ -78,9 +74,9 @@ In addition to all arguments above, the following attributes are exported:
 
 ## Import
 
-An Archer endpoint consumer can be imported using the endpoint `id`,
-`service_id` and `project_id` separated by a slash, e.g.:
+An Archer endpoint consumer can be imported using the endpoint `id` and
+`service_id` separated by a slash, e.g.:
 
 ```shell
-$ terraform import ccloud_endpoint_accept_v1.accept_1 301317d8-9067-439f-b90f-9916beaf087c/74931fd2-90ff-41c0-93f2-f536eb3c2412/d162aaab07e5489896182efd563b23c6
+$ terraform import ccloud_endpoint_accept_v1.accept_1 301317d8-9067-439f-b90f-9916beaf087c/74931fd2-90ff-41c0-93f2-f536eb3c2412
 ```

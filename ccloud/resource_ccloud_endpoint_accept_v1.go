@@ -41,11 +41,6 @@ func resourceCCloudEndpointAcceptV1() *schema.Resource {
 				Required: true,
 				ForceNew: true,
 			},
-			"project_id": {
-				Type:     schema.TypeString,
-				Required: true,
-				ForceNew: true,
-			},
 
 			// computed
 			"status": {
@@ -67,10 +62,8 @@ func resourceCCloudEndpointAcceptV1Create(ctx context.Context, d *schema.Resourc
 	// Accept the service endpoint consumer
 	serviceID := d.Get("service_id").(string)
 	endpointID := d.Get("endpoint_id").(string)
-	projectID := d.Get("project_id").(string)
 	req := &models.EndpointConsumerList{
 		EndpointIds: []strfmt.UUID{strfmt.UUID(endpointID)},
-		ProjectIds:  []models.Project{models.Project(projectID)},
 	}
 
 	opts := &service.PutServiceServiceIDAcceptEndpointsParams{
@@ -92,12 +85,14 @@ func resourceCCloudEndpointAcceptV1Create(ctx context.Context, d *schema.Resourc
 
 	// waiting for AVAILABLE status
 	timeout := d.Timeout(schema.TimeoutCreate)
-	target := string(models.EndpointStatusAVAILABLE)
+	target := []string{
+		string(models.EndpointStatusAVAILABLE),
+	}
 	pending := []string{
 		string(models.EndpointStatusPENDINGCREATE),
 		string(models.EndpointStatusPENDINGAPPROVAL),
 	}
-	ec, err := archerWaitForServiceEndpointConsumer(ctx, c, endpointID, serviceID, projectID, target, pending, timeout)
+	ec, err := archerWaitForServiceEndpointConsumer(ctx, c, endpointID, serviceID, target, pending, timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -116,8 +111,7 @@ func resourceCCloudEndpointAcceptV1Read(ctx context.Context, d *schema.ResourceD
 
 	id := d.Id()
 	serviceID := d.Get("service_id").(string)
-	projectID := d.Get("project_id").(string)
-	ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID, projectID)
+	ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID)
 	if err != nil {
 		if _, ok := err.(*service.GetServiceServiceIDEndpointsNotFound); ok {
 			d.SetId("")
@@ -140,10 +134,8 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 	client := c.Service
 
 	serviceID := d.Get("service_id").(string)
-	projectID := d.Get("project_id").(string)
 	req := &models.EndpointConsumerList{
 		EndpointIds: []strfmt.UUID{strfmt.UUID(d.Id())},
-		ProjectIds:  []models.Project{models.Project(projectID)},
 	}
 	opts := &service.PutServiceServiceIDRejectEndpointsParams{
 		Body:      req,
@@ -160,12 +152,15 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 
 	// waiting for DELETED status
 	timeout := d.Timeout(schema.TimeoutDelete)
-	target := "DELETED"
+	target := []string{
+		"DELETED",
+		string(models.EndpointStatusREJECTED),
+	}
 	pending := []string{
 		string(models.EndpointStatusPENDINGREJECTED),
 		string(models.EndpointStatusPENDINGDELETE),
 	}
-	_, err = archerWaitForServiceEndpointConsumer(ctx, c, d.Id(), serviceID, projectID, target, pending, timeout)
+	_, err = archerWaitForServiceEndpointConsumer(ctx, c, d.Id(), serviceID, target, pending, timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -173,13 +168,13 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 	return nil
 }
 
-func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, serviceID, projectID, target string, pending []string, timeout time.Duration) (*models.EndpointConsumer, error) {
+func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, serviceID string, target, pending []string, timeout time.Duration) (*models.EndpointConsumer, error) {
 	log.Printf("[DEBUG] Waiting for %s endpoint to become %s.", id, target)
 
 	stateConf := &resource.StateChangeConf{
-		Target:     []string{target},
+		Target:     target,
 		Pending:    pending,
-		Refresh:    archerGetServiceEndpointConsumerStatus(ctx, c, id, serviceID, projectID),
+		Refresh:    archerGetServiceEndpointConsumerStatus(ctx, c, id, serviceID),
 		Timeout:    timeout,
 		Delay:      1 * time.Second,
 		MinTimeout: 1 * time.Second,
@@ -187,7 +182,7 @@ func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, se
 
 	ec, err := stateConf.WaitForStateContext(ctx)
 	if err != nil {
-		if _, ok := err.(*service.GetServiceServiceIDEndpointsNotFound); ok && target == "DELETED" {
+		if _, ok := err.(*service.GetServiceServiceIDEndpointsNotFound); ok && sliceContains(target, "DELETED") {
 			return nil, nil
 		}
 		return nil, fmt.Errorf("error waiting for %s endpoint to become %s: %s", id, target, err)
@@ -196,9 +191,9 @@ func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, se
 	return ec.(*models.EndpointConsumer), nil
 }
 
-func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, serviceID, projectID string) resource.StateRefreshFunc {
+func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, serviceID string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID, projectID)
+		ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID)
 		if err != nil {
 			return nil, "", err
 		}
@@ -207,7 +202,7 @@ func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, 
 	}
 }
 
-func archerGetServiceEndpointConsumer(ctx context.Context, c *archer, id, serviceID, projectID string) (*models.EndpointConsumer, error) {
+func archerGetServiceEndpointConsumer(ctx context.Context, c *archer, id, serviceID string) (*models.EndpointConsumer, error) {
 	opts := &service.GetServiceServiceIDEndpointsParams{
 		ServiceID: strfmt.UUID(serviceID),
 	}
@@ -220,7 +215,7 @@ func archerGetServiceEndpointConsumer(ctx context.Context, c *archer, id, servic
 	}
 
 	for _, v := range res.Payload.Items {
-		if v.ID == strfmt.UUID(id) && v.ProjectID == models.Project(projectID) {
+		if v.ID == strfmt.UUID(id) {
 			return v, nil
 		}
 	}
@@ -230,25 +225,22 @@ func archerGetServiceEndpointConsumer(ctx context.Context, c *archer, id, servic
 
 func archerSetServiceEndpointConsumer(d *schema.ResourceData, config *Config, id string, consumer *models.EndpointConsumer) {
 	d.Set("endpoint_id", id)
-	d.Set("project_id", consumer.ProjectID)
 	d.Set("status", consumer.Status)
 	d.Set("region", GetRegion(d, config))
 }
 
 func archerSetServiceEndpointConsumerImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	parts := strings.SplitN(d.Id(), "/", 3)
+	parts := strings.SplitN(d.Id(), "/", 2)
 	if len(parts) != 3 {
-		err := fmt.Errorf("Invalid format specified for endpoint consumer. Format must be <endpoint id>/<service id>/<project id>")
+		err := fmt.Errorf("Invalid format specified for endpoint consumer. Format must be <endpoint id>/<service id>")
 		return nil, err
 	}
 
 	id := parts[0]
 	serviceID := parts[1]
-	projectID := parts[2]
 
 	d.SetId(id)
 	d.Set("service_id", serviceID)
-	d.Set("project_id", projectID)
 
 	return []*schema.ResourceData{d}, nil
 }
