@@ -191,6 +191,12 @@ func resourceCCloudBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.
 		hasChange = true
 	}
 
+	if d.HasChange("remote_interconnection_id") {
+		id := d.Get("remote_interconnection_id").(string)
+		opts.RemoteInterconnectionID = &id
+		hasChange = true
+	}
+
 	log.Printf("[DEBUG] Updating BGP VPN interconnection with id %s: %#v", d.Id(), opts)
 
 	if hasChange {
