@@ -7,6 +7,7 @@ require (
 	github.com/go-openapi/strfmt v0.23.0
 	github.com/go-openapi/validate v0.24.0
 	github.com/gophercloud/gophercloud v1.13.0
+	github.com/gophercloud/gophercloud/v2 v2.0.0
 	github.com/gophercloud/utils v0.0.0-20231010081019-80377eca5d56
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 	github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395
