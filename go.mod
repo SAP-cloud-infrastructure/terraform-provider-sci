@@ -12,6 +12,7 @@ require (
 	github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395
 	github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab
 	github.com/sapcc/gophercloud-sapcc v1.0.1
+	github.com/sapcc/gophercloud-sapcc/v2 v2.0.2
 	github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c
 	k8s.io/client-go v0.30.2
 	sigs.k8s.io/yaml v1.4.0

@@ -198,6 +198,7 @@ github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab h1:UFs5/2KHQPRrauK/
 github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab/go.mod h1:sHNMVgbAoDVwF/RHWbtJN4vEzO9arON5CykNGD7JAvY=
 github.com/sapcc/gophercloud-sapcc v1.0.1 h1:Ufz8groIKoLl6wyn60hiMyr5fZgrs1NcA6d1NHEC1KA=
 github.com/sapcc/gophercloud-sapcc v1.0.1/go.mod h1:dTBCGEVxdxL9gYLSl5oLOKHexw7nSuKgHquOK6Z36V8=
+github.com/sapcc/gophercloud-sapcc/v2 v2.0.2/go.mod h1:c+guCOMR8/sGXDus5VEVrjQ7pdmT7JEQaInJWysbBzQ=
 github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c h1:pFKySc7H9nGwTJEtaNoCiFsy60VPHnjGDyYapakfa4c=
 github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c/go.mod h1:BspB+v1MQvnJi95Nu9r+4A3UzCwi03XNLG3u6eZyRWU=
 github.com/sergi/go-diff v1.3.2-0.20230802210424-5b0b94c5c0d3 h1:n661drycOFuPLCN3Uc8sB6B/s6Z4t2xvBgU1htSHuq8=
