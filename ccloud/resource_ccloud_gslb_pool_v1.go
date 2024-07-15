@@ -85,7 +85,7 @@ func resourceCCloudGSLBPoolV1() *schema.Resource {
 
 func resourceCCloudGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -141,7 +141,7 @@ func resourceCCloudGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData,
 
 func resourceCCloudGSLBPoolV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -164,7 +164,7 @@ func resourceCCloudGSLBPoolV1Read(ctx context.Context, d *schema.ResourceData, m
 
 func resourceCCloudGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -218,7 +218,7 @@ func resourceCCloudGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData,
 
 func resourceCCloudGSLBPoolV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}

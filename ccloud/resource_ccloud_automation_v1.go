@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/automation/v1/automations"
+	"github.com/sapcc/gophercloud-sapcc/v2/automation/v1/automations"
 )
 
 func resourceCCloudAutomationV1() *schema.Resource {
@@ -159,7 +159,7 @@ func resourceCCloudAutomationV1() *schema.Resource {
 
 func resourceCCloudAutomationV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	automationClient, err := config.automationV1Client(GetRegion(d, config))
+	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Automation client: %s", err)
 	}
@@ -202,7 +202,7 @@ func resourceCCloudAutomationV1Create(ctx context.Context, d *schema.ResourceDat
 
 	log.Printf("[DEBUG] ccloud_automation_v1 create options: %#v", createOpts)
 
-	automation, err := automations.Create(automationClient, createOpts).Extract()
+	automation, err := automations.Create(ctx, automationClient, createOpts).Extract()
 	if err != nil {
 		return diag.Errorf("Error creating ccloud_automation_v1: %s", err)
 	}
@@ -214,12 +214,12 @@ func resourceCCloudAutomationV1Create(ctx context.Context, d *schema.ResourceDat
 
 func resourceCCloudAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	automationClient, err := config.automationV1Client(GetRegion(d, config))
+	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
 
-	automation, err := automations.Get(automationClient, d.Id()).Extract()
+	automation, err := automations.Get(ctx, automationClient, d.Id()).Extract()
 	if err != nil {
 		return diag.FromErr(CheckDeleted(d, err, "Unable to retrieve ccloud_automation_v1"))
 	}
@@ -256,7 +256,7 @@ func resourceCCloudAutomationV1Read(ctx context.Context, d *schema.ResourceData,
 
 func resourceCCloudAutomationV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	automationClient, err := config.automationV1Client(GetRegion(d, config))
+	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -339,7 +339,7 @@ func resourceCCloudAutomationV1Update(ctx context.Context, d *schema.ResourceDat
 		updateOpts.Environment = expandToMapStringString(environment)
 	}
 
-	_, err = automations.Update(automationClient, d.Id(), updateOpts).Extract()
+	_, err = automations.Update(ctx, automationClient, d.Id(), updateOpts).Extract()
 	if err != nil {
 		return diag.Errorf("Error updating ccloud_automation_v1: %s", err)
 	}
@@ -349,13 +349,13 @@ func resourceCCloudAutomationV1Update(ctx context.Context, d *schema.ResourceDat
 
 func resourceCCloudAutomationV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	automationClient, err := config.automationV1Client(GetRegion(d, config))
+	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
 
 	log.Printf("[DEBUG] Deleting ccloud_automation_v1: %s", d.Id())
-	err = automations.Delete(automationClient, d.Id()).ExtractErr()
+	err = automations.Delete(ctx, automationClient, d.Id()).ExtractErr()
 	if err != nil {
 		return diag.FromErr(CheckDeleted(d, err, "Error deleting ccloud_automation_v1"))
 	}

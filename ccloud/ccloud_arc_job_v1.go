@@ -9,9 +9,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/jobs"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/jobs"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/gophercloud/gophercloud/v2"
 )
 
 type chefZeroPayload struct {
@@ -256,7 +256,7 @@ func arcCCloudArcJobV1FlattenChef(job *jobs.Job) ([]map[string]interface{}, erro
 	}}, nil
 }
 
-func arcCCloudArcJobV1Filter(d *schema.ResourceData, arcClient *gophercloud.ServiceClient, resourceName string) ([]jobs.Job, error) {
+func arcCCloudArcJobV1Filter(ctx context.Context, d *schema.ResourceData, arcClient *gophercloud.ServiceClient, resourceName string) ([]jobs.Job, error) {
 	agentID := d.Get("agent_id").(string)
 	timeout := d.Get("timeout").(int)
 	agent := d.Get("agent").(string)
@@ -267,7 +267,7 @@ func arcCCloudArcJobV1Filter(d *schema.ResourceData, arcClient *gophercloud.Serv
 
 	log.Printf("[DEBUG] %s list options: %#v", resourceName, listOpts)
 
-	allPages, err := jobs.List(arcClient, listOpts).AllPages()
+	allPages, err := jobs.List(arcClient, listOpts).AllPages(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("Unable to list %s: %v", resourceName, err)
 	}
@@ -317,7 +317,7 @@ func waitForArcJobV1(ctx context.Context, arcClient *gophercloud.ServiceClient, 
 	stateConf := &resource.StateChangeConf{
 		Target:     target,
 		Pending:    pending,
-		Refresh:    arcJobV1GetStatus(arcClient, id),
+		Refresh:    arcJobV1GetStatus(ctx, arcClient, id),
 		Timeout:    timeout,
 		Delay:      1 * time.Second,
 		MinTimeout: 1 * time.Second,
@@ -328,9 +328,9 @@ func waitForArcJobV1(ctx context.Context, arcClient *gophercloud.ServiceClient, 
 	return err
 }
 
-func arcJobV1GetStatus(arcClient *gophercloud.ServiceClient, id string) resource.StateRefreshFunc {
+func arcJobV1GetStatus(ctx context.Context, arcClient *gophercloud.ServiceClient, id string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		job, err := jobs.Get(arcClient, id).Extract()
+		job, err := jobs.Get(ctx, arcClient, id).Extract()
 		if err != nil {
 			return nil, "", fmt.Errorf("Unable to retrieve %s ccloud_arc_job_v1: %v", id, err)
 		}
@@ -339,11 +339,11 @@ func arcJobV1GetStatus(arcClient *gophercloud.ServiceClient, id string) resource
 	}
 }
 
-func arcJobV1GetLog(arcClient *gophercloud.ServiceClient, id string) []byte {
+func arcJobV1GetLog(ctx context.Context, arcClient *gophercloud.ServiceClient, id string) []byte {
 	var err error
 	l := []byte("Log not available")
 
-	res := jobs.GetLog(arcClient, id)
+	res := jobs.GetLog(ctx, arcClient, id)
 	if res.Err != nil {
 		log.Printf("[DEBUG] Error retrieving logs for %s ccloud_arc_job_v1: %s", id, res.Err)
 		return l

@@ -4,19 +4,20 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/agents"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/compute/v2/servers"
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/gophercloud/v2/openstack/compute/v2/servers"
 )
 
-func arcCCloudArcAgentV1ReadAgent(d *schema.ResourceData, arcClient *gophercloud.ServiceClient, agent *agents.Agent, region string) {
+func arcCCloudArcAgentV1ReadAgent(ctx context.Context, d *schema.ResourceData, arcClient *gophercloud.ServiceClient, agent *agents.Agent, region string) {
 	if len(agent.Facts) == 0 {
-		facts, err := agents.GetFacts(arcClient, agent.AgentID).Extract()
+		facts, err := agents.GetFacts(ctx, arcClient, agent.AgentID).Extract()
 		if err != nil {
 			log.Printf("Unable to retrieve facts for ccloud_arc_agent_v1: %s", err)
 		}
@@ -56,7 +57,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 		// Retryable case, when timeout is set
 		waitForAgent := &resource.StateChangeConf{
 			Target:         []string{"active"},
-			Refresh:        arcCCloudArcAgentV1GetAgent(arcClient, agentID, filter, timeout),
+			Refresh:        arcCCloudArcAgentV1GetAgent(ctx, arcClient, agentID, filter, timeout),
 			Timeout:        timeout,
 			Delay:          1 * time.Second,
 			MinTimeout:     1 * time.Second,
@@ -65,7 +66,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 		agent, err = waitForAgent.WaitForStateContext(ctx)
 	} else {
 		// When timeout is not set, just get the agent
-		agent, msg, err = arcCCloudArcAgentV1GetAgent(arcClient, agentID, filter, timeout)()
+		agent, msg, err = arcCCloudArcAgentV1GetAgent(ctx, arcClient, agentID, filter, timeout)()
 	}
 
 	if len(msg) > 0 && msg != "active" {
@@ -79,7 +80,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 	return agent.(*agents.Agent), nil
 }
 
-func arcCCloudArcAgentV1GetAgent(arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) resource.StateRefreshFunc {
+func arcCCloudArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		var agent *agents.Agent
 		var err error
@@ -89,9 +90,9 @@ func arcCCloudArcAgentV1GetAgent(arcClient *gophercloud.ServiceClient, agentID, 
 		}
 
 		if len(agentID) > 0 {
-			agent, err = agents.Get(arcClient, agentID).Extract()
+			agent, err = agents.Get(ctx, arcClient, agentID).Extract()
 			if err != nil {
-				if _, ok := err.(gophercloud.ErrDefault404); ok && timeout > 0 {
+				if gophercloud.ResponseCodeIs(err, http.StatusNotFound) && timeout > 0 {
 					// Retryable case, when timeout is set
 					return nil, fmt.Sprintf("Unable to retrieve %s ccloud_arc_agent_v1: %v", agentID, err), nil
 				}
@@ -102,7 +103,7 @@ func arcCCloudArcAgentV1GetAgent(arcClient *gophercloud.ServiceClient, agentID, 
 
 			log.Printf("[DEBUG] ccloud_arc_agent_v1 list options: %#v", listOpts)
 
-			allPages, err := agents.List(arcClient, listOpts).AllPages()
+			allPages, err := agents.List(arcClient, listOpts).AllPages(ctx)
 			if err != nil {
 				return nil, "", fmt.Errorf("Unable to list ccloud_arc_agent_v1: %s", err)
 			}
@@ -130,7 +131,7 @@ func arcCCloudArcAgentV1GetAgent(arcClient *gophercloud.ServiceClient, agentID, 
 	}
 }
 
-func updateArcAgentTagsV1(arcClient *gophercloud.ServiceClient, agentID string, oldTagsRaw, newTagsRaw interface{}) error {
+func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID string, oldTagsRaw, newTagsRaw interface{}) error {
 	var tagsToDelete []string
 	oldTags, _ := oldTagsRaw.(map[string]interface{})
 	newTags, _ := newTagsRaw.(map[string]interface{})
@@ -151,7 +152,7 @@ func updateArcAgentTagsV1(arcClient *gophercloud.ServiceClient, agentID string, 
 	}
 
 	for _, key := range tagsToDelete {
-		err := agents.DeleteTag(arcClient, agentID, key).ExtractErr()
+		err := agents.DeleteTag(ctx, arcClient, agentID, key).ExtractErr()
 		if err != nil {
 			return fmt.Errorf("Error deleting %s tag from %s ccloud_arc_agent_v1: %v", key, agentID, err)
 		}
@@ -163,7 +164,7 @@ func updateArcAgentTagsV1(arcClient *gophercloud.ServiceClient, agentID string, 
 		tagsOpts[k] = v.(string)
 	}
 
-	err := agents.CreateTags(arcClient, agentID, tagsOpts).ExtractErr()
+	err := agents.CreateTags(ctx, arcClient, agentID, tagsOpts).ExtractErr()
 	if err != nil {
 		return fmt.Errorf("Error updating tags for %s ccloud_arc_agent_v1: %v", agentID, err)
 	}
@@ -185,11 +186,11 @@ func arcAgentV1ParseTimeout(raw interface{}) (time.Duration, error) {
 	return time.Duration(0), nil
 }
 
-func serverV2StateRefreshFunc(client *gophercloud.ServiceClient, instanceID string) resource.StateRefreshFunc {
+func serverV2StateRefreshFunc(ctx context.Context, client *gophercloud.ServiceClient, instanceID string) resource.StateRefreshFunc {
 	return func() (interface{}, string, error) {
-		s, err := servers.Get(client, instanceID).Extract()
+		s, err := servers.Get(ctx, client, instanceID).Extract()
 		if err != nil {
-			if _, ok := err.(gophercloud.ErrDefault404); ok {
+			if gophercloud.ResponseCodeIs(err, http.StatusNotFound) {
 				return s, "DELETED", nil
 			}
 			return nil, "", err

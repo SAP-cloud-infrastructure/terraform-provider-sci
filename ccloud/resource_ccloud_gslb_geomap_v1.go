@@ -98,7 +98,7 @@ func resourceCCloudGSLBGeoMapV1() *schema.Resource {
 
 func resourceCCloudGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -158,7 +158,7 @@ func resourceCCloudGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceDat
 
 func resourceCCloudGSLBGeoMapV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -181,7 +181,7 @@ func resourceCCloudGSLBGeoMapV1Read(ctx context.Context, d *schema.ResourceData,
 
 func resourceCCloudGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}
@@ -240,7 +240,7 @@ func resourceCCloudGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceDat
 
 func resourceCCloudGSLBGeoMapV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.andromedaV1Client(GetRegion(d, config))
+	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Andromeda client: %s", err)
 	}

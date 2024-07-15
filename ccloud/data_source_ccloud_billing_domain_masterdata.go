@@ -7,7 +7,7 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/gophercloud-sapcc/billing/masterdata/domains"
+	"github.com/sapcc/gophercloud-sapcc/v2/billing/masterdata/domains"
 )
 
 func dataSourceCCloudBillingDomainMasterdata() *schema.Resource {
@@ -107,7 +107,7 @@ func dataSourceCCloudBillingDomainMasterdata() *schema.Resource {
 
 func dataSourceCCloudBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	billing, err := config.billingClient(GetRegion(d, config))
+	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack billing client: %s", err)
 	}
@@ -115,12 +115,12 @@ func dataSourceCCloudBillingDomainMasterdataRead(ctx context.Context, d *schema.
 	domainID := d.Get("domain_id").(string)
 	if domainID == "" {
 		// first call, expecting to get current scope domain
-		identityClient, err := config.IdentityV3Client(GetRegion(d, config))
+		identityClient, err := config.IdentityV3Client(ctx, GetRegion(d, config))
 		if err != nil {
 			return diag.Errorf("Error creating OpenStack identity client: %s", err)
 		}
 
-		tokenDetails, err := getTokenDetails(identityClient)
+		tokenDetails, err := getTokenDetails(ctx, identityClient)
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -132,7 +132,7 @@ func dataSourceCCloudBillingDomainMasterdataRead(ctx context.Context, d *schema.
 		domainID = tokenDetails.domain.ID
 	}
 
-	domain, err := domains.Get(billing, domainID).Extract()
+	domain, err := domains.Get(ctx, billing, domainID).Extract()
 	if err != nil {
 		return diag.Errorf("Error getting billing domain masterdata: %s", err)
 	}

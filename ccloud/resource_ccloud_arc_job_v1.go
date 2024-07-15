@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/jobs"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/jobs"
 )
 
 func resourceCCloudArcJobV1() *schema.Resource {
@@ -311,7 +311,7 @@ func resourceCCloudArcJobV1() *schema.Resource {
 
 func resourceCCloudArcJobV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -352,7 +352,7 @@ func resourceCCloudArcJobV1Create(ctx context.Context, d *schema.ResourceData, m
 
 	log.Printf("[DEBUG] ccloud_arc_job_v1 create options: %#v", createOpts)
 
-	job, err := jobs.Create(arcClient, createOpts).Extract()
+	job, err := jobs.Create(ctx, arcClient, createOpts).Extract()
 	if err != nil {
 		return diag.Errorf("Error creating ccloud_arc_job_v1: %s", err)
 	}
@@ -378,17 +378,17 @@ func resourceCCloudArcJobV1Create(ctx context.Context, d *schema.ResourceData, m
 
 func resourceCCloudArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
 
-	job, err := jobs.Get(arcClient, d.Id()).Extract()
+	job, err := jobs.Get(ctx, arcClient, d.Id()).Extract()
 	if err != nil {
 		return diag.FromErr(CheckDeleted(d, err, "Unable to retrieve ccloud_arc_job_v1"))
 	}
 
-	log := arcJobV1GetLog(arcClient, job.RequestID)
+	log := arcJobV1GetLog(ctx, arcClient, job.RequestID)
 
 	execute, err := arcCCloudArcJobV1FlattenExecute(job)
 	if err != nil {

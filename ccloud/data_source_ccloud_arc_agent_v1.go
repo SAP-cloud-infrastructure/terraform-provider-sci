@@ -116,7 +116,7 @@ func dataSourceCCloudArcAgentV1() *schema.Resource {
 
 func dataSourceCCloudArcAgentV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -136,7 +136,7 @@ func dataSourceCCloudArcAgentV1Read(ctx context.Context, d *schema.ResourceData,
 
 	d.SetId(agent.AgentID)
 
-	arcCCloudArcAgentV1ReadAgent(d, arcClient, agent, GetRegion(d, config))
+	arcCCloudArcAgentV1ReadAgent(ctx, d, arcClient, agent, GetRegion(d, config))
 
 	return nil
 }

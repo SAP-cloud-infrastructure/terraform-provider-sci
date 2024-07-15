@@ -352,7 +352,7 @@ func resourceCCloudKubernetesV1Create(ctx context.Context, d *schema.ResourceDat
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Creating Kubernikus Kluster in project %s", config.TenantID)
 
-	klient, err := config.kubernikusV1Client(GetRegion(d, config), d.Get("is_admin").(bool))
+	klient, err := config.kubernikusV1Client(ctx, GetRegion(d, config), d.Get("is_admin").(bool))
 	if err != nil {
 		return diag.Errorf("Error creating Kubernikus client: %s", err)
 	}
@@ -429,7 +429,7 @@ func resourceCCloudKubernetesV1Read(ctx context.Context, d *schema.ResourceData,
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Reading Kubernikus Kluster in project %s", config.TenantID)
 
-	klient, err := config.kubernikusV1Client(GetRegion(d, config), d.Get("is_admin").(bool))
+	klient, err := config.kubernikusV1Client(ctx, GetRegion(d, config), d.Get("is_admin").(bool))
 	if err != nil {
 		return diag.Errorf("Error creating Kubernikus client: %s", err)
 	}
@@ -490,7 +490,7 @@ func resourceCCloudKubernetesV1Update(ctx context.Context, d *schema.ResourceDat
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Updating Kubernikus Kluster in project %s", config.TenantID)
 
-	klient, err := config.kubernikusV1Client(GetRegion(d, config), d.Get("is_admin").(bool))
+	klient, err := config.kubernikusV1Client(ctx, GetRegion(d, config), d.Get("is_admin").(bool))
 	if err != nil {
 		return diag.Errorf("Error creating Kubernikus client: %s", err)
 	}
@@ -560,7 +560,7 @@ func resourceCCloudKubernetesV1Delete(ctx context.Context, d *schema.ResourceDat
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Deleting Kubernikus Kluster in project %s", config.TenantID)
 
-	klient, err := config.kubernikusV1Client(GetRegion(d, config), d.Get("is_admin").(bool))
+	klient, err := config.kubernikusV1Client(ctx, GetRegion(d, config), d.Get("is_admin").(bool))
 	if err != nil {
 		return diag.Errorf("Error creating Kubernikus client: %s", err)
 	}

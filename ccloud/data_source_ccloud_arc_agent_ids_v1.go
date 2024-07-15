@@ -8,9 +8,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/agents"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
 
-	"github.com/gophercloud/utils/terraform/hashcode"
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func dataSourceCCloudArcAgentIDsV1() *schema.Resource {
@@ -42,7 +42,7 @@ func dataSourceCCloudArcAgentIDsV1() *schema.Resource {
 
 func dataSourceCCloudArcAgentIDsV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -53,7 +53,7 @@ func dataSourceCCloudArcAgentIDsV1Read(ctx context.Context, d *schema.ResourceDa
 
 	log.Printf("[DEBUG] ccloud_arc_agent_ids_v1 list options: %#v", listOpts)
 
-	allPages, err := agents.List(arcClient, listOpts).AllPages()
+	allPages, err := agents.List(arcClient, listOpts).AllPages(ctx)
 	if err != nil {
 		return diag.Errorf("Unable to list ccloud_arc_agent_ids_v1: %s", err)
 	}

@@ -132,7 +132,7 @@ func dataSourceCCloudEndpointServiceV1() *schema.Resource {
 
 func dataSourceCCloudEndpointServiceV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.archerV1Client(GetRegion(d, config))
+	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Archer client: %s", err)
 	}

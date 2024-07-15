@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/jobs"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/jobs"
 )
 
 func dataSourceCCloudArcJobV1() *schema.Resource {
@@ -268,7 +268,7 @@ func dataSourceCCloudArcJobV1() *schema.Resource {
 
 func dataSourceCCloudArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -277,13 +277,13 @@ func dataSourceCCloudArcJobV1Read(ctx context.Context, d *schema.ResourceData, m
 	jobID := d.Get("job_id").(string)
 
 	if len(jobID) > 0 {
-		err = jobs.Get(arcClient, jobID).ExtractInto(&job)
+		err = jobs.Get(ctx, arcClient, jobID).ExtractInto(&job)
 		if err != nil {
 			return diag.Errorf("Unable to retrieve %s ccloud_arc_job_v1: %v", jobID, err)
 		}
 	} else {
 		// filter arc jobs by parameters
-		jobs, err := arcCCloudArcJobV1Filter(d, arcClient, "ccloud_arc_job_v1")
+		jobs, err := arcCCloudArcJobV1Filter(ctx, d, arcClient, "ccloud_arc_job_v1")
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -299,7 +299,7 @@ func dataSourceCCloudArcJobV1Read(ctx context.Context, d *schema.ResourceData, m
 		job = jobs[0]
 	}
 
-	log := arcJobV1GetLog(arcClient, job.RequestID)
+	log := arcJobV1GetLog(ctx, arcClient, job.RequestID)
 
 	execute, err := arcCCloudArcJobV1FlattenExecute(&job)
 	if err != nil {

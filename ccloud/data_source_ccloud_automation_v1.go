@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/automation/v1/automations"
+	"github.com/sapcc/gophercloud-sapcc/v2/automation/v1/automations"
 )
 
 func dataSourceCCloudAutomationV1() *schema.Resource {
@@ -135,12 +135,12 @@ func dataSourceCCloudAutomationV1() *schema.Resource {
 
 func dataSourceCCloudAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	automationClient, err := config.automationV1Client(GetRegion(d, config))
+	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Automation client: %s", err)
 	}
 
-	allPages, err := automations.List(automationClient, automations.ListOpts{}).AllPages()
+	allPages, err := automations.List(automationClient, automations.ListOpts{}).AllPages(ctx)
 	if err != nil {
 		return diag.Errorf("Unable to list ccloud_automation_v1: %s", err)
 	}

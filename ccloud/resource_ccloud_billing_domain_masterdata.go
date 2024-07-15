@@ -3,14 +3,15 @@ package ccloud
 import (
 	"context"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/billing/masterdata/domains"
+	"github.com/sapcc/gophercloud-sapcc/v2/billing/masterdata/domains"
 
-	"github.com/gophercloud/gophercloud"
+	"github.com/gophercloud/gophercloud/v2"
 )
 
 func resourceCCloudBillingDomainMasterdata() *schema.Resource {
@@ -126,7 +127,7 @@ func resourceCCloudBillingDomainMasterdata() *schema.Resource {
 
 func resourceCCloudBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	billing, err := config.billingClient(GetRegion(d, config))
+	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack billing client: %s", err)
 	}
@@ -134,12 +135,12 @@ func resourceCCloudBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d 
 	domainID := d.Get("domain_id").(string)
 	if d.Id() == "" && domainID == "" {
 		// first call, expecting to get current scope domain
-		identityClient, err := config.IdentityV3Client(GetRegion(d, config))
+		identityClient, err := config.IdentityV3Client(ctx, GetRegion(d, config))
 		if err != nil {
 			return diag.Errorf("Error creating OpenStack identity client: %s", err)
 		}
 
-		tokenDetails, err := getTokenDetails(identityClient)
+		tokenDetails, err := getTokenDetails(ctx, identityClient)
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -151,9 +152,9 @@ func resourceCCloudBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d 
 		domainID = tokenDetails.domain.ID
 	}
 
-	domain, err := domains.Get(billing, domainID).Extract()
+	domain, err := domains.Get(ctx, billing, domainID).Extract()
 	if err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); d.Id() != "" || !ok {
+		if d.Id() != "" || !gophercloud.ResponseCodeIs(err, http.StatusNotFound) {
 			return diag.Errorf("Error getting billing domain masterdata: %s", err)
 		}
 		log.Printf("[DEBUG] Error getting billing domain masterdata, probably this domain was not created yet: %s", err)
@@ -177,7 +178,7 @@ func resourceCCloudBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d 
 
 	log.Printf("[DEBUG] Updating %s domain masterdata: %+v", opts.DomainID, opts)
 
-	_, err = domains.Update(billing, opts.DomainID, opts).Extract()
+	_, err = domains.Update(ctx, billing, opts.DomainID, opts).Extract()
 	if err != nil {
 		return diag.Errorf("Error updating billing domain masterdata: %s", err)
 	}
@@ -191,12 +192,12 @@ func resourceCCloudBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d 
 
 func resourceCCloudBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	billing, err := config.billingClient(GetRegion(d, config))
+	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack billing client: %s", err)
 	}
 
-	domain, err := domains.Get(billing, d.Id()).Extract()
+	domain, err := domains.Get(ctx, billing, d.Id()).Extract()
 	if err != nil {
 		return diag.FromErr(CheckDeleted(d, err, "Error getting billing domain masterdata"))
 	}

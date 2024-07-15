@@ -9,9 +9,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/arc/v1/agents"
+	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
 
-	"github.com/gophercloud/utils/terraform/hashcode"
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func resourceCCloudArcAgentBootstrapV1() *schema.Resource {
@@ -60,7 +60,7 @@ func resourceCCloudArcAgentBootstrapV1() *schema.Resource {
 
 func resourceCCloudArcAgentBootstrapV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
@@ -81,7 +81,7 @@ func resourceCCloudArcAgentBootstrapV1Create(ctx context.Context, d *schema.Reso
 
 	log.Printf("[DEBUG] ccloud_arc_agent_bootstrap_v1 create options: %#v", createOpts)
 
-	res := agents.Init(arcClient, createOpts)
+	res := agents.Init(ctx, arcClient, createOpts)
 	if res.Err != nil {
 		return diag.Errorf("Error creating ccloud_arc_agent_bootstrap_v1: %s", res.Err)
 	}

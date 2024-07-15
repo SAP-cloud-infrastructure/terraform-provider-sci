@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 
-	"github.com/gophercloud/utils/terraform/hashcode"
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func dataSourceCCloudArcJobIDsV1() *schema.Resource {
@@ -71,12 +71,12 @@ func dataSourceCCloudArcJobIDsV1() *schema.Resource {
 
 func dataSourceCCloudArcJobIDsV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	arcClient, err := config.arcV1Client(GetRegion(d, config))
+	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Arc client: %s", err)
 	}
 
-	jobs, err := arcCCloudArcJobV1Filter(d, arcClient, "ccloud_arc_job_ids_v1")
+	jobs, err := arcCCloudArcJobV1Filter(ctx, d, arcClient, "ccloud_arc_job_ids_v1")
 	if err != nil {
 		return diag.FromErr(err)
 	}

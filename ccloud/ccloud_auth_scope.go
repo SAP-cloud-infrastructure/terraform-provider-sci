@@ -1,8 +1,10 @@
 package ccloud
 
 import (
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/gophercloud/openstack/identity/v3/tokens"
+	"context"
+
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/gophercloud/v2/openstack/identity/v3/tokens"
 )
 
 type authScopeTokenDetails struct {
@@ -13,7 +15,7 @@ type authScopeTokenDetails struct {
 	roles   []tokens.Role
 }
 
-func getTokenDetails(sc *gophercloud.ServiceClient) (authScopeTokenDetails, error) {
+func getTokenDetails(ctx context.Context, sc *gophercloud.ServiceClient) (authScopeTokenDetails, error) {
 	var (
 		details authScopeTokenDetails
 		err     error
@@ -64,7 +66,7 @@ func getTokenDetails(sc *gophercloud.ServiceClient) (authScopeTokenDetails, erro
 			return details, err
 		}
 	default:
-		res := tokens.Get(sc, sc.ProviderClient.TokenID)
+		res := tokens.Get(ctx, sc, sc.ProviderClient.TokenID)
 		if res.Err != nil {
 			return details, res.Err
 		}

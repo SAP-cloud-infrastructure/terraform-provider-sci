@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/gophercloud-sapcc/networking/v2/bgpvpn/interconnections"
+	"github.com/sapcc/gophercloud-sapcc/v2/networking/v2/bgpvpn/interconnections"
 )
 
 func resourceCCloudBGPVPNInterconnectionV2() *schema.Resource {
@@ -110,7 +110,7 @@ func resourceCCloudBGPVPNInterconnectionV2() *schema.Resource {
 
 func resourceCCloudBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	networkingClient, err := config.NetworkingV2Client(GetRegion(d, config))
+	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack networking client: %s", err)
 	}
@@ -127,7 +127,7 @@ func resourceCCloudBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.
 
 	log.Printf("[DEBUG] Create BGP VPN interconnection: %#v", createOpts)
 
-	interConn, err := interconnections.Create(networkingClient, createOpts).Extract()
+	interConn, err := interconnections.Create(ctx, networkingClient, createOpts).Extract()
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -141,12 +141,12 @@ func resourceCCloudBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.
 
 func resourceCCloudBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	networkingClient, err := config.NetworkingV2Client(GetRegion(d, config))
+	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack networking client: %s", err)
 	}
 
-	interConn, err := interconnections.Get(networkingClient, d.Id()).Extract()
+	interConn, err := interconnections.Get(ctx, networkingClient, d.Id()).Extract()
 	if err != nil {
 		return diag.FromErr(CheckDeleted(d, err, "interconnection"))
 	}
@@ -170,7 +170,7 @@ func resourceCCloudBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.Re
 
 func resourceCCloudBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	networkingClient, err := config.NetworkingV2Client(GetRegion(d, config))
+	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack networking client: %s", err)
 	}
@@ -200,7 +200,7 @@ func resourceCCloudBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.
 	log.Printf("[DEBUG] Updating BGP VPN interconnection with id %s: %#v", d.Id(), opts)
 
 	if hasChange {
-		_, err = interconnections.Update(networkingClient, d.Id(), opts).Extract()
+		_, err = interconnections.Update(ctx, networkingClient, d.Id(), opts).Extract()
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -215,12 +215,12 @@ func resourceCCloudBGPVPNInterconnectionV2Delete(ctx context.Context, d *schema.
 	log.Printf("[DEBUG] Destroy interconnection: %s", d.Id())
 
 	config := meta.(*Config)
-	networkingClient, err := config.NetworkingV2Client(GetRegion(d, config))
+	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack networking client: %s", err)
 	}
 
-	err = interconnections.Delete(networkingClient, d.Id()).Err
+	err = interconnections.Delete(ctx, networkingClient, d.Id()).Err
 	if err != nil {
 		return diag.FromErr(err)
 	}

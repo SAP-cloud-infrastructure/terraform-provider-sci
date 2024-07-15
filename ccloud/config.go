@@ -1,15 +1,17 @@
 package ccloud
 
 import (
-	"github.com/sapcc/andromeda/client"
-	"github.com/sapcc/gophercloud-sapcc/clients"
+	"context"
 
-	"github.com/gophercloud/gophercloud"
-	"github.com/gophercloud/utils/openstack/clientconfig"
+	"github.com/sapcc/andromeda/client"
+	"github.com/sapcc/gophercloud-sapcc/v2/clients"
+
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/utils/v2/openstack/clientconfig"
 )
 
-func (c *Config) kubernikusV1Client(region string, isAdmin bool) (*kubernikus, error) {
-	if err := c.Authenticate(); err != nil {
+func (c *Config) kubernikusV1Client(ctx context.Context, region string, isAdmin bool) (*kubernikus, error) {
+	if err := c.Authenticate(ctx); err != nil {
 		return nil, err
 	}
 
@@ -25,8 +27,8 @@ func (c *Config) kubernikusV1Client(region string, isAdmin bool) (*kubernikus, e
 	})
 }
 
-func (c *Config) andromedaV1Client(region string) (*client.Andromeda, error) {
-	if err := c.Authenticate(); err != nil {
+func (c *Config) andromedaV1Client(ctx context.Context, region string) (*client.Andromeda, error) {
+	if err := c.Authenticate(ctx); err != nil {
 		return nil, err
 	}
 
@@ -37,8 +39,8 @@ func (c *Config) andromedaV1Client(region string) (*client.Andromeda, error) {
 	})
 }
 
-func (c *Config) archerV1Client(region string) (*archer, error) {
-	if err := c.Authenticate(); err != nil {
+func (c *Config) archerV1Client(ctx context.Context, region string) (*archer, error) {
+	if err := c.Authenticate(ctx); err != nil {
 		return nil, err
 	}
 
@@ -49,14 +51,14 @@ func (c *Config) archerV1Client(region string) (*archer, error) {
 	})
 }
 
-func (c *Config) arcV1Client(region string) (*gophercloud.ServiceClient, error) {
-	return c.CommonServiceClientInit(clients.NewArcV1, region, "arc")
+func (c *Config) arcV1Client(ctx context.Context, region string) (*gophercloud.ServiceClient, error) {
+	return c.CommonServiceClientInit(ctx, clients.NewArcV1, region, "arc")
 }
 
-func (c *Config) automationV1Client(region string) (*gophercloud.ServiceClient, error) {
-	return c.CommonServiceClientInit(clients.NewAutomationV1, region, "automation")
+func (c *Config) automationV1Client(ctx context.Context, region string) (*gophercloud.ServiceClient, error) {
+	return c.CommonServiceClientInit(ctx, clients.NewAutomationV1, region, "automation")
 }
 
-func (c *Config) billingClient(region string) (*gophercloud.ServiceClient, error) {
-	return c.CommonServiceClientInit(clients.NewBilling, region, "sapcc-billing")
+func (c *Config) billingClient(ctx context.Context, region string) (*gophercloud.ServiceClient, error) {
+	return c.CommonServiceClientInit(ctx, clients.NewBilling, region, "sapcc-billing")
 }

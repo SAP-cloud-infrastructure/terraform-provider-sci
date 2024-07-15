@@ -11,8 +11,8 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/sapcc/andromeda/client"
 
-	"github.com/gophercloud/gophercloud"
-	osClient "github.com/gophercloud/utils/client"
+	"github.com/gophercloud/gophercloud/v2"
+	osClient "github.com/gophercloud/utils/v2/client"
 )
 
 func newAndromedaV1(c *Config, eo gophercloud.EndpointOpts) (*client.Andromeda, error) {

@@ -69,7 +69,7 @@ func resourceCCloudEndpointRBACV1() *schema.Resource {
 
 func resourceCCloudEndpointRBACV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.archerV1Client(GetRegion(d, config))
+	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Archer client: %s", err)
 	}
@@ -109,7 +109,7 @@ func resourceCCloudEndpointRBACV1Create(ctx context.Context, d *schema.ResourceD
 
 func resourceCCloudEndpointRBACV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.archerV1Client(GetRegion(d, config))
+	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Archer client: %s", err)
 	}
@@ -140,7 +140,7 @@ func resourceCCloudEndpointRBACV1Read(ctx context.Context, d *schema.ResourceDat
 
 func resourceCCloudEndpointRBACV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.archerV1Client(GetRegion(d, config))
+	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Archer client: %s", err)
 	}
@@ -177,7 +177,7 @@ func resourceCCloudEndpointRBACV1Update(ctx context.Context, d *schema.ResourceD
 
 func resourceCCloudEndpointRBACV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	config := meta.(*Config)
-	c, err := config.archerV1Client(GetRegion(d, config))
+	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("error creating Archer client: %s", err)
 	}
