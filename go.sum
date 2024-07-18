@@ -199,6 +199,8 @@ github.com/sapcc/andromeda v0.0.2-0.20240718140407-a893a7fcea3c h1:6De6Ionm6YNO/
 github.com/sapcc/andromeda v0.0.2-0.20240718140407-a893a7fcea3c/go.mod h1:mc+NUVHK5QBq7olWsCHlzcHtoNq4QmzHDJwQub3wGto=
 github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab h1:UFs5/2KHQPRrauK/vHyPBuIfgMIjyc9sLwlXMChY9UA=
 github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab/go.mod h1:sHNMVgbAoDVwF/RHWbtJN4vEzO9arON5CykNGD7JAvY=
+github.com/sapcc/archer v1.2.1-0.20240711183110-302e2bbe3533 h1:Hs8eCJPOzdrOBEGytLcKMftDBk+387A5QK9OoYZNh1o=
+github.com/sapcc/archer v1.2.1-0.20240711183110-302e2bbe3533/go.mod h1:6nqgo3IxX3kTJqX2rrfBuAaKJstWpNT2U8XbuReWYu0=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.2 h1:SxLVKQqm759bFYl4iDVU2ELys6fcLpsUqMtxv0s2Z6M=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.2/go.mod h1:c+guCOMR8/sGXDus5VEVrjQ7pdmT7JEQaInJWysbBzQ=
 github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c h1:pFKySc7H9nGwTJEtaNoCiFsy60VPHnjGDyYapakfa4c=
