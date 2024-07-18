@@ -13,7 +13,7 @@ require (
 	github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab
 	github.com/sapcc/gophercloud-sapcc/v2 v2.0.2
 	github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c
-	k8s.io/client-go v0.30.2
+	k8s.io/client-go v0.30.3
 	sigs.k8s.io/yaml v1.4.0
 )
 
@@ -95,7 +95,7 @@ require (
 	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apimachinery v0.30.2 // indirect
+	k8s.io/apimachinery v0.30.3 // indirect
 	k8s.io/klog/v2 v2.120.1 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
