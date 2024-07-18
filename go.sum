@@ -195,6 +195,8 @@ github.com/rogpeppe/go-internal v1.11.0 h1:cWPaGQEPrBb5/AsnsZesgZZ9yb1OQ+GOISoDN
 github.com/rogpeppe/go-internal v1.11.0/go.mod h1:ddIwULY96R17DhadqLgMfk9H9tvdUzkipdSkR5nkCZA=
 github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395 h1:3N52RabcT4i+S2oNuQFIFnv2FSjpU+LDoE7aJwk5om8=
 github.com/sapcc/andromeda v0.0.2-0.20240708183330-cef127e17395/go.mod h1:+gQJT0K0NF7P/CydFpEFhnfYrdQnUKBMhd1+2wzuesQ=
+github.com/sapcc/andromeda v0.0.2-0.20240718140407-a893a7fcea3c h1:6De6Ionm6YNO/mR+Z0N/6EFrQ5vHE/Iu2Z+4D/EVfgs=
+github.com/sapcc/andromeda v0.0.2-0.20240718140407-a893a7fcea3c/go.mod h1:mc+NUVHK5QBq7olWsCHlzcHtoNq4QmzHDJwQub3wGto=
 github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab h1:UFs5/2KHQPRrauK/vHyPBuIfgMIjyc9sLwlXMChY9UA=
 github.com/sapcc/archer v1.2.1-0.20240709050832-9604b3087bab/go.mod h1:sHNMVgbAoDVwF/RHWbtJN4vEzO9arON5CykNGD7JAvY=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.2 h1:SxLVKQqm759bFYl4iDVU2ELys6fcLpsUqMtxv0s2Z6M=
