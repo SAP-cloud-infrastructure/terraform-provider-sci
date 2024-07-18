@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"strings"
 	"time"
 
 	"github.com/go-openapi/strfmt"
@@ -21,7 +20,7 @@ func resourceCCloudEndpointAcceptV1() *schema.Resource {
 		ReadContext:   resourceCCloudEndpointAcceptV1Read,
 		DeleteContext: resourceCCloudEndpointAcceptV1Delete,
 		Importer: &schema.ResourceImporter{
-			StateContext: archerSetServiceEndpointConsumerImport,
+			StateContext: schema.ImportStatePassthroughContext,
 		},
 
 		Schema: map[string]*schema.Schema{
@@ -81,7 +80,8 @@ func resourceCCloudEndpointAcceptV1Create(ctx context.Context, d *schema.Resourc
 
 	log.Printf("[DEBUG] Accepted Archer endpoint: %v", res)
 
-	d.SetId(endpointID)
+	id := fmt.Sprintf("%s/%s", serviceID, endpointID)
+	d.SetId(id)
 
 	// waiting for AVAILABLE status
 	timeout := d.Timeout(schema.TimeoutCreate)
@@ -109,8 +109,11 @@ func resourceCCloudEndpointAcceptV1Read(ctx context.Context, d *schema.ResourceD
 		return diag.Errorf("error creating Archer client: %s", err)
 	}
 
-	id := d.Id()
-	serviceID := d.Get("service_id").(string)
+	serviceID, id, err := parsePairedIDs(d.Id(), "ccloud_endpoint_accept_v1")
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID)
 	if err != nil {
 		if _, ok := err.(*service.GetServiceServiceIDEndpointsNotFound); ok {
@@ -133,9 +136,13 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 	}
 	client := c.Service
 
-	serviceID := d.Get("service_id").(string)
+	serviceID, id, err := parsePairedIDs(d.Id(), "ccloud_endpoint_accept_v1")
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	req := &models.EndpointConsumerList{
-		EndpointIds: []strfmt.UUID{strfmt.UUID(d.Id())},
+		EndpointIds: []strfmt.UUID{strfmt.UUID(id)},
 	}
 	opts := &service.PutServiceServiceIDRejectEndpointsParams{
 		Body:      req,
@@ -160,7 +167,7 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 		string(models.EndpointStatusPENDINGREJECTED),
 		string(models.EndpointStatusPENDINGDELETE),
 	}
-	_, err = archerWaitForServiceEndpointConsumer(ctx, c, d.Id(), serviceID, target, pending, timeout)
+	_, err = archerWaitForServiceEndpointConsumer(ctx, c, id, serviceID, target, pending, timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -227,20 +234,4 @@ func archerSetServiceEndpointConsumer(d *schema.ResourceData, config *Config, id
 	d.Set("endpoint_id", id)
 	d.Set("status", consumer.Status)
 	d.Set("region", GetRegion(d, config))
-}
-
-func archerSetServiceEndpointConsumerImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	parts := strings.SplitN(d.Id(), "/", 2)
-	if len(parts) != 3 {
-		err := fmt.Errorf("Invalid format specified for endpoint consumer. Format must be <endpoint id>/<service id>")
-		return nil, err
-	}
-
-	id := parts[0]
-	serviceID := parts[1]
-
-	d.SetId(id)
-	d.Set("service_id", serviceID)
-
-	return []*schema.ResourceData{d}, nil
 }

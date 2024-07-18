@@ -69,7 +69,7 @@ The following arguments are supported:
 
 In addition to all arguments above, the following attributes are exported:
 
-* `id` - The ID of the Archer endpoint.
+* `id` - A combined ID of the Archer service and endpoint separated by a slash.
 * `status` - The current status of the Archer service endpoint acceptance.
 
 ## Import
