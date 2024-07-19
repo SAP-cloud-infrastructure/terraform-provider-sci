@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/gophercloud-sapcc/v2/automation/v1/runs"
@@ -222,7 +222,7 @@ func flattenAutomationiOwnerV1(owner runs.Owner) []interface{} {
 func waitForAutomationRunV1(ctx context.Context, automationClient *gophercloud.ServiceClient, id string, target []string, pending []string, timeout time.Duration) error {
 	log.Printf("[DEBUG] Waiting for %s run to become %v.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     target,
 		Pending:    pending,
 		Refresh:    automationRunV1GetState(ctx, automationClient, id),
@@ -236,7 +236,7 @@ func waitForAutomationRunV1(ctx context.Context, automationClient *gophercloud.S
 	return err
 }
 
-func automationRunV1GetState(ctx context.Context, automationClient *gophercloud.ServiceClient, id string) resource.StateRefreshFunc {
+func automationRunV1GetState(ctx context.Context, automationClient *gophercloud.ServiceClient, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		run, err := runs.Get(ctx, automationClient, id).Extract()
 		if err != nil {

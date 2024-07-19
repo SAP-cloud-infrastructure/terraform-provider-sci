@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/archer/client/service"
@@ -148,10 +148,10 @@ func resourceCCloudEndpointServiceV1Create(ctx context.Context, d *schema.Resour
 		Port:        int32(d.Get("port").(int)),
 		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]interface{})),
 	}
-	if v, ok := d.GetOkExists("proxy_protocol"); ok {
+	if v, ok := getOkExists(d, "proxy_protocol"); ok {
 		svc.ProxyProtocol = ptr(v.(bool))
 	}
-	if v, ok := d.GetOkExists("require_approval"); ok {
+	if v, ok := getOkExists(d, "require_approval"); ok {
 		svc.RequireApproval = ptr(v.(bool))
 	}
 	if v, ok := d.GetOk("availability_zone"); ok && v != "" {
@@ -323,7 +323,7 @@ func resourceCCloudEndpointServiceV1Delete(ctx context.Context, d *schema.Resour
 func archerWaitForService(ctx context.Context, c *archer, id, target, pending string, timeout time.Duration) (*models.Service, error) {
 	log.Printf("[DEBUG] Waiting for %s service to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    archerGetServiceStatus(ctx, c, id),
@@ -343,7 +343,7 @@ func archerWaitForService(ctx context.Context, c *archer, id, target, pending st
 	return svc.(*models.Service), nil
 }
 
-func archerGetServiceStatus(ctx context.Context, c *archer, id string) resource.StateRefreshFunc {
+func archerGetServiceStatus(ctx context.Context, c *archer, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		service, err := archerGetService(ctx, c, id)
 		if err != nil {

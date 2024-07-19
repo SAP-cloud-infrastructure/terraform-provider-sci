@@ -373,7 +373,7 @@ func resourceCCloudBillingProjectMasterdataCreateOrUpdate(ctx context.Context, d
 	opts.ContainsExternalCustomerData = replaceEmptyBool(d, "contains_external_customer_data", opts.ContainsExternalCustomerData)
 	opts.ExtCertification = billingProjectExpandExtCertificationV1(d.Get("ext_certification"))
 
-	if v, ok := d.GetOkExists("number_of_endusers"); ok {
+	if v, ok := getOkExists(d, "number_of_endusers"); ok {
 		opts.NumberOfEndusers = v.(int)
 	}
 

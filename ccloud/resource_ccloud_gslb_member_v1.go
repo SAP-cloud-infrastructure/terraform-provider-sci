@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/andromeda/client/members"
 	"github.com/sapcc/andromeda/models"
@@ -261,7 +261,7 @@ func resourceCCloudGSLBMemberV1Delete(ctx context.Context, d *schema.ResourceDat
 func andromedaWaitForMember(ctx context.Context, client members.ClientService, id, target, pending string, timeout time.Duration) (*models.Member, error) {
 	log.Printf("[DEBUG] Waiting for %s member to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetMemberStatus(ctx, client, id),
@@ -281,7 +281,7 @@ func andromedaWaitForMember(ctx context.Context, client members.ClientService, i
 	return member.(*models.Member), nil
 }
 
-func andromedaGetMemberStatus(ctx context.Context, client members.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetMemberStatus(ctx context.Context, client members.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		member, err := andromedaGetMember(ctx, client, id)
 		if err != nil {

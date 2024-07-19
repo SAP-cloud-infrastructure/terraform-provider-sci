@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/archer/client/service"
 	"github.com/sapcc/archer/models"
@@ -178,7 +178,7 @@ func resourceCCloudEndpointAcceptV1Delete(ctx context.Context, d *schema.Resourc
 func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, serviceID string, target, pending []string, timeout time.Duration) (*models.EndpointConsumer, error) {
 	log.Printf("[DEBUG] Waiting for %s endpoint to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     target,
 		Pending:    pending,
 		Refresh:    archerGetServiceEndpointConsumerStatus(ctx, c, id, serviceID),
@@ -198,7 +198,7 @@ func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, se
 	return ec.(*models.EndpointConsumer), nil
 }
 
-func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, serviceID string) resource.StateRefreshFunc {
+func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, serviceID string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID)
 		if err != nil {

@@ -3,11 +3,11 @@ package ccloud
 import (
 	"context"
 	"os"
+	"runtime/debug"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/meta"
 
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/utils/v2/terraform/auth"
@@ -373,6 +373,21 @@ func init() {
 	}
 }
 
+func getSDKVersion() string {
+	buildInfo, ok := debug.ReadBuildInfo()
+	if !ok {
+		return ""
+	}
+
+	for _, v := range buildInfo.Deps {
+		if v.Path == "github.com/hashicorp/terraform-plugin-sdk/v2" {
+			return v.Version
+		}
+	}
+
+	return ""
+}
+
 func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVersion string) (interface{}, diag.Diagnostics) {
 	enableLogging := d.Get("enable_logging").(bool)
 	if !enableLogging {
@@ -420,13 +435,13 @@ func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVer
 			MaxRetries:                  d.Get("max_retries").(int),
 			DisableNoCacheHeader:        d.Get("disable_no_cache_header").(bool),
 			TerraformVersion:            terraformVersion,
-			SDKVersion:                  meta.SDKVersionString(),
+			SDKVersion:                  getSDKVersion(),
 			MutexKV:                     mutexkv.NewMutexKV(),
 			EnableLogger:                enableLogging,
 		},
 	}
 
-	v, ok := d.GetOkExists("insecure")
+	v, ok := getOkExists(d, "insecure")
 	if ok {
 		insecure := v.(bool)
 		config.Insecure = &insecure

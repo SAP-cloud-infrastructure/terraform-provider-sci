@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/andromeda/client/monitors"
@@ -295,7 +295,7 @@ func resourceCCloudGSLBMonitorV1Delete(ctx context.Context, d *schema.ResourceDa
 func andromedaWaitForMonitor(ctx context.Context, client monitors.ClientService, id, target, pending string, timeout time.Duration) (*models.Monitor, error) {
 	log.Printf("[DEBUG] Waiting for %s monitor to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetMonitorStatus(ctx, client, id),
@@ -315,7 +315,7 @@ func andromedaWaitForMonitor(ctx context.Context, client monitors.ClientService,
 	return monitor.(*models.Monitor), nil
 }
 
-func andromedaGetMonitorStatus(ctx context.Context, client monitors.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetMonitorStatus(ctx context.Context, client monitors.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		monitor, err := andromedaGetMonitor(ctx, client, id)
 		if err != nil {

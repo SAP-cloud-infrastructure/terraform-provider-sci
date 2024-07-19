@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/andromeda/client/domains"
@@ -310,7 +310,7 @@ func resourceCCloudGSLBDomainV1Delete(ctx context.Context, d *schema.ResourceDat
 func andromedaWaitForDomain(ctx context.Context, client domains.ClientService, id, target, pending string, timeout time.Duration) (*models.Domain, error) {
 	log.Printf("[DEBUG] Waiting for %s domain to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetDomainStatus(ctx, client, id),
@@ -330,7 +330,7 @@ func andromedaWaitForDomain(ctx context.Context, client domains.ClientService, i
 	return domain.(*models.Domain), nil
 }
 
-func andromedaGetDomainStatus(ctx context.Context, client domains.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetDomainStatus(ctx context.Context, client domains.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		domain, err := andromedaGetDomain(ctx, client, id)
 		if err != nil {

@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	geomaps "github.com/sapcc/andromeda/client/geographic_maps"
@@ -274,7 +274,7 @@ func resourceCCloudGSLBGeoMapV1Delete(ctx context.Context, d *schema.ResourceDat
 func andromedaWaitForGeoMap(ctx context.Context, client geomaps.ClientService, id, target, pending string, timeout time.Duration) (*models.Geomap, error) {
 	log.Printf("[DEBUG] Waiting for %s geographic map to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetGeoMapStatus(ctx, client, id),
@@ -294,7 +294,7 @@ func andromedaWaitForGeoMap(ctx context.Context, client geomaps.ClientService, i
 	return geomap.(*models.Geomap), nil
 }
 
-func andromedaGetGeoMapStatus(ctx context.Context, client geomaps.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetGeoMapStatus(ctx context.Context, client geomaps.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		geomap, err := andromedaGetGeoMap(ctx, client, id)
 		if err != nil {

@@ -13,7 +13,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/sapcc/kubernikus/pkg/api/client/operations"
 	"github.com/sapcc/kubernikus/pkg/api/models"
 	clientcmdapi "k8s.io/client-go/tools/clientcmd/api/v1"
@@ -174,7 +174,7 @@ func kubernikusWaitForClusterV1(ctx context.Context, klient *kubernikus, name st
 	// Phase: "Pending","Creating","Running","Terminating","Upgrading"
 	log.Printf("[DEBUG] Waiting for %s cluster to become %s.", name, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    pending,
 		Refresh:    kubernikusKlusterV1GetPhase(klient, target, name),
@@ -194,7 +194,7 @@ func kubernikusWaitForClusterV1(ctx context.Context, klient *kubernikus, name st
 	return err
 }
 
-func kubernikusKlusterV1GetPhase(klient *kubernikus, target string, name string) resource.StateRefreshFunc {
+func kubernikusKlusterV1GetPhase(klient *kubernikus, target string, name string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		result, err := klient.ShowCluster(operations.NewShowClusterParams().WithName(name), klient.authFunc())
 		if err != nil {

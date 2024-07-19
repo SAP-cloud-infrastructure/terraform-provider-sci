@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/jobs"
 
@@ -314,7 +314,7 @@ func flattenArcJobUserV1(user jobs.User) []interface{} {
 func waitForArcJobV1(ctx context.Context, arcClient *gophercloud.ServiceClient, id string, target []string, pending []string, timeout time.Duration) error {
 	log.Printf("[DEBUG] Waiting for %s job to become %v.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     target,
 		Pending:    pending,
 		Refresh:    arcJobV1GetStatus(ctx, arcClient, id),
@@ -328,7 +328,7 @@ func waitForArcJobV1(ctx context.Context, arcClient *gophercloud.ServiceClient, 
 	return err
 }
 
-func arcJobV1GetStatus(ctx context.Context, arcClient *gophercloud.ServiceClient, id string) resource.StateRefreshFunc {
+func arcJobV1GetStatus(ctx context.Context, arcClient *gophercloud.ServiceClient, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		job, err := jobs.Get(ctx, arcClient, id).Extract()
 		if err != nil {

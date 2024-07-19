@@ -251,3 +251,14 @@ func parsePairedIDs(id string, res string) (string, string, error) {
 
 	return parts[0], parts[1], nil
 }
+
+// getOkExists is a helper function that replaces the deprecated GetOkExists
+// schema method. It returns the value of the key if it exists in the
+// configuration, along with a boolean indicating if the key exists.
+func getOkExists(d *schema.ResourceData, key string) (interface{}, bool) {
+	v := d.GetRawConfig().GetAttr(key)
+	if v.IsNull() {
+		return nil, false
+	}
+	return d.Get(key), true
+}

@@ -318,11 +318,11 @@ func resourceCCloudArcJobV1Create(ctx context.Context, d *schema.ResourceData, m
 
 	var agent, action, payload string
 
-	if v, ok := d.GetOkExists("execute"); ok {
+	if v, ok := getOkExists(d, "execute"); ok {
 		agent = "execute"
 		action, payload, err = arcCCloudArcJobV1BuildPayload(v.([]interface{}))
 	}
-	if v, ok := d.GetOkExists("chef"); ok {
+	if v, ok := getOkExists(d, "chef"); ok {
 		agent = "chef"
 		action, payload, err = arcCCloudArcJobV1BuildPayload(v.([]interface{}))
 	}

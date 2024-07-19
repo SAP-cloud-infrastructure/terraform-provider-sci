@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/archer/client/endpoint"
 	"github.com/sapcc/archer/models"
@@ -254,7 +254,7 @@ func resourceCCloudEndpointV1Delete(ctx context.Context, d *schema.ResourceData,
 func archerWaitForEndpoint(ctx context.Context, c *archer, id string, target []string, pending string, timeout time.Duration) (*models.Endpoint, error) {
 	log.Printf("[DEBUG] Waiting for %s endpoint to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     target,
 		Pending:    []string{pending},
 		Refresh:    archerGetEndpointStatus(ctx, c, id),
@@ -274,7 +274,7 @@ func archerWaitForEndpoint(ctx context.Context, c *archer, id string, target []s
 	return ept.(*models.Endpoint), nil
 }
 
-func archerGetEndpointStatus(ctx context.Context, c *archer, id string) resource.StateRefreshFunc {
+func archerGetEndpointStatus(ctx context.Context, c *archer, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		endpoint, err := archerGetEndpoint(ctx, c, id)
 		if err != nil {

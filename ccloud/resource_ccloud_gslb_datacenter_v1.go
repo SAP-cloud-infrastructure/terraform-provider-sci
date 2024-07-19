@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/andromeda/client/datacenters"
@@ -324,7 +324,7 @@ func resourceCCloudGSLBDatacenterV1Delete(ctx context.Context, d *schema.Resourc
 func andromedaWaitForDatacenter(ctx context.Context, client datacenters.ClientService, id, target, pending string, timeout time.Duration) (*models.Datacenter, error) {
 	log.Printf("[DEBUG] Waiting for %s datacenter to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetDatacenterStatus(ctx, client, id),
@@ -344,7 +344,7 @@ func andromedaWaitForDatacenter(ctx context.Context, client datacenters.ClientSe
 	return datacenter.(*models.Datacenter), nil
 }
 
-func andromedaGetDatacenterStatus(ctx context.Context, client datacenters.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetDatacenterStatus(ctx context.Context, client datacenters.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		datacenter, err := andromedaGetDatacenter(ctx, client, id)
 		if err != nil {

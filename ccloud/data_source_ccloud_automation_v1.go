@@ -158,7 +158,7 @@ func dataSourceCCloudAutomationV1Read(ctx context.Context, d *schema.ResourceDat
 	var v interface{}
 	var debugExists, debug bool
 
-	if v, debugExists = d.GetOkExists("debug"); debugExists {
+	if v, debugExists = getOkExists(d, "debug"); debugExists {
 		debug = v.(bool)
 	}
 	name := d.Get("name").(string)

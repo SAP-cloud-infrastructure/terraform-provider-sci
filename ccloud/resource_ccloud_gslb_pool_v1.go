@@ -8,7 +8,7 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/andromeda/client/pools"
 	"github.com/sapcc/andromeda/models"
@@ -252,7 +252,7 @@ func resourceCCloudGSLBPoolV1Delete(ctx context.Context, d *schema.ResourceData,
 func andromedaWaitForPool(ctx context.Context, client pools.ClientService, id, target, pending string, timeout time.Duration) (*models.Pool, error) {
 	log.Printf("[DEBUG] Waiting for %s pool to become %s.", id, target)
 
-	stateConf := &resource.StateChangeConf{
+	stateConf := &retry.StateChangeConf{
 		Target:     []string{target},
 		Pending:    []string{pending},
 		Refresh:    andromedaGetPoolStatus(ctx, client, id),
@@ -272,7 +272,7 @@ func andromedaWaitForPool(ctx context.Context, client pools.ClientService, id, t
 	return pool.(*models.Pool), nil
 }
 
-func andromedaGetPoolStatus(ctx context.Context, client pools.ClientService, id string) resource.StateRefreshFunc {
+func andromedaGetPoolStatus(ctx context.Context, client pools.ClientService, id string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		pool, err := andromedaGetPool(ctx, client, id)
 		if err != nil {

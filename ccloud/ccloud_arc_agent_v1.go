@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
 
@@ -55,7 +55,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 	// "timeout while waiting for state to become 'active'"
 	if timeout > 0 {
 		// Retryable case, when timeout is set
-		waitForAgent := &resource.StateChangeConf{
+		waitForAgent := &retry.StateChangeConf{
 			Target:         []string{"active"},
 			Refresh:        arcCCloudArcAgentV1GetAgent(ctx, arcClient, agentID, filter, timeout),
 			Timeout:        timeout,
@@ -80,7 +80,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 	return agent.(*agents.Agent), nil
 }
 
-func arcCCloudArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) resource.StateRefreshFunc {
+func arcCCloudArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		var agent *agents.Agent
 		var err error
@@ -186,7 +186,7 @@ func arcAgentV1ParseTimeout(raw interface{}) (time.Duration, error) {
 	return time.Duration(0), nil
 }
 
-func serverV2StateRefreshFunc(ctx context.Context, client *gophercloud.ServiceClient, instanceID string) resource.StateRefreshFunc {
+func serverV2StateRefreshFunc(ctx context.Context, client *gophercloud.ServiceClient, instanceID string) retry.StateRefreshFunc {
 	return func() (interface{}, string, error) {
 		s, err := servers.Get(ctx, client, instanceID).Extract()
 		if err != nil {

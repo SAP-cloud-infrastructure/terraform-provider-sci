@@ -46,7 +46,7 @@ func billingProjectExpandCostObject(raw interface{}) projects.CostObject {
 func replaceEmptyString(d *schema.ResourceData, field string, b string) string {
 	var v interface{}
 	var ok bool
-	if v, ok = d.GetOkExists(field); !ok {
+	if v, ok = getOkExists(d, field); !ok {
 		return b
 	}
 	return v.(string)
@@ -57,7 +57,7 @@ func replaceEmptyString(d *schema.ResourceData, field string, b string) string {
 func replaceEmptyBool(d *schema.ResourceData, field string, b bool) bool {
 	var v interface{}
 	var ok bool
-	if v, ok = d.GetOkExists(field); !ok {
+	if v, ok = getOkExists(d, field); !ok {
 		return b
 	}
 	return v.(bool)
