@@ -14,6 +14,8 @@ import (
 	"github.com/gophercloud/utils/v2/terraform/mutexkv"
 )
 
+var version = "dev"
+
 // Use openstackbase.Config as the base/foundation of this provider's
 // Config struct.
 type Config struct {
@@ -435,7 +437,7 @@ func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVer
 			MaxRetries:                  d.Get("max_retries").(int),
 			DisableNoCacheHeader:        d.Get("disable_no_cache_header").(bool),
 			TerraformVersion:            terraformVersion,
-			SDKVersion:                  getSDKVersion(),
+			SDKVersion:                  getSDKVersion() + " Terraform Provider CCloud/" + version,
 			MutexKV:                     mutexkv.NewMutexKV(),
 			EnableLogger:                enableLogging,
 		},
