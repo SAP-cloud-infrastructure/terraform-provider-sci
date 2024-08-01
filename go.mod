@@ -6,10 +6,10 @@ require (
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-openapi/strfmt v0.23.0
 	github.com/go-openapi/validate v0.24.0
-	github.com/gophercloud/gophercloud/v2 v2.0.0
-	github.com/gophercloud/utils/v2 v2.0.0-20240705071316-780b64d153e3
+	github.com/gophercloud/gophercloud/v2 v2.1.0
+	github.com/gophercloud/utils/v2 v2.0.0-20240725072607-4241c98875fa
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
-	github.com/sapcc/andromeda v0.0.2-0.20240718140407-a893a7fcea3c
+	github.com/sapcc/andromeda v1.0.0
 	github.com/sapcc/archer v1.2.1-0.20240711183110-302e2bbe3533
 	github.com/sapcc/gophercloud-sapcc/v2 v2.0.2
 	github.com/sapcc/kubernikus v1.0.1-0.20240619130954-d2e31494f91c
