@@ -42,7 +42,7 @@ The following arguments are supported:
 
 * `name` - (Optional) The name of the GSLB member.
 
-* `pool_id` - (Required) The UUID of the GSLB pool to which the member belongs.
+* `pool_id` - (Optional) The UUID of the GSLB pool to which the member belongs.
 
 * `port` - (Required) The port on which the member is accepting traffic.
 

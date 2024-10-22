@@ -50,7 +50,7 @@ func resourceCCloudGSLBMemberV1() *schema.Resource {
 			},
 			"pool_id": {
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
 			},
 			"port": {
 				Type:     schema.TypeInt,
@@ -96,12 +96,10 @@ func resourceCCloudGSLBMemberV1Create(ctx context.Context, d *schema.ResourceDat
 	adminStateUp := d.Get("admin_state_up").(bool)
 	address := strfmt.IPv4(d.Get("address").(string))
 	port := int64(d.Get("port").(int))
-	poolID := strfmt.UUID(d.Get("pool_id").(string))
 	member := &models.Member{
 		Address:      &address,
 		AdminStateUp: &adminStateUp,
 		Port:         &port,
-		PoolID:       &poolID,
 	}
 	if v, ok := d.GetOk("datacenter_id"); ok && v != "" {
 		v := strfmt.UUID(v.(string))
@@ -112,6 +110,10 @@ func resourceCCloudGSLBMemberV1Create(ctx context.Context, d *schema.ResourceDat
 	}
 	if v, ok := d.GetOk("project_id"); ok && v != "" {
 		member.ProjectID = ptr(v.(string))
+	}
+	if v, ok := d.GetOk("pool_id"); ok && v != "" {
+		v := strfmt.UUID(v.(string))
+		member.PoolID = &v
 	}
 
 	opts := &members.PostMembersParams{
@@ -181,7 +183,6 @@ func resourceCCloudGSLBMemberV1Update(ctx context.Context, d *schema.ResourceDat
 	id := d.Id()
 	member := &models.Member{
 		Address:      ptr(strfmt.IPv4(d.Get("address").(string))),
-		PoolID:       ptr(strfmt.UUID(d.Get("pool_id").(string))),
 		DatacenterID: ptr(strfmt.UUID(d.Get("datacenter_id").(string))),
 		Port:         ptr(int64(d.Get("port").(int))),
 	}
@@ -197,6 +198,10 @@ func resourceCCloudGSLBMemberV1Update(ctx context.Context, d *schema.ResourceDat
 	if d.HasChange("project_id") {
 		v := d.Get("project_id").(string)
 		member.ProjectID = &v
+	}
+	if d.HasChange("pool_id") {
+		v := strfmt.UUID(d.Get("pool_id").(string))
+		member.PoolID = &v
 	}
 
 	opts := &members.PutMembersMemberIDParams{
