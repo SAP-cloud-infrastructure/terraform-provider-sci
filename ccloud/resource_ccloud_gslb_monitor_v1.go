@@ -45,6 +45,10 @@ func resourceCCloudGSLBMonitorV1() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"domain_name": {
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"pool_id": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -75,6 +79,14 @@ func resourceCCloudGSLBMonitorV1() *schema.Resource {
 				}, false),
 				Optional: true,
 				Default:  "ICMP",
+			},
+			"http_method": {
+				Type: schema.TypeString,
+				ValidateFunc: validation.StringInSlice([]string{
+					"GET", "POST", "PUT", "HEAD", "DELETE", "OPTIONS",
+				}, false),
+				Optional: true,
+				Default:  "GET",
 			},
 
 			// computed
@@ -113,6 +125,9 @@ func resourceCCloudGSLBMonitorV1Create(ctx context.Context, d *schema.ResourceDa
 	if v, ok := d.GetOk("name"); ok && v != "" {
 		monitor.Name = ptr(v.(string))
 	}
+	if v, ok := d.GetOk("domain_name"); ok && v != "" {
+		monitor.DomainName = ptr(strfmt.Hostname(v.(string)))
+	}
 	if v, ok := d.GetOk("pool_id"); ok && v != "" {
 		v := strfmt.UUID(v.(string))
 		monitor.PoolID = &v
@@ -131,6 +146,9 @@ func resourceCCloudGSLBMonitorV1Create(ctx context.Context, d *schema.ResourceDa
 	}
 	if v, ok := d.GetOk("type"); ok && v != "" {
 		monitor.Type = ptr(v.(string))
+	}
+	if v, ok := d.GetOk("http_method"); ok && v != "" {
+		monitor.HTTPMethod = ptr(v.(string))
 	}
 
 	opts := &monitors.PostMonitorsParams{
@@ -212,6 +230,10 @@ func resourceCCloudGSLBMonitorV1Update(ctx context.Context, d *schema.ResourceDa
 		v := d.Get("name").(string)
 		monitor.Name = &v
 	}
+	if d.HasChange("domain_name") {
+		v := strfmt.Hostname(d.Get("domain_name").(string))
+		monitor.DomainName = &v
+	}
 	if d.HasChange("pool_id") {
 		v := strfmt.UUID(d.Get("pool_id").(string))
 		monitor.PoolID = &v
@@ -231,6 +253,10 @@ func resourceCCloudGSLBMonitorV1Update(ctx context.Context, d *schema.ResourceDa
 	if d.HasChange("type") {
 		v := d.Get("type").(string)
 		monitor.Type = &v
+	}
+	if d.HasChange("http_method") {
+		v := d.Get("http_method").(string)
+		monitor.HTTPMethod = &v
 	}
 
 	opts := &monitors.PutMonitorsMonitorIDParams{
@@ -346,12 +372,14 @@ func andromedaSetMonitorResource(d *schema.ResourceData, config *Config, monitor
 	d.Set("admin_state_up", ptrValue(monitor.AdminStateUp))
 	d.Set("interval", ptrValue(monitor.Interval))
 	d.Set("name", ptrValue(monitor.Name))
+	d.Set("domain_name", ptrValue(monitor.DomainName))
 	d.Set("pool_id", ptrValue(monitor.PoolID))
 	d.Set("project_id", ptrValue(monitor.ProjectID))
 	d.Set("receive", ptrValue(monitor.Receive))
 	d.Set("send", ptrValue(monitor.Send))
 	d.Set("timeout", ptrValue(monitor.Timeout))
 	d.Set("type", ptrValue(monitor.Type))
+	d.Set("http_method", ptrValue(monitor.HTTPMethod))
 
 	// computed
 	d.Set("provisioning_status", monitor.ProvisioningStatus)

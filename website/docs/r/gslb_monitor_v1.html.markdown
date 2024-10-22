@@ -42,6 +42,9 @@ The following arguments are supported:
 
 * `name` - (Optional) The name of the monitor.
 
+* `domain_name` - (Optional) The domain name to use in the HTTP host header.
+  Only used with `HTTP` and `HTTPS` monitor types.
+
 * `pool_id` - (Optional) The ID of the pool that this monitor is associated
   with.
 
@@ -61,6 +64,10 @@ The following arguments are supported:
 * `type` - (Optional) The type of monitor, which determines the method used to
   check the health of the monitored resource. Supported types are `ICMP`,
   `HTTP`, `HTTPS`, `TCP`, and `UDP`. Defaults to `ICMP`.
+
+* `http_method` - (Optional) The HTTP method to use for the monitor. Supported
+  methods are `GET`, `POST`, `PUT`, `HEAD`, `DELETE` and `OPTIONS`. Only used
+  with `HTTP` and `HTTPS` monitor types. Defaults to `GET`.
 
 ## Attributes Reference
 
