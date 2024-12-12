@@ -212,7 +212,7 @@ func kubernikusKlusterV1GetPhase(klient *kubernikus, target string, name string)
 				event := events.Payload[len(events.Payload)-1]
 
 				if strings.Contains(event.Reason, "Error") || strings.Contains(event.Reason, "Failed") {
-					return nil, event.Reason, fmt.Errorf(event.Message)
+					return nil, event.Reason, fmt.Errorf("%s", event.Message)
 				}
 			}
 

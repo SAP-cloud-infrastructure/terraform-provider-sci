@@ -70,7 +70,7 @@ func arcCCloudArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud
 	}
 
 	if len(msg) > 0 && msg != "active" {
-		return nil, fmt.Errorf(msg)
+		return nil, fmt.Errorf("%s", msg)
 	}
 
 	if err != nil {
