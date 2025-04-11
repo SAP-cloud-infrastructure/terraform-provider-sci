@@ -113,6 +113,18 @@ func expandToNodePoolConfig(v []interface{}) *models.NodePoolConfig {
 	return c
 }
 
+// from https://github.com/terraform-provider-openstack/terraform-provider-openstack/blob/74d82f6ce503df74a5e63ac2491e837dc296a82b/openstack/util.go#L153
+func expandObjectTags(d *schema.ResourceData) []string {
+	rawTags := d.Get("tags").(*schema.Set).List()
+	tags := make([]string, len(rawTags))
+
+	for i, raw := range rawTags {
+		tags[i] = raw.(string)
+	}
+
+	return tags
+}
+
 func normalizeJSONString(v interface{}) string {
 	json, _ := structure.NormalizeJsonString(v)
 	return json

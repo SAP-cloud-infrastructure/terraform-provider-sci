@@ -262,6 +262,7 @@ func Provider() *schema.Provider {
 			"ccloud_billing_project_masterdata": dataSourceCCloudBillingProjectMasterdata(),
 			"ccloud_gslb_services_v1":           dataSourceCCloudGSLBServicesV1(),
 			"ccloud_endpoint_service_v1":        dataSourceCCloudEndpointServiceV1(),
+			"ccloud_networking_router_v2":       dataSourceCCloudNetworkingRouterV2(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
