@@ -232,7 +232,7 @@ func archerGetServiceEndpointConsumer(ctx context.Context, c *archer, id, servic
 }
 
 func archerSetServiceEndpointConsumer(d *schema.ResourceData, config *Config, id string, consumer *models.EndpointConsumer) {
-	d.Set("endpoint_id", id)
-	d.Set("status", consumer.Status)
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("endpoint_id", id)
+	_ = d.Set("status", consumer.Status)
+	_ = d.Set("region", GetRegion(d, config))
 }

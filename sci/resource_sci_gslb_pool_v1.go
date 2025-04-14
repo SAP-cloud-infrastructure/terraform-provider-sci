@@ -300,18 +300,18 @@ func andromedaGetPool(ctx context.Context, client pools.ClientService, id string
 }
 
 func andromedaSetPoolResource(d *schema.ResourceData, config *Config, pool *models.Pool) {
-	d.Set("admin_state_up", ptrValue(pool.AdminStateUp))
-	d.Set("domains", pool.Domains)
-	d.Set("name", ptrValue(pool.Name))
-	d.Set("project_id", ptrValue(pool.ProjectID))
+	_ = d.Set("admin_state_up", ptrValue(pool.AdminStateUp))
+	_ = d.Set("domains", pool.Domains)
+	_ = d.Set("name", ptrValue(pool.Name))
+	_ = d.Set("project_id", ptrValue(pool.ProjectID))
 
 	// computed
-	d.Set("members", pool.Members)
-	d.Set("monitors", pool.Monitors)
-	d.Set("provisioning_status", pool.ProvisioningStatus)
-	d.Set("status", pool.Status)
-	d.Set("created_at", pool.CreatedAt.String())
-	d.Set("updated_at", pool.UpdatedAt.String())
+	_ = d.Set("members", pool.Members)
+	_ = d.Set("monitors", pool.Monitors)
+	_ = d.Set("provisioning_status", pool.ProvisioningStatus)
+	_ = d.Set("status", pool.Status)
+	_ = d.Set("created_at", pool.CreatedAt.String())
+	_ = d.Set("updated_at", pool.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

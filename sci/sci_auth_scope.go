@@ -21,7 +21,7 @@ func getTokenDetails(ctx context.Context, sc *gophercloud.ServiceClient) (authSc
 		err     error
 	)
 
-	r := sc.ProviderClient.GetAuthResult()
+	r := sc.GetAuthResult()
 	switch result := r.(type) {
 	case tokens.CreateResult:
 		details.user, err = result.ExtractUser()
@@ -66,7 +66,7 @@ func getTokenDetails(ctx context.Context, sc *gophercloud.ServiceClient) (authSc
 			return details, err
 		}
 	default:
-		res := tokens.Get(ctx, sc, sc.ProviderClient.TokenID)
+		res := tokens.Get(ctx, sc, sc.TokenID)
 		if res.Err != nil {
 			return details, res.Err
 		}

@@ -88,8 +88,8 @@ func dataSourceSCIGSLBServicesV1Read(ctx context.Context, d *schema.ResourceData
 
 	id := andromedaServicesHash(res.Payload.Services)
 	d.SetId(id)
-	d.Set("services", andromedaFlattenServices(res.Payload.Services))
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("services", andromedaFlattenServices(res.Payload.Services))
+	_ = d.Set("region", GetRegion(d, config))
 
 	return diag.FromErr(err)
 }

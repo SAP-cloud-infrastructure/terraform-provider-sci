@@ -141,21 +141,21 @@ func dataSourceSCIBillingDomainMasterdataRead(ctx context.Context, d *schema.Res
 
 	d.SetId(domain.DomainID)
 
-	d.Set("domain_id", domain.DomainID)
-	d.Set("domain_name", domain.DomainName)
-	d.Set("description", domain.Description)
-	d.Set("responsible_primary_contact_id", domain.ResponsiblePrimaryContactID)
-	d.Set("responsible_primary_contact_email", domain.ResponsiblePrimaryContactEmail)
-	d.Set("additional_information", domain.AdditionalInformation)
-	d.Set("cost_object", billingDomainFlattenCostObject(domain.CostObject))
-	d.Set("created_at", domain.CreatedAt.Format(time.RFC3339))
-	d.Set("changed_at", domain.ChangedAt.Format(time.RFC3339))
-	d.Set("changed_by", domain.ChangedBy)
-	d.Set("is_complete", domain.IsComplete)
-	d.Set("missing_attributes", domain.MissingAttributes)
-	d.Set("collector", domain.Collector)
+	_ = d.Set("domain_id", domain.DomainID)
+	_ = d.Set("domain_name", domain.DomainName)
+	_ = d.Set("description", domain.Description)
+	_ = d.Set("responsible_primary_contact_id", domain.ResponsiblePrimaryContactID)
+	_ = d.Set("responsible_primary_contact_email", domain.ResponsiblePrimaryContactEmail)
+	_ = d.Set("additional_information", domain.AdditionalInformation)
+	_ = d.Set("cost_object", billingDomainFlattenCostObject(domain.CostObject))
+	_ = d.Set("created_at", domain.CreatedAt.Format(time.RFC3339))
+	_ = d.Set("changed_at", domain.ChangedAt.Format(time.RFC3339))
+	_ = d.Set("changed_by", domain.ChangedBy)
+	_ = d.Set("is_complete", domain.IsComplete)
+	_ = d.Set("missing_attributes", domain.MissingAttributes)
+	_ = d.Set("collector", domain.Collector)
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }

@@ -200,14 +200,14 @@ func resourceSCIEndpointRBACV1Delete(ctx context.Context, d *schema.ResourceData
 }
 
 func archerSetRBACPolicyResource(d *schema.ResourceData, config *Config, rbacPolicy *models.Rbacpolicy) {
-	d.Set("service_id", ptrValue(rbacPolicy.ServiceID))
-	d.Set("project_id", rbacPolicy.ProjectID)
-	d.Set("target", rbacPolicy.Target)
-	d.Set("target_type", ptrValue(rbacPolicy.TargetType))
+	_ = d.Set("service_id", ptrValue(rbacPolicy.ServiceID))
+	_ = d.Set("project_id", rbacPolicy.ProjectID)
+	_ = d.Set("target", rbacPolicy.Target)
+	_ = d.Set("target_type", ptrValue(rbacPolicy.TargetType))
 
 	// computed
-	d.Set("created_at", rbacPolicy.CreatedAt.String())
-	d.Set("updated_at", rbacPolicy.UpdatedAt.String())
+	_ = d.Set("created_at", rbacPolicy.CreatedAt.String())
+	_ = d.Set("updated_at", rbacPolicy.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

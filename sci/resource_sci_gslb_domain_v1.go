@@ -358,22 +358,22 @@ func andromedaGetDomain(ctx context.Context, client domains.ClientService, id st
 }
 
 func andromedaSetDomainResource(d *schema.ResourceData, config *Config, domain *models.Domain) {
-	d.Set("admin_state_up", ptrValue(domain.AdminStateUp))
-	d.Set("aliases", domain.Aliases)
-	d.Set("fqdn", ptrValue(domain.Fqdn))
-	d.Set("mode", ptrValue(domain.Mode))
-	d.Set("name", ptrValue(domain.Name))
-	d.Set("pools", domain.Pools)
-	d.Set("project_id", ptrValue(domain.ProjectID))
-	d.Set("service_provider", ptrValue(domain.Provider))
-	d.Set("record_type", ptrValue(domain.RecordType))
+	_ = d.Set("admin_state_up", ptrValue(domain.AdminStateUp))
+	_ = d.Set("aliases", domain.Aliases)
+	_ = d.Set("fqdn", ptrValue(domain.Fqdn))
+	_ = d.Set("mode", ptrValue(domain.Mode))
+	_ = d.Set("name", ptrValue(domain.Name))
+	_ = d.Set("pools", domain.Pools)
+	_ = d.Set("project_id", ptrValue(domain.ProjectID))
+	_ = d.Set("service_provider", ptrValue(domain.Provider))
+	_ = d.Set("record_type", ptrValue(domain.RecordType))
 
 	// computed
-	d.Set("cname_target", ptrValue(domain.CnameTarget))
-	d.Set("provisioning_status", domain.ProvisioningStatus)
-	d.Set("status", domain.Status)
-	d.Set("created_at", domain.CreatedAt.String())
-	d.Set("updated_at", domain.UpdatedAt.String())
+	_ = d.Set("cname_target", ptrValue(domain.CnameTarget))
+	_ = d.Set("provisioning_status", domain.ProvisioningStatus)
+	_ = d.Set("status", domain.Status)
+	_ = d.Set("created_at", domain.CreatedAt.String())
+	_ = d.Set("updated_at", domain.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

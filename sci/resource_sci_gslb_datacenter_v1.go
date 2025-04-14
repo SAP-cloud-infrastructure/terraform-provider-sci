@@ -372,23 +372,23 @@ func andromedaGetDatacenter(ctx context.Context, client datacenters.ClientServic
 }
 
 func andromedaSetDatacenterResource(d *schema.ResourceData, config *Config, datacenter *models.Datacenter) {
-	d.Set("admin_state_up", ptrValue(datacenter.AdminStateUp))
-	d.Set("city", ptrValue(datacenter.City))
-	d.Set("continent", ptrValue(datacenter.Continent))
-	d.Set("country", ptrValue(datacenter.Country))
-	d.Set("latitude", ptrValue(datacenter.Latitude))
-	d.Set("longitude", ptrValue(datacenter.Longitude))
-	d.Set("name", ptrValue(datacenter.Name))
-	d.Set("project_id", ptrValue(datacenter.ProjectID))
-	d.Set("service_provider", datacenter.Provider)
-	d.Set("scope", ptrValue(datacenter.Scope))
-	d.Set("state_or_province", ptrValue(datacenter.StateOrProvince))
+	_ = d.Set("admin_state_up", ptrValue(datacenter.AdminStateUp))
+	_ = d.Set("city", ptrValue(datacenter.City))
+	_ = d.Set("continent", ptrValue(datacenter.Continent))
+	_ = d.Set("country", ptrValue(datacenter.Country))
+	_ = d.Set("latitude", ptrValue(datacenter.Latitude))
+	_ = d.Set("longitude", ptrValue(datacenter.Longitude))
+	_ = d.Set("name", ptrValue(datacenter.Name))
+	_ = d.Set("project_id", ptrValue(datacenter.ProjectID))
+	_ = d.Set("service_provider", datacenter.Provider)
+	_ = d.Set("scope", ptrValue(datacenter.Scope))
+	_ = d.Set("state_or_province", ptrValue(datacenter.StateOrProvince))
 
 	// computed
-	d.Set("provisioning_status", datacenter.ProvisioningStatus)
-	d.Set("meta", datacenter.Meta)
-	d.Set("created_at", datacenter.CreatedAt.String())
-	d.Set("updated_at", datacenter.UpdatedAt.String())
+	_ = d.Set("provisioning_status", datacenter.ProvisioningStatus)
+	_ = d.Set("meta", datacenter.Meta)
+	_ = d.Set("created_at", datacenter.CreatedAt.String())
+	_ = d.Set("updated_at", datacenter.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

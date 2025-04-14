@@ -153,17 +153,17 @@ func resourceSCIBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.Resou
 
 	log.Printf("[DEBUG] Read OpenStack BPG VPN interconnection %s: %#v", d.Id(), interConn)
 
-	d.Set("name", interConn.Name)
-	d.Set("type", interConn.Type)
-	d.Set("project_id", interConn.ProjectID)
-	d.Set("local_resource_id", interConn.LocalResourceID)
-	d.Set("remote_resource_id", interConn.RemoteResourceID)
-	d.Set("remote_region", interConn.RemoteRegion)
-	d.Set("remote_interconnection_id", interConn.RemoteInterconnectionID)
-	d.Set("state", interConn.State)
-	d.Set("local_parameters", []map[string][]string{{"project_id": interConn.LocalParameters.ProjectID}})
-	d.Set("remote_parameters", []map[string][]string{{"project_id": interConn.RemoteParameters.ProjectID}})
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("name", interConn.Name)
+	_ = d.Set("type", interConn.Type)
+	_ = d.Set("project_id", interConn.ProjectID)
+	_ = d.Set("local_resource_id", interConn.LocalResourceID)
+	_ = d.Set("remote_resource_id", interConn.RemoteResourceID)
+	_ = d.Set("remote_region", interConn.RemoteRegion)
+	_ = d.Set("remote_interconnection_id", interConn.RemoteInterconnectionID)
+	_ = d.Set("state", interConn.State)
+	_ = d.Set("local_parameters", []map[string][]string{{"project_id": interConn.LocalParameters.ProjectID}})
+	_ = d.Set("remote_parameters", []map[string][]string{{"project_id": interConn.RemoteParameters.ProjectID}})
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }

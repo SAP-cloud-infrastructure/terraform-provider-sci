@@ -244,18 +244,18 @@ func resourceSCIGSLBQuotaV1Delete(ctx context.Context, d *schema.ResourceData, m
 }
 
 func andromedaSetQuotaResource(d *schema.ResourceData, config *Config, q *administrative.GetQuotasProjectIDOKBody) {
-	d.Set("datacenter", ptrValue(q.Quota.Datacenter))
-	d.Set("domain", ptrValue(q.Quota.Domain))
-	d.Set("member", ptrValue(q.Quota.Member))
-	d.Set("monitor", ptrValue(q.Quota.Monitor))
-	d.Set("pool", ptrValue(q.Quota.Pool))
+	_ = d.Set("datacenter", ptrValue(q.Quota.Datacenter))
+	_ = d.Set("domain", ptrValue(q.Quota.Domain))
+	_ = d.Set("member", ptrValue(q.Quota.Member))
+	_ = d.Set("monitor", ptrValue(q.Quota.Monitor))
+	_ = d.Set("pool", ptrValue(q.Quota.Pool))
 
 	// computed
-	d.Set("in_use_datacenter", q.Quota.InUseDatacenter)
-	d.Set("in_use_domain", q.Quota.InUseDomain)
-	d.Set("in_use_member", q.Quota.InUseMember)
-	d.Set("in_use_monitor", q.Quota.InUseMonitor)
-	d.Set("in_use_pool", q.Quota.InUsePool)
+	_ = d.Set("in_use_datacenter", q.Quota.InUseDatacenter)
+	_ = d.Set("in_use_domain", q.Quota.InUseDomain)
+	_ = d.Set("in_use_member", q.Quota.InUseMember)
+	_ = d.Set("in_use_monitor", q.Quota.InUseMonitor)
+	_ = d.Set("in_use_pool", q.Quota.InUsePool)
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

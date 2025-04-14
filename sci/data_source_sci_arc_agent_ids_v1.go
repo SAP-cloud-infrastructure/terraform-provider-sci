@@ -6,11 +6,10 @@ import (
 	"log"
 	"strings"
 
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
-
-	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func dataSourceSCIArcAgentIDsV1() *schema.Resource {
@@ -71,7 +70,7 @@ func dataSourceSCIArcAgentIDsV1Read(ctx context.Context, d *schema.ResourceData,
 	log.Printf("[DEBUG] Retrieved %d agents in sci_arc_agent_ids_v1: %+v", len(allAgents), allAgents)
 
 	d.SetId(fmt.Sprintf("%d", hashcode.String(strings.Join(agentIDs, ""))))
-	d.Set("ids", agentIDs)
+	_ = d.Set("ids", agentIDs)
 
 	return nil
 }

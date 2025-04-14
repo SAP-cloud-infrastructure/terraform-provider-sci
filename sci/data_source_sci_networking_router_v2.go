@@ -9,10 +9,9 @@ import (
 	"log"
 	"strings"
 
+	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/extensions/layer3/routers"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-
-	"github.com/gophercloud/gophercloud/v2/openstack/networking/v2/extensions/layer3/routers"
 )
 
 type GatewayInfo struct {
@@ -181,17 +180,17 @@ func dataSourceSCINetworkingRouterV2Read(ctx context.Context, d *schema.Resource
 	log.Printf("[DEBUG] Retrieved Router %s: %+v", router.ID, router)
 	d.SetId(router.ID)
 
-	d.Set("name", router.Name)
-	d.Set("description", router.Description)
-	d.Set("admin_state_up", router.AdminStateUp)
-	d.Set("distributed", router.Distributed)
-	d.Set("status", router.Status)
-	d.Set("tenant_id", router.TenantID)
-	d.Set("external_network_id", router.CCGatewayInfo.NetworkID)
-	d.Set("external_port_id", router.CCGatewayInfo.ExternalPortID)
-	d.Set("enable_snat", router.CCGatewayInfo.EnableSNAT)
-	d.Set("all_tags", router.Tags)
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("name", router.Name)
+	_ = d.Set("description", router.Description)
+	_ = d.Set("admin_state_up", router.AdminStateUp)
+	_ = d.Set("distributed", router.Distributed)
+	_ = d.Set("status", router.Status)
+	_ = d.Set("tenant_id", router.TenantID)
+	_ = d.Set("external_network_id", router.CCGatewayInfo.NetworkID)
+	_ = d.Set("external_port_id", router.CCGatewayInfo.ExternalPortID)
+	_ = d.Set("enable_snat", router.CCGatewayInfo.EnableSNAT)
+	_ = d.Set("all_tags", router.Tags)
+	_ = d.Set("region", GetRegion(d, config))
 
 	if err := d.Set("availability_zone_hints", router.AvailabilityZoneHints); err != nil {
 		log.Printf("[DEBUG] Unable to set availability_zone_hints: %s", err)

@@ -11,11 +11,10 @@ import (
 
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/validate"
+	"github.com/gophercloud/gophercloud/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/structure"
 	"github.com/sapcc/kubernikus/pkg/api/models"
-
-	"github.com/gophercloud/gophercloud/v2"
 )
 
 // CheckDeleted checks the error to see if it's a 404 (Not Found) and, if so,
@@ -202,7 +201,7 @@ func diffSuppressJSONArray(k, old, new string, d *schema.ResourceData) bool {
 
 func validateKubernetesVersion(v interface{}, k string) ([]string, []error) {
 	if err := validate.Pattern("version", "", v.(string), `^[0-9]+\.[0-9]+\.[0-9]+$`); err != nil {
-		return nil, []error{fmt.Errorf("Invalid version (%s) specified for Kubernikus cluster: %v", v.(string), err)}
+		return nil, []error{fmt.Errorf("invalid version (%s) specified for Kubernikus cluster: %v", v.(string), err)}
 	}
 
 	return nil, nil
@@ -258,7 +257,7 @@ func ptrValue[T any](p *T) T {
 func parsePairedIDs(id string, res string) (string, string, error) {
 	parts := strings.SplitN(id, "/", 2)
 	if len(parts) != 2 {
-		return "", "", fmt.Errorf("Unable to determine %s ID from raw ID: %s", res, id)
+		return "", "", fmt.Errorf("unable to determine %s ID from raw ID: %s", res, id)
 	}
 
 	return parts[0], parts[1], nil

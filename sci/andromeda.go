@@ -9,10 +9,9 @@ import (
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/sapcc/andromeda/client"
-
 	"github.com/gophercloud/gophercloud/v2"
 	osClient "github.com/gophercloud/utils/v2/client"
+	"github.com/sapcc/andromeda/client"
 )
 
 func newAndromedaV1(c *Config, eo gophercloud.EndpointOpts) (*client.Andromeda, error) {

@@ -7,11 +7,10 @@ import (
 	"log"
 	"time"
 
+	"github.com/gophercloud/gophercloud/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/jobs"
-
-	"github.com/gophercloud/gophercloud/v2"
 )
 
 type chefZeroPayload struct {
@@ -269,12 +268,12 @@ func arcSCIArcJobV1Filter(ctx context.Context, d *schema.ResourceData, arcClient
 
 	allPages, err := jobs.List(arcClient, listOpts).AllPages(ctx)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to list %s: %v", resourceName, err)
+		return nil, fmt.Errorf("unable to list %s: %v", resourceName, err)
 	}
 
 	allJobs, err := jobs.ExtractJobs(allPages)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to retrieve %s: %v", resourceName, err)
+		return nil, fmt.Errorf("unable to retrieve %s: %v", resourceName, err)
 	}
 
 	var jobs []jobs.Job
@@ -332,7 +331,7 @@ func arcJobV1GetStatus(ctx context.Context, arcClient *gophercloud.ServiceClient
 	return func() (interface{}, string, error) {
 		job, err := jobs.Get(ctx, arcClient, id).Extract()
 		if err != nil {
-			return nil, "", fmt.Errorf("Unable to retrieve %s sci_arc_job_v1: %v", id, err)
+			return nil, "", fmt.Errorf("unable to retrieve %s sci_arc_job_v1: %v", id, err)
 		}
 
 		return job, job.Status, nil

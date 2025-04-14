@@ -182,12 +182,12 @@ func resourceSCIEndpointQuotaV1Delete(ctx context.Context, d *schema.ResourceDat
 }
 
 func archerSetQuotaResource(d *schema.ResourceData, config *Config, q *quota.GetQuotasProjectIDOKBody) {
-	d.Set("endpoint", q.Quota.Endpoint)
-	d.Set("service", q.Quota.Service)
+	_ = d.Set("endpoint", q.Endpoint)
+	_ = d.Set("service", q.Service)
 
 	// computed
-	d.Set("in_use_endpoint", q.QuotaUsage.InUseEndpoint)
-	d.Set("in_use_service", q.QuotaUsage.InUseService)
+	_ = d.Set("in_use_endpoint", q.InUseEndpoint)
+	_ = d.Set("in_use_service", q.InUseService)
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

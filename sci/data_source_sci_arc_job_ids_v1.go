@@ -6,11 +6,10 @@ import (
 	"log"
 	"strings"
 
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-
-	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func dataSourceSCIArcJobIDsV1() *schema.Resource {
@@ -89,7 +88,7 @@ func dataSourceSCIArcJobIDsV1Read(ctx context.Context, d *schema.ResourceData, m
 	log.Printf("[DEBUG] Retrieved %d jobs in sci_arc_job_ids_v1: %+v", len(jobs), jobs)
 
 	d.SetId(fmt.Sprintf("%d", hashcode.String(strings.Join(jobIDs, ""))))
-	d.Set("ids", jobIDs)
+	_ = d.Set("ids", jobIDs)
 
 	return nil
 }

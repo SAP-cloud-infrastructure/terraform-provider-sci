@@ -314,19 +314,19 @@ func andromedaGetMember(ctx context.Context, client members.ClientService, id st
 }
 
 func andromedaSetMemberResource(d *schema.ResourceData, config *Config, member *models.Member) {
-	d.Set("admin_state_up", ptrValue(member.AdminStateUp))
-	d.Set("address", ptrValue(member.Address))
-	d.Set("datacenter_id", ptrValue(member.DatacenterID))
-	d.Set("name", ptrValue(member.Name))
-	d.Set("pool_id", ptrValue(member.PoolID))
-	d.Set("port", ptrValue(member.Port))
-	d.Set("project_id", ptrValue(member.ProjectID))
+	_ = d.Set("admin_state_up", ptrValue(member.AdminStateUp))
+	_ = d.Set("address", ptrValue(member.Address))
+	_ = d.Set("datacenter_id", ptrValue(member.DatacenterID))
+	_ = d.Set("name", ptrValue(member.Name))
+	_ = d.Set("pool_id", ptrValue(member.PoolID))
+	_ = d.Set("port", ptrValue(member.Port))
+	_ = d.Set("project_id", ptrValue(member.ProjectID))
 
 	// computed
-	d.Set("provisioning_status", member.ProvisioningStatus)
-	d.Set("status", member.Status)
-	d.Set("created_at", member.CreatedAt.String())
-	d.Set("updated_at", member.UpdatedAt.String())
+	_ = d.Set("provisioning_status", member.ProvisioningStatus)
+	_ = d.Set("status", member.Status)
+	_ = d.Set("created_at", member.CreatedAt.String())
+	_ = d.Set("updated_at", member.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

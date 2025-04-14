@@ -450,28 +450,28 @@ func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, me
 		return diag.FromErr(err)
 	}
 
-	d.Set("advertise_address", result.Payload.Spec.AdvertiseAddress)
-	d.Set("advertise_port", result.Payload.Spec.AdvertisePort)
-	d.Set("audit", result.Payload.Spec.Audit)
-	d.Set("cluster_cidr", result.Payload.Spec.ClusterCIDR)
-	d.Set("dns_address", result.Payload.Spec.DNSAddress)
-	d.Set("dns_domain", result.Payload.Spec.DNSDomain)
-	d.Set("name", result.Payload.Spec.Name)
-	d.Set("ssh_public_key", result.Payload.Spec.SSHPublicKey)
-	d.Set("no_cloud", result.Payload.Spec.NoCloud)
-	d.Set("dex", result.Payload.Spec.Dex)
-	d.Set("dashboard", result.Payload.Spec.Dashboard)
-	d.Set("backup", result.Payload.Spec.Backup)
-	d.Set("service_cidr", result.Payload.Spec.ServiceCIDR)
-	d.Set("version", result.Payload.Spec.Version)
-	d.Set("phase", result.Payload.Status.Phase)
-	d.Set("wormhole", result.Payload.Status.Wormhole)
-	d.Set("apiserver_url", result.Payload.Status.Apiserver)
-	d.Set("dashboard_url", result.Payload.Status.Dashboard)
-	d.Set("openstack", kubernikusFlattenOpenstackSpecV1(&result.Payload.Spec.Openstack))
-	d.Set("node_pools", kubernikusFlattenNodePoolsV1(result.Payload.Spec.NodePools))
+	_ = d.Set("advertise_address", result.Payload.Spec.AdvertiseAddress)
+	_ = d.Set("advertise_port", result.Payload.Spec.AdvertisePort)
+	_ = d.Set("audit", result.Payload.Spec.Audit)
+	_ = d.Set("cluster_cidr", result.Payload.Spec.ClusterCIDR)
+	_ = d.Set("dns_address", result.Payload.Spec.DNSAddress)
+	_ = d.Set("dns_domain", result.Payload.Spec.DNSDomain)
+	_ = d.Set("name", result.Payload.Spec.Name)
+	_ = d.Set("ssh_public_key", result.Payload.Spec.SSHPublicKey)
+	_ = d.Set("no_cloud", result.Payload.Spec.NoCloud)
+	_ = d.Set("dex", result.Payload.Spec.Dex)
+	_ = d.Set("dashboard", result.Payload.Spec.Dashboard)
+	_ = d.Set("backup", result.Payload.Spec.Backup)
+	_ = d.Set("service_cidr", result.Payload.Spec.ServiceCIDR)
+	_ = d.Set("version", result.Payload.Spec.Version)
+	_ = d.Set("phase", result.Payload.Status.Phase)
+	_ = d.Set("wormhole", result.Payload.Status.Wormhole)
+	_ = d.Set("apiserver_url", result.Payload.Status.Apiserver)
+	_ = d.Set("dashboard_url", result.Payload.Status.Dashboard)
+	_ = d.Set("openstack", kubernikusFlattenOpenstackSpecV1(&result.Payload.Spec.Openstack))
+	_ = d.Set("node_pools", kubernikusFlattenNodePoolsV1(result.Payload.Spec.NodePools))
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 
 	// if cluster is in pending state, than there are no credentials yet
 	if result.Payload.Status.Phase != models.KlusterPhasePending {
@@ -479,8 +479,8 @@ func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, me
 		if err != nil {
 			return diag.FromErr(err)
 		}
-		d.Set("kube_config", kubeConfig)
-		d.Set("kube_config_raw", kubeConfigRaw)
+		_ = d.Set("kube_config", kubeConfig)
+		_ = d.Set("kube_config_raw", kubeConfigRaw)
 	}
 
 	return nil
@@ -593,7 +593,7 @@ func resourceSCIKubernetesV1Import(ctx context.Context, d *schema.ResourceData, 
 	name := parts[0]
 
 	if len(name) == 0 {
-		err := fmt.Errorf("Invalid format specified for Kubernetes. Format must be <name>[/<is_admin>]")
+		err := fmt.Errorf("invalid format specified for Kubernetes, format must be <name>[/<is_admin>]")
 		return nil, err
 	}
 
@@ -602,12 +602,12 @@ func resourceSCIKubernetesV1Import(ctx context.Context, d *schema.ResourceData, 
 	if len(parts) == 2 {
 		isAdmin, err = strconv.ParseBool(parts[1])
 		if err != nil {
-			return nil, fmt.Errorf("Failed to parse is_admin field: %s", err)
+			return nil, fmt.Errorf("failed to parse is_admin field: %s", err)
 		}
 	}
 
 	d.SetId(name)
-	d.Set("is_admin", isAdmin)
+	_ = d.Set("is_admin", isAdmin)
 
 	return []*schema.ResourceData{d}, nil
 }

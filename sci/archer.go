@@ -9,10 +9,9 @@ import (
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/sapcc/archer/client"
-
 	"github.com/gophercloud/gophercloud/v2"
 	osClient "github.com/gophercloud/utils/v2/client"
+	"github.com/sapcc/archer/client"
 )
 
 type archer struct {

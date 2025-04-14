@@ -6,12 +6,11 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gophercloud/utils/v2/terraform/hashcode"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
-
-	"github.com/gophercloud/utils/v2/terraform/hashcode"
 )
 
 func resourceSCIArcAgentBootstrapV1() *schema.Resource {
@@ -110,13 +109,13 @@ func resourceSCIArcAgentBootstrapV1Create(ctx context.Context, d *schema.Resourc
 		if err != nil {
 			return diag.Errorf("Error unmarshalling JSON content while creating sci_arc_agent_bootstrap_v1: %s", err)
 		}
-		d.Set("raw_map", initMap)
+		_ = d.Set("raw_map", initMap)
 	} else {
-		d.Set("raw_map", map[string]string{})
+		_ = d.Set("raw_map", map[string]string{})
 	}
 
-	d.Set("user_data", userData)
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("user_data", userData)
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }

@@ -7,12 +7,11 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gophercloud/gophercloud/v2"
+	"github.com/gophercloud/gophercloud/v2/openstack/compute/v2/servers"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/sapcc/gophercloud-sapcc/v2/arc/v1/agents"
-
-	"github.com/gophercloud/gophercloud/v2"
-	"github.com/gophercloud/gophercloud/v2/openstack/compute/v2/servers"
 )
 
 func arcSCIArcAgentV1ReadAgent(ctx context.Context, d *schema.ResourceData, arcClient *gophercloud.ServiceClient, agent *agents.Agent, region string) {
@@ -25,25 +24,25 @@ func arcSCIArcAgentV1ReadAgent(ctx context.Context, d *schema.ResourceData, arcC
 		log.Printf("[DEBUG] Retrieved sci_arc_agent_v1 facts %s: %+v", agent.AgentID, agent.Facts)
 	}
 
-	d.Set("display_name", agent.DisplayName)
-	d.Set("agent_id", agent.AgentID)
-	d.Set("project", agent.Project)
-	d.Set("organization", agent.Organization)
-	d.Set("all_tags", agent.Tags)
-	d.Set("created_at", agent.CreatedAt.Format(time.RFC3339))
-	d.Set("updated_at", agent.UpdatedAt.Format(time.RFC3339))
-	d.Set("updated_with", agent.UpdatedWith)
-	d.Set("updated_by", agent.UpdatedBy)
+	_ = d.Set("display_name", agent.DisplayName)
+	_ = d.Set("agent_id", agent.AgentID)
+	_ = d.Set("project", agent.Project)
+	_ = d.Set("organization", agent.Organization)
+	_ = d.Set("all_tags", agent.Tags)
+	_ = d.Set("created_at", agent.CreatedAt.Format(time.RFC3339))
+	_ = d.Set("updated_at", agent.UpdatedAt.Format(time.RFC3339))
+	_ = d.Set("updated_with", agent.UpdatedWith)
+	_ = d.Set("updated_by", agent.UpdatedBy)
 
-	d.Set("facts", expandToMapStringString(agent.Facts))
+	_ = d.Set("facts", expandToMapStringString(agent.Facts))
 	factsAgents := agent.Facts["agents"]
 	if v, ok := factsAgents.(map[string]interface{}); ok {
-		d.Set("facts_agents", expandToMapStringString(v))
+		_ = d.Set("facts_agents", expandToMapStringString(v))
 	} else {
-		d.Set("facts_agents", map[string]string{})
+		_ = d.Set("facts_agents", map[string]string{})
 	}
 
-	d.Set("region", region)
+	_ = d.Set("region", region)
 }
 
 func arcSCIArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) (*agents.Agent, error) {
@@ -86,7 +85,7 @@ func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.Servic
 		var err error
 
 		if len(agentID) == 0 && len(filter) == 0 {
-			return nil, "", fmt.Errorf("At least one of agent_id or filter parameters is expected in sci_arc_agent_v1")
+			return nil, "", fmt.Errorf("at least one of agent_id or filter parameters is expected in sci_arc_agent_v1")
 		}
 
 		if len(agentID) > 0 {
@@ -94,9 +93,9 @@ func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.Servic
 			if err != nil {
 				if gophercloud.ResponseCodeIs(err, http.StatusNotFound) && timeout > 0 {
 					// Retryable case, when timeout is set
-					return nil, fmt.Sprintf("Unable to retrieve %s sci_arc_agent_v1: %v", agentID, err), nil
+					return nil, fmt.Sprintf("unable to retrieve %s sci_arc_agent_v1: %v", agentID, err), nil
 				}
-				return nil, "", fmt.Errorf("Unable to retrieve %s sci_arc_agent_v1: %v", agentID, err)
+				return nil, "", fmt.Errorf("unable to retrieve %s sci_arc_agent_v1: %v", agentID, err)
 			}
 		} else {
 			listOpts := agents.ListOpts{Filter: filter}
@@ -105,12 +104,12 @@ func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.Servic
 
 			allPages, err := agents.List(arcClient, listOpts).AllPages(ctx)
 			if err != nil {
-				return nil, "", fmt.Errorf("Unable to list sci_arc_agent_v1: %s", err)
+				return nil, "", fmt.Errorf("unable to list sci_arc_agent_v1: %s", err)
 			}
 
 			allAgents, err := agents.ExtractAgents(allPages)
 			if err != nil {
-				return nil, "", fmt.Errorf("Unable to retrieve sci_arc_agent_v1: %s", err)
+				return nil, "", fmt.Errorf("unable to retrieve sci_arc_agent_v1: %s", err)
 			}
 
 			if len(allAgents) == 0 {
@@ -119,7 +118,7 @@ func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.Servic
 			}
 
 			if len(allAgents) > 1 {
-				return nil, "", fmt.Errorf("More than one sci_arc_agent_v1 found (%d)", len(allAgents))
+				return nil, "", fmt.Errorf("more than one sci_arc_agent_v1 found (%d)", len(allAgents))
 			}
 
 			agent = &allAgents[0]
@@ -154,7 +153,7 @@ func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceCli
 	for _, key := range tagsToDelete {
 		err := agents.DeleteTag(ctx, arcClient, agentID, key).ExtractErr()
 		if err != nil {
-			return fmt.Errorf("Error deleting %s tag from %s sci_arc_agent_v1: %v", key, agentID, err)
+			return fmt.Errorf("error deleting %s tag from %s sci_arc_agent_v1: %v", key, agentID, err)
 		}
 	}
 
@@ -166,7 +165,7 @@ func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceCli
 
 	err := agents.CreateTags(ctx, arcClient, agentID, tagsOpts).ExtractErr()
 	if err != nil {
-		return fmt.Errorf("Error updating tags for %s sci_arc_agent_v1: %v", agentID, err)
+		return fmt.Errorf("error updating tags for %s sci_arc_agent_v1: %v", agentID, err)
 	}
 
 	return nil

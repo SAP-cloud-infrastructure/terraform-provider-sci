@@ -9,10 +9,9 @@ import (
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-	"github.com/sapcc/kubernikus/pkg/api/client/operations"
-
 	"github.com/gophercloud/gophercloud/v2"
 	osClient "github.com/gophercloud/utils/v2/client"
+	"github.com/sapcc/kubernikus/pkg/api/client/operations"
 )
 
 type kubernikus struct {
@@ -40,7 +39,7 @@ func newKubernikusV1(c *Config, eo gophercloud.EndpointOpts) (*kubernikus, error
 	}
 
 	if kurl, err = url.Parse(endpoint); err != nil {
-		return nil, fmt.Errorf("Parsing the Kubernikus URL failed: %s", err)
+		return nil, fmt.Errorf("parsing the Kubernikus URL failed: %s", err)
 	}
 
 	transport := httptransport.New(kurl.Host, kurl.EscapedPath(), []string{kurl.Scheme})

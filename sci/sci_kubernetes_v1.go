@@ -130,7 +130,7 @@ func kubernikusExpandNodePoolsV1(raw interface{}) ([]models.NodePool, error) {
 					if v, ok := v["name"]; ok {
 						p.Name = v.(string)
 						if strSliceContains(names, p.Name) {
-							return nil, fmt.Errorf("Duplicate node pool name found: %s", p.Name)
+							return nil, fmt.Errorf("duplicate node pool name found: %s", p.Name)
 						}
 						names = append(names, p.Name)
 					}
@@ -382,7 +382,7 @@ func flattenKubernetesClusterKubeConfig(creds string) ([]map[string]string, *x50
 
 	err := yaml.Unmarshal([]byte(creds), &cfg)
 	if err != nil {
-		return nil, nil, fmt.Errorf("Failed to unmarshal Kubernikus kubeconfig: %s", err)
+		return nil, nil, fmt.Errorf("failed to unmarshal Kubernikus kubeconfig: %s", err)
 	}
 
 	for _, v := range cfg.Clusters {
@@ -398,18 +398,18 @@ func flattenKubernetesClusterKubeConfig(creds string) ([]map[string]string, *x50
 		// parse certificate date
 		pem, _ := pem.Decode(v.AuthInfo.ClientCertificateData)
 		if pem == nil {
-			return nil, nil, fmt.Errorf("Failed to decode PEM")
+			return nil, nil, fmt.Errorf("failed to decode PEM")
 		}
 		crt, err = x509.ParseCertificate(pem.Bytes)
 		if err != nil {
-			return nil, nil, fmt.Errorf("Failed to parse Kubernikus certificate %s", err)
+			return nil, nil, fmt.Errorf("failed to parse Kubernikus certificate %s", err)
 		}
 		values["not_before"] = crt.NotBefore.Format(time.RFC3339)
 		values["not_after"] = crt.NotAfter.Format(time.RFC3339)
 	}
 
 	if crt == nil {
-		return nil, nil, fmt.Errorf("Failed to get Kubernikus kubeconfig credentials %s", err)
+		return nil, nil, fmt.Errorf("failed to get Kubernikus kubeconfig credentials %s", err)
 	}
 
 	return []map[string]string{values}, crt, nil
@@ -418,7 +418,7 @@ func flattenKubernetesClusterKubeConfig(creds string) ([]map[string]string, *x50
 func downloadCredentials(klient *kubernikus, name string) (string, []map[string]string, error) {
 	credentials, err := klient.GetClusterCredentials(operations.NewGetClusterCredentialsParams().WithName(name), klient.authFunc())
 	if err != nil {
-		return "", nil, fmt.Errorf("Failed to download Kubernikus kubeconfig: %s", err)
+		return "", nil, fmt.Errorf("failed to download Kubernikus kubeconfig: %s", err)
 	}
 
 	kubeConfig, _, err := flattenKubernetesClusterKubeConfig(credentials.Payload.Kubeconfig)
@@ -431,9 +431,9 @@ func downloadCredentials(klient *kubernikus, name string) (string, []map[string]
 
 func verifySupportedKubernetesVersion(klient *kubernikus, version string) error {
 	if info, err := klient.Info(nil); err != nil {
-		return fmt.Errorf("Failed to check supported Kubernetes versions: %s", err)
+		return fmt.Errorf("failed to check supported Kubernetes versions: %s", err)
 	} else if !strSliceContains(info.Payload.AvailableClusterVersions, version) {
-		return fmt.Errorf("Kubernikus doesn't support %q Kubernetes version, supported versions: %q", version, info.Payload.AvailableClusterVersions)
+		return fmt.Errorf("kubernikus doesn't support %q Kubernetes version, supported versions: %q", version, info.Payload.AvailableClusterVersions)
 	}
 	return nil
 }

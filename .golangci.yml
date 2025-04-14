@@ -1,41 +1,19 @@
+version: "2"
+
 run:
   timeout: 5m
 
-linters-settings:
-  gci:
-    sections:
-      - standard
-      - default
-      - prefix(github.com/gophercloud)
-  goimports:
-    local-prefixes: github.com/gophercloud
-  depguard:
-    rules:
-      prevent_unmaintained_packages:
-        list-mode: lax
-        files:
-          - $all
-          - "!$test"
-        deny:
-          - pkg: io/ioutil
-            desc: "replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil"
-
 linters:
-  fast: false
-  disable-all: true
+  default: none
   enable:
     - asciicheck
     - bodyclose
-    - depguard
     - copyloopvar
     - dogsled
     - errcheck
     - exhaustive
-    - gci
     - godot
-    - gofmt
     - goheader
-    - goimports
     - gomodguard
     - goprintffuncname
     - govet
@@ -45,65 +23,32 @@ linters:
     - nolintlint
     - prealloc
     - staticcheck
-    - stylecheck
-    - typecheck
     - unconvert
     - unused
     - whitespace
-#    - cyclop
-#    - dupl
-#    - durationcheck
-#    - errname
-#    - errorlint
-#    - exhaustivestruct
-#    - forbidigo
-#    - forcetypeassert
-#    - funlen
-#    - gochecknoglobals
-#    - gochecknoinits
-#    - gocognit
-#    - goconst
-#    - gocritic
-#    - gocyclo
-#    - godox
-#    - goerr113
-#    - gofumpt
-#    - golint
-#    - gomnd
-#    - gomoddirectives
-#    - gosec (gas)
-#    - gosimple (megacheck)
-#    - ifshort
-#    - importas
-#    - interfacer
-#    - lll
-#    - makezero
-#    - maligned
-#    - nestif
-#    - nilerr
-#    - nlreturn
-#    - noctx
-#    - paralleltest
-#    - predeclared
-#    - promlinter
-#    - revive
-#    - scopelint
-#    - sqlclosecheck
-#    - tagliatelle
-#    - testpackage
-#    - thelper
-#    - tparallel
-#    - unparam
-#    - wastedassign
-#    - wrapcheck
-#    - wsl
-
-issues:
-  exclude-rules:
-    - linters:
-        - stylecheck
-      text: "ST1005:"
-
-    - linters:
-        - errcheck
-      text: "Error return value of `d.Set` is not checked"
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - staticcheck
+        text: "SA1019: (x509.EncryptPEMBlock|strings.Title)"
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - gofmt
+    - goimports
+    - gci
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

@@ -269,26 +269,26 @@ ItemsLoop:
 
 	d.SetId(string(svc.ID))
 
-	d.Set("enabled", ptrValue(svc.Enabled))
-	d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
-	d.Set("name", svc.Name)
-	d.Set("description", svc.Description)
-	d.Set("port", svc.Port)
-	d.Set("network_id", ptrValue(svc.NetworkID))
-	d.Set("project_id", svc.ProjectID)
-	d.Set("all_tags", svc.Tags)
-	d.Set("service_provider", ptrValue(svc.Provider))
-	d.Set("proxy_protocol", ptrValue(svc.ProxyProtocol))
-	d.Set("require_approval", ptrValue(svc.RequireApproval))
-	d.Set("visibility", ptrValue(svc.Visibility))
+	_ = d.Set("enabled", ptrValue(svc.Enabled))
+	_ = d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
+	_ = d.Set("name", svc.Name)
+	_ = d.Set("description", svc.Description)
+	_ = d.Set("port", svc.Port)
+	_ = d.Set("network_id", ptrValue(svc.NetworkID))
+	_ = d.Set("project_id", svc.ProjectID)
+	_ = d.Set("all_tags", svc.Tags)
+	_ = d.Set("service_provider", ptrValue(svc.Provider))
+	_ = d.Set("proxy_protocol", ptrValue(svc.ProxyProtocol))
+	_ = d.Set("require_approval", ptrValue(svc.RequireApproval))
+	_ = d.Set("visibility", ptrValue(svc.Visibility))
 
 	// computed
-	d.Set("host", ptrValue(svc.Host))
-	d.Set("status", svc.Status)
-	d.Set("created_at", svc.CreatedAt.String())
-	d.Set("updated_at", svc.UpdatedAt.String())
+	_ = d.Set("host", ptrValue(svc.Host))
+	_ = d.Set("status", svc.Status)
+	_ = d.Set("created_at", svc.CreatedAt.String())
+	_ = d.Set("updated_at", svc.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }

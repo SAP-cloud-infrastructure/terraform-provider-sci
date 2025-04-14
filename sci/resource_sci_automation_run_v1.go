@@ -7,13 +7,12 @@ import (
 	"log"
 	"time"
 
+	"github.com/gophercloud/gophercloud/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/sapcc/gophercloud-sapcc/v2/automation/v1/runs"
-
-	"github.com/gophercloud/gophercloud/v2"
 )
 
 func resourceSCIAutomationRunV1() *schema.Resource {
@@ -186,26 +185,26 @@ func resourceSCIAutomationRunV1Read(ctx context.Context, d *schema.ResourceData,
 		return diag.FromErr(CheckDeleted(d, err, "Unable to retrieve sci_automation_run_v1"))
 	}
 
-	d.Set("automation_id", run.AutomationID)
-	d.Set("automation_name", run.AutomationName)
-	d.Set("selector", run.Selector)
-	d.Set("repository_revision", run.RepositoryRevision)
+	_ = d.Set("automation_id", run.AutomationID)
+	_ = d.Set("automation_name", run.AutomationName)
+	_ = d.Set("selector", run.Selector)
+	_ = d.Set("repository_revision", run.RepositoryRevision)
 
 	automationAttributes, err := json.Marshal(run.AutomationAttributes)
 	if err != nil {
 		log.Printf("[DEBUG] resourceSCIAutomationRunV1Read: Cannot marshal run.AutomationAttributes: %s", err)
 	}
-	d.Set("automation_attributes", string(automationAttributes))
+	_ = d.Set("automation_attributes", string(automationAttributes))
 
-	d.Set("state", run.State)
-	d.Set("created_at", run.CreatedAt.Format(time.RFC3339))
-	d.Set("updated_at", run.UpdatedAt.Format(time.RFC3339))
-	d.Set("log", run.Log)
-	d.Set("jobs", run.Jobs)
-	d.Set("owner", flattenAutomationiOwnerV1(run.Owner))
-	d.Set("project_id", run.ProjectID)
+	_ = d.Set("state", run.State)
+	_ = d.Set("created_at", run.CreatedAt.Format(time.RFC3339))
+	_ = d.Set("updated_at", run.UpdatedAt.Format(time.RFC3339))
+	_ = d.Set("log", run.Log)
+	_ = d.Set("jobs", run.Jobs)
+	_ = d.Set("owner", flattenAutomationiOwnerV1(run.Owner))
+	_ = d.Set("project_id", run.ProjectID)
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }
@@ -240,7 +239,7 @@ func automationRunV1GetState(ctx context.Context, automationClient *gophercloud.
 	return func() (interface{}, string, error) {
 		run, err := runs.Get(ctx, automationClient, id).Extract()
 		if err != nil {
-			return nil, "", fmt.Errorf("Unable to retrieve %s sci_automation_run_v1: %v", id, err)
+			return nil, "", fmt.Errorf("enable to retrieve %s sci_automation_run_v1: %v", id, err)
 		}
 
 		return run, run.State, nil

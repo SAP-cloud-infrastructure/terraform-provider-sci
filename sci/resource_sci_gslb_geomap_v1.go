@@ -322,19 +322,19 @@ func andromedaGetGeoMap(ctx context.Context, client geomaps.ClientService, id st
 }
 
 func andromedaSetGeoMapResource(d *schema.ResourceData, config *Config, geomap *models.Geomap) {
-	d.Set("default_datacenter", geomap.DefaultDatacenter.String())
-	d.Set("name", ptrValue(geomap.Name))
-	d.Set("project_id", ptrValue(geomap.ProjectID))
-	d.Set("service_provider", geomap.Provider)
-	d.Set("scope", ptrValue(geomap.Scope))
-	d.Set("assignments", andromedaFlattenGeoMapAssignments(geomap.Assignments))
+	_ = d.Set("default_datacenter", geomap.DefaultDatacenter.String())
+	_ = d.Set("name", ptrValue(geomap.Name))
+	_ = d.Set("project_id", ptrValue(geomap.ProjectID))
+	_ = d.Set("service_provider", geomap.Provider)
+	_ = d.Set("scope", ptrValue(geomap.Scope))
+	_ = d.Set("assignments", andromedaFlattenGeoMapAssignments(geomap.Assignments))
 
 	// computed
-	d.Set("provisioning_status", geomap.ProvisioningStatus)
-	d.Set("created_at", geomap.CreatedAt.String())
-	d.Set("updated_at", geomap.UpdatedAt.String())
+	_ = d.Set("provisioning_status", geomap.ProvisioningStatus)
+	_ = d.Set("created_at", geomap.CreatedAt.String())
+	_ = d.Set("updated_at", geomap.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }
 
 func andromedaFlattenGeoMapAssignments(assignments []*models.GeomapAssignmentsItems0) []map[string]string {

@@ -369,22 +369,22 @@ func andromedaGetMonitor(ctx context.Context, client monitors.ClientService, id 
 }
 
 func andromedaSetMonitorResource(d *schema.ResourceData, config *Config, monitor *models.Monitor) {
-	d.Set("admin_state_up", ptrValue(monitor.AdminStateUp))
-	d.Set("interval", ptrValue(monitor.Interval))
-	d.Set("name", ptrValue(monitor.Name))
-	d.Set("domain_name", ptrValue(monitor.DomainName))
-	d.Set("pool_id", ptrValue(monitor.PoolID))
-	d.Set("project_id", ptrValue(monitor.ProjectID))
-	d.Set("receive", ptrValue(monitor.Receive))
-	d.Set("send", ptrValue(monitor.Send))
-	d.Set("timeout", ptrValue(monitor.Timeout))
-	d.Set("type", ptrValue(monitor.Type))
-	d.Set("http_method", ptrValue(monitor.HTTPMethod))
+	_ = d.Set("admin_state_up", ptrValue(monitor.AdminStateUp))
+	_ = d.Set("interval", ptrValue(monitor.Interval))
+	_ = d.Set("name", ptrValue(monitor.Name))
+	_ = d.Set("domain_name", ptrValue(monitor.DomainName))
+	_ = d.Set("pool_id", ptrValue(monitor.PoolID))
+	_ = d.Set("project_id", ptrValue(monitor.ProjectID))
+	_ = d.Set("receive", ptrValue(monitor.Receive))
+	_ = d.Set("send", ptrValue(monitor.Send))
+	_ = d.Set("timeout", ptrValue(monitor.Timeout))
+	_ = d.Set("type", ptrValue(monitor.Type))
+	_ = d.Set("http_method", ptrValue(monitor.HTTPMethod))
 
 	// computed
-	d.Set("provisioning_status", monitor.ProvisioningStatus)
-	d.Set("created_at", monitor.CreatedAt.String())
-	d.Set("updated_at", monitor.UpdatedAt.String())
+	_ = d.Set("provisioning_status", monitor.ProvisioningStatus)
+	_ = d.Set("created_at", monitor.CreatedAt.String())
+	_ = d.Set("updated_at", monitor.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }

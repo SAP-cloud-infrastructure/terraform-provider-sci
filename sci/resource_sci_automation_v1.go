@@ -224,32 +224,32 @@ func resourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, me
 		return diag.FromErr(CheckDeleted(d, err, "Unable to retrieve sci_automation_v1"))
 	}
 
-	d.Set("name", automation.Name)
-	d.Set("repository", automation.Repository)
-	d.Set("repository_revision", automation.RepositoryRevision)
-	d.Set("repository_authentication_enabled", automation.RepositoryAuthenticationEnabled)
-	d.Set("project_id", automation.ProjectID)
-	d.Set("timeout", automation.Timeout)
-	d.Set("tags", automation.Tags)
-	d.Set("created_at", automation.CreatedAt.Format(time.RFC3339))
-	d.Set("updated_at", automation.UpdatedAt.Format(time.RFC3339))
-	d.Set("type", automation.Type)
-	d.Set("run_list", automation.RunList)
+	_ = d.Set("name", automation.Name)
+	_ = d.Set("repository", automation.Repository)
+	_ = d.Set("repository_revision", automation.RepositoryRevision)
+	_ = d.Set("repository_authentication_enabled", automation.RepositoryAuthenticationEnabled)
+	_ = d.Set("project_id", automation.ProjectID)
+	_ = d.Set("timeout", automation.Timeout)
+	_ = d.Set("tags", automation.Tags)
+	_ = d.Set("created_at", automation.CreatedAt.Format(time.RFC3339))
+	_ = d.Set("updated_at", automation.UpdatedAt.Format(time.RFC3339))
+	_ = d.Set("type", automation.Type)
+	_ = d.Set("run_list", automation.RunList)
 
 	chefAttributes, err := json.Marshal(automation.ChefAttributes)
 	if err != nil {
 		log.Printf("[DEBUG] resourceSCIAutomationV1Read: Cannot marshal automation.ChefAttributes: %s", err)
 	}
-	d.Set("chef_attributes", string(chefAttributes))
+	_ = d.Set("chef_attributes", string(chefAttributes))
 
-	d.Set("log_level", automation.LogLevel)
-	d.Set("debug", automation.Debug)
-	d.Set("chef_version", automation.ChefVersion)
-	d.Set("path", automation.Path)
-	d.Set("arguments", automation.Arguments)
-	d.Set("environment", automation.Environment)
+	_ = d.Set("log_level", automation.LogLevel)
+	_ = d.Set("debug", automation.Debug)
+	_ = d.Set("chef_version", automation.ChefVersion)
+	_ = d.Set("path", automation.Path)
+	_ = d.Set("arguments", automation.Arguments)
+	_ = d.Set("environment", automation.Environment)
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 
 	return nil
 }

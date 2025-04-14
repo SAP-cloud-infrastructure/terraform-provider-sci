@@ -302,20 +302,20 @@ func archerGetEndpoint(ctx context.Context, c *archer, id string) (*models.Endpo
 }
 
 func archerSetEndpointResource(d *schema.ResourceData, config *Config, ept *models.Endpoint) {
-	d.Set("name", ept.Name)
-	d.Set("description", ept.Description)
-	d.Set("service_id", ept.ServiceID)
-	d.Set("project_id", ept.ProjectID)
-	d.Set("ip_address", ept.IPAddress)
-	d.Set("tags", ept.Tags)
-	d.Set("target", expandEndpointTarget(ept.Target))
+	_ = d.Set("name", ept.Name)
+	_ = d.Set("description", ept.Description)
+	_ = d.Set("service_id", ept.ServiceID)
+	_ = d.Set("project_id", ept.ProjectID)
+	_ = d.Set("ip_address", ept.IPAddress)
+	_ = d.Set("tags", ept.Tags)
+	_ = d.Set("target", expandEndpointTarget(ept.Target))
 
 	// computed
-	d.Set("status", ept.Status)
-	d.Set("created_at", ept.CreatedAt.String())
-	d.Set("updated_at", ept.UpdatedAt.String())
+	_ = d.Set("status", ept.Status)
+	_ = d.Set("created_at", ept.CreatedAt.String())
+	_ = d.Set("updated_at", ept.UpdatedAt.String())
 
-	d.Set("region", GetRegion(d, config))
+	_ = d.Set("region", GetRegion(d, config))
 }
 
 func expandEndpointTarget(target models.EndpointTarget) []map[string]string {

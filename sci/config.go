@@ -3,11 +3,10 @@ package sci
 import (
 	"context"
 
-	"github.com/sapcc/andromeda/client"
-	"github.com/sapcc/gophercloud-sapcc/v2/clients"
-
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/gophercloud/utils/v2/openstack/clientconfig"
+	"github.com/sapcc/andromeda/client"
+	"github.com/sapcc/gophercloud-sapcc/v2/clients"
 )
 
 func (c *Config) kubernikusV1Client(ctx context.Context, region string, isAdmin bool) (*kubernikus, error) {
