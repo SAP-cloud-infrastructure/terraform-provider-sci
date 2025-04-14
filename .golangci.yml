@@ -1,13 +1,12 @@
 run:
-  deadline: 5m
+  timeout: 5m
 
 linters-settings:
-  staticcheck:
-    go: '1.23'
-  stylecheck:
-    go: '1.23'
   gci:
-    local-prefixes: github.com/gophercloud
+    sections:
+      - standard
+      - default
+      - prefix(github.com/gophercloud)
   goimports:
     local-prefixes: github.com/gophercloud
   depguard:
@@ -28,10 +27,10 @@ linters:
     - asciicheck
     - bodyclose
     - depguard
+    - copyloopvar
     - dogsled
     - errcheck
     - exhaustive
-    - exportloopref
     - gci
     - godot
     - gofmt
