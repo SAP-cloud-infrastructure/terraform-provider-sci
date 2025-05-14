@@ -125,4 +125,4 @@ We as members, contributors, and leaders pledge to make participation in our com
 Licensing
 ---------
 
-Copyright 2018-2025 SAP SE or an SAP affiliate company and terraform-provider-ccloud contributors. Please see our [LICENSE](LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/sapcc/terraform-provider-ccloud).
+Copyright 2018-2025 SAP SE or an SAP affiliate company and terraform-provider-ccloud contributors. This repository contains code from [terraform-provider-openstack](https://github.com/terraform-provider-openstack/terraform-provider-openstack), copyright 2017-2025 terraform-provider-openstack contributors. Please see our [LICENSE](LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available [via the REUSE tool](https://api.reuse.software/info/github.com/sapcc/terraform-provider-ccloud).
