@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_monitor_v1"
-sidebar_current: "docs-ccloud-resource-gslb-monitor-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_monitor_v1"
+sidebar_current: "docs-sci-resource-gslb-monitor-v1"
 description: |-
   Manage GSLB Monitors
 ---
 
-# ccloud\_gslb\_monitor\_v1
+# sci\_gslb\_monitor\_v1
 
 This resource allows you to manage GSLB Monitors.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_monitor_v1" "monitor_1" {
+resource "sci_gslb_monitor_v1" "monitor_1" {
   admin_state_up = true
   interval       = 10
   name           = "example-monitor"
@@ -83,5 +83,5 @@ In addition to the arguments listed above, the following computed attributes are
 Monitors can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_monitor_v1.monitor_1 de731802-f092-496d-9508-9e02eb6ba0b1
+$ terraform import sci_gslb_monitor_v1.monitor_1 de731802-f092-496d-9508-9e02eb6ba0b1
 ```

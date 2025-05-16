@@ -1,7 +1,7 @@
 ---
-layout: "ccloud"
-page_title: "Provider: Converged Cloud"
-sidebar_current: "docs-ccloud-index"
+layout: "sci"
+page_title: "Provider: SAP Cloud Infrastructure"
+sidebar_current: "docs-sci-index"
 description: |-
   The Converged Cloud provider is used to interact with the many resources supported by Converged Cloud. The provider needs to be configured with the proper credentials before it can be used.
 ---
@@ -16,7 +16,7 @@ Use the navigation to the left to read about the available resources.
 
 # Installing the provider
 
-Starting from v1.4.8, you can utilize the provider from a [Terraform Registry](https://registry.terraform.io/providers/sapcc/ccloud).
+Starting from v1.4.8, you can utilize the provider from a [Terraform Registry](https://registry.terraform.io/providers/SAP-cloud-infrastructure/sci).
 
 ## Example Usage
 
@@ -24,14 +24,14 @@ Starting from v1.4.8, you can utilize the provider from a [Terraform Registry](h
 # Define required providers
 terraform {
   required_providers {
-    ccloud = {
-      source = "sapcc/ccloud"
+    sci = {
+      source = "SAP-cloud-infrastructure/sci"
     }
   }
 }
 
 # Configure the Converged Cloud Provider
-provider "ccloud" {
+provider "sci" {
   user_name   = "admin"
   tenant_name = "admin"
   password    = "pwd"
@@ -40,7 +40,7 @@ provider "ccloud" {
 }
 
 # Create a Kubernetes cluster
-resource "ccloud_kubernetes_v1" "test-cluster" {
+resource "sci_kubernetes_v1" "test-cluster" {
   # ...
 }
 ```
@@ -183,7 +183,7 @@ You can do this by configuring the `endpoint_overrides` argument in the provider
 configuration:
 
 ```hcl
-provider "ccloud" {
+provider "sci" {
 
   endpoint_overrides = {
     "arc"               = "https://arc.example.com/api/v1/"

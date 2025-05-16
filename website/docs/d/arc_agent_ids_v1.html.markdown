@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_agent_ids_v1"
-sidebar_current: "docs-ccloud-datasource-arc-agent-ids-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_agent_ids_v1"
+sidebar_current: "docs-sci-datasource-arc-agent-ids-v1"
 description: |-
   Get a list of Arc Agent IDs.
 ---
 
-# ccloud\_arc\_agent\_ids\_v1
+# sci\_arc\_agent\_ids\_v1
 
 Use this data source to get a list of Arc Agent IDs.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_arc_agent_ids_v1" "agent_ids_1" {
+data "sci_arc_agent_ids_v1" "agent_ids_1" {
   filter = "@os = 'linux' AND @platform = 'ubuntu'"
 }
 ```

@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_pool_v1"
-sidebar_current: "docs-ccloud-resource-gslb-pool-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_pool_v1"
+sidebar_current: "docs-sci-resource-gslb-pool-v1"
 description: |-
   Manage GSLB Pools
 ---
 
-# ccloud\_gslb\_pool\_v1
+# sci\_gslb\_pool\_v1
 
 This resource allows you to manage GSLB Pools.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_pool_v1" "pool_1" {
+resource "sci_gslb_pool_v1" "pool_1" {
   admin_state_up = true
   domains        = ["4da21196-4f20-48e6-aa56-42a567f40598"]
   name           = "pool1"
@@ -56,5 +56,5 @@ In addition to the arguments listed above, the following computed attributes are
 Pools can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_pool_v1.pool_1 a4182fdb-a763-451e-8fd8-05f79d57128b
+$ terraform import sci_gslb_pool_v1.pool_1 a4182fdb-a763-451e-8fd8-05f79d57128b
 ```

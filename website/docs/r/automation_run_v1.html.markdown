@@ -1,41 +1,41 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_automation_run_v1"
-sidebar_current: "docs-ccloud-resource-automation-run-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_automation_run_v1"
+sidebar_current: "docs-sci-resource-automation-run-v1"
 description: |-
   Run a Lyra Automation on the target.
 ---
 
-# ccloud\_automation\_run\_v1
+# sci\_automation\_run\_v1
 
 Use this resource to run a Lyra Automation on the target agent(s). The resource
 will wait for the final Run state: `failed` or `completed`.
 
-The `terraform destroy` command destroys the `ccloud_automation_run_v1` state,
+The `terraform destroy` command destroys the `sci_automation_run_v1` state,
 but not the remote Lyra Automation Run object.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_automation_v1" "automation_1" {
+data "sci_automation_v1" "automation_1" {
   name = "chef-automation"
 }
 
-resource "ccloud_automation_run_v1" "run_1" {
-  automation_id = data.ccloud_automation_v1.automation_1.id
+resource "sci_automation_run_v1" "run_1" {
+  automation_id = data.sci_automation_v1.automation_1.id
   selector      = "@metadata_name = 'hostname'"
 }
 
-data "ccloud_arc_job_v1" "job" {
-  job_id = ccloud_automation_run_v1.run_1.jobs[0]
+data "sci_arc_job_v1" "job" {
+  job_id = sci_automation_run_v1.run_1.jobs[0]
 }
 
 output "run_log" {
-  value = ccloud_automation_run_v1.run_1.log
+  value = sci_automation_run_v1.run_1.log
 }
 
 output "job_log" {
-  value = data.ccloud_arc_job_v1.job.log
+  value = data.sci_arc_job_v1.job.log
 }
 ```
 

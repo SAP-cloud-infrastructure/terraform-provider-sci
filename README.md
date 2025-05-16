@@ -1,7 +1,7 @@
-Converged Cloud - Terraform Provider
+SAP Cloud Infrastructure - Terraform Provider
 =======================================================
 
-Documentation: [registry.terraform.io](https://registry.terraform.io/providers/sapcc/ccloud/latest/docs)
+Documentation: [registry.terraform.io](https://registry.terraform.io/providers/SAP-cloud-infrastructure/sci/latest/docs)
 
 Maintainers
 -----------
@@ -20,9 +20,9 @@ Requirements
 Usage
 ---------------------
 
-The CCloudEE provider is an extension to the [OpenStack Terraform
+The SAP Cloud Infrastructure provider is an extension to the [OpenStack Terraform
 Provider](https://github.com/terraform-provider-openstack/terraform-provider-openstack).
-It provides resources that allow to use Terraform for Converged Cloud's
+It provides resources that allow to use Terraform for SAP Cloud Infrastructure's
 additional services:
 
   * Kubernikus (Kubernetes as a Service)
@@ -41,13 +41,13 @@ Building The Provider
 Clone the repository
 
 ```sh
-$ git clone git@github.com:sapcc/terraform-provider-ccloud
+$ git clone git@github.com:SAP-cloud-infrastructure/terraform-provider-sci
 ```
 
 Enter the provider directory and build the provider
 
 ```sh
-$ cd terraform-provider-ccloud
+$ cd terraform-provider-sci
 $ make build
 ```
 
@@ -59,22 +59,22 @@ To install this provider, copy and paste this code into your Terraform configura
 ```hcl
 terraform {
   required_providers {
-    ccloud = {
-      source = "sapcc/ccloud"
+    sci = {
+      source = "SAP-cloud-infrastructure/sci"
     }
   }
 }
 
-provider "ccloud" {
+provider "sci" {
   # Configuration options
 }
 ```
 
 Using the provider
 ----------------------
-Please see the documentation at [registry.terraform.io](https://registry.terraform.io/providers/sapcc/ccloud/latest/docs).
+Please see the documentation at [registry.terraform.io](https://registry.terraform.io/providers/SAP-cloud-infrastructure/sci/latest/docs).
 
-Or you can browse the documentation within this repo [here](https://github.com/sapcc/terraform-provider-ccloud/tree/master/website/docs).
+Or you can browse the documentation within this repo [here](https://github.com/SAP-cloud-infrastructure/terraform-provider-sci/tree/master/website/docs).
 
 Developing the Provider
 ---------------------------

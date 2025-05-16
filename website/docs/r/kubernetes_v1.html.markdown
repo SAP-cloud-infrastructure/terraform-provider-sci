@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_kubernetes_v1"
-sidebar_current: "docs-ccloud-resource-kubernetes-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_kubernetes_v1"
+sidebar_current: "docs-sci-resource-kubernetes-v1"
 description: |-
   Manages a Kubernikus cluster
 ---
 
-# ccloud\_kubernetes\_v1
+# sci\_kubernetes\_v1
 
 Manages a Kubernikus (Kubernetes as a Service) cluster.
 
@@ -24,7 +24,7 @@ creating a new node pool with the new argument specified.
 ### Kubernikus cluster with two node pools
 
 ```hcl
-resource "ccloud_kubernetes_v1" "demo" {
+resource "sci_kubernetes_v1" "demo" {
   name           = "demo"
   ssh_public_key = "ssh-rsa AAAABHTmDMP6w=="
 
@@ -69,7 +69,7 @@ data "openstack_networking_router_v2" "router_1" {
   name = "router_1"
 }
 
-resource "ccloud_kubernetes_v1" "demo" {
+resource "sci_kubernetes_v1" "demo" {
   name           = "demo"
   ssh_public_key = "ssh-rsa AAAABHTmDMP6w=="
 
@@ -92,7 +92,7 @@ resource "ccloud_kubernetes_v1" "demo" {
 }
 
 resource "local_sensitive_file" "kubeconfig" {
-  content  = ccloud_kubernetes_v1.demo.kube_config_raw
+  content  = sci_kubernetes_v1.demo.kube_config_raw
   filename = "kubeconfig"
 }
 ```
@@ -284,16 +284,16 @@ like so:
 
 ```hcl
 provider "kubernetes" {
-  host                   = ccloud_kubernetes_v1.demo.kube_config.0.host
-  client_certificate     = base64decode(ccloud_kubernetes_v1.demo.kube_config.0.client_certificate)
-  client_key             = base64decode(ccloud_kubernetes_v1.demo.kube_config.0.client_key)
-  cluster_ca_certificate = base64decode(ccloud_kubernetes_v1.demo.kube_config.0.cluster_ca_certificate)
+  host                   = sci_kubernetes_v1.demo.kube_config.0.host
+  client_certificate     = base64decode(sci_kubernetes_v1.demo.kube_config.0.client_certificate)
+  client_key             = base64decode(sci_kubernetes_v1.demo.kube_config.0.client_key)
+  cluster_ca_certificate = base64decode(sci_kubernetes_v1.demo.kube_config.0.cluster_ca_certificate)
 }
 ```
 
 ## Timeouts
 
-`ccloud_kubernetes_v1` provides the following
+`sci_kubernetes_v1` provides the following
 [Timeouts](https://www.terraform.io/docs/configuration/resources.html#timeouts)
 configuration options:
 
@@ -310,7 +310,7 @@ Kubernikus Clusters can be imported using the `name` and `is_admin` flag
 (`<name>/<is_admin>`), e.g.
 
 ```
-$ terraform import ccloud_kubernetes_v1.demo demo/true
+$ terraform import sci_kubernetes_v1.demo demo/true
 ```
 
 If the `is_admin` flag is omitted, it defaults to `false`.

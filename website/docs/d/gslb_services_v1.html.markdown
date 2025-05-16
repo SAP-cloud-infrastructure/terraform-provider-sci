@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_services_v1"
-sidebar_current: "docs-ccloud-datasource-gslb-services-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_services_v1"
+sidebar_current: "docs-sci-datasource-gslb-services-v1"
 description: |-
   Get information about available GSLB services.
 ---
 
-# ccloud\_gslb\_services\_v1
+# sci\_gslb\_services\_v1
 
 Use this data source to get information about available GSLB services. This
 data source is available only for OpenStack cloud admins.
@@ -14,7 +14,7 @@ data source is available only for OpenStack cloud admins.
 ## Example Usage
 
 ```hcl
-data "ccloud_gslb_services_v1" "services_1" {
+data "sci_gslb_services_v1" "services_1" {
   // No arguments
 }
 ```

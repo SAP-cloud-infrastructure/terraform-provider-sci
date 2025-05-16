@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_job_v1"
-sidebar_current: "docs-ccloud-datasource-arc-job-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_job_v1"
+sidebar_current: "docs-sci-datasource-arc-job-v1"
 description: |-
   Get information on an Arc Job.
 ---
 
-# ccloud\_arc\_job\_v1
+# sci\_arc\_job\_v1
 
 Use this data source to get the ID and other attributes of an Arc Job.
 
@@ -15,25 +15,25 @@ Use this data source to get the ID and other attributes of an Arc Job.
 ### Get Arc Job using a Job ID
 
 ```hcl
-resource "ccloud_automation_run_v1" "run_1" {
+resource "sci_automation_run_v1" "run_1" {
   automation_id = "123"
   selector      = "@metadata_name = 'hostname'"
 }
 
-data "ccloud_arc_job_v1" "job_1" {
-  job_id = ccloud_automation_run_v1.run_1.jobs[0]
+data "sci_arc_job_v1" "job_1" {
+  job_id = sci_automation_run_v1.run_1.jobs[0]
 }
 ```
 
 ### Get Arc Job using a filter
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   filter  = "@metadata_name = 'hostname'"
 }
 
-data "ccloud_arc_job_v1" "job_1" {
-  agent_id = data.ccloud_arc_agent_v1.agent_1.id
+data "sci_arc_job_v1" "job_1" {
+  agent_id = data.sci_arc_agent_v1.agent_1.id
   timeout  = 3600
   agent    = "chef"
   action   = "zero"
@@ -73,9 +73,9 @@ are exported:
 * `job_id` - See Argument Reference above.
 * `agent_id` - See Argument Reference above.
 * `timeout` - See Argument Reference above.
-* `execute` - See Argument Reference in the `ccloud_arc_job_v1` resource
+* `execute` - See Argument Reference in the `sci_arc_job_v1` resource
   documentation.
-* `chef` - See Argument Reference in the `ccloud_arc_job_v1` resource
+* `chef` - See Argument Reference in the `sci_arc_job_v1` resource
   documentation.
 * `agent` - See Argument Reference above.
 * `action` - See Argument Reference above.

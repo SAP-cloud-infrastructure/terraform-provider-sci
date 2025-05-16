@@ -1,17 +1,17 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_billing_domain_masterdata"
-sidebar_current: "docs-ccloud-resource-billing-domain-masterdata"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_billing_domain_masterdata"
+sidebar_current: "docs-sci-resource-billing-domain-masterdata"
 description: |-
   Manages Billing Domain Masterdata
 ---
 
-# ccloud\_billing\_domain\_masterdata
+# sci\_billing\_domain\_masterdata
 
 Manages Billing Domain masterdata.
 
 ~> **Note:** The `terraform destroy` command destroys the
-`ccloud_billing_domain_masterdata` state, but not the actual billing domain
+`sci_billing_domain_masterdata` state, but not the actual billing domain
 masterdata.
 
 ~> **Note:** You _must_ have admin privileges in your OpenStack cloud to use
@@ -20,7 +20,7 @@ this resource.
 ## Example Usage
 
 ```hcl
-resource "ccloud_billing_domain_masterdata" "masterdata" {
+resource "sci_billing_domain_masterdata" "masterdata" {
   responsible_primary_contact_id    = "D123456"
   responsible_primary_contact_email = "mail@example.com"
 
@@ -84,5 +84,5 @@ In addition to all arguments above, the following attributes are exported:
 Billing Domain Masterdata can be imported with a `domain_id` argument, e.g.
 
 ```
-$ terraform import ccloud_billing_domain_masterdata.demo 30dd31bcac8748daaa75720dab7e019a
+$ terraform import sci_billing_domain_masterdata.demo 30dd31bcac8748daaa75720dab7e019a
 ```

@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_agent_v1"
-sidebar_current: "docs-ccloud-datasource-arc-agent-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_agent_v1"
+sidebar_current: "docs-sci-datasource-arc-agent-v1"
 description: |-
   Get information on an Arc Agent.
 ---
 
-# ccloud\_arc\_agent\_v1
+# sci\_arc\_agent\_v1
 
 Use this data source to get the ID and other attributes of an available Arc
 Agent.
@@ -22,7 +22,7 @@ block argument. The default read timeout is 0, what means don't wait.
 ### Get an Arc Agent by an agent ID
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   agent_id = "72f50dc1-03c2-4177-9ffa-d75929734c0d"
 }
 ```
@@ -33,7 +33,7 @@ The example below will be completed once it finds the exact one agent
 satisfying the specified filter.
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   filter  = "@metadata_name = 'hostname'"
 
   timeouts {

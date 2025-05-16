@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_member_v1"
-sidebar_current: "docs-ccloud-resource-gslb-member-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_member_v1"
+sidebar_current: "docs-sci-resource-gslb-member-v1"
 description: |-
   Manage GSLB Members
 ---
 
-# ccloud\_gslb\_member\_v1
+# sci\_gslb\_member\_v1
 
 This resource allows you to manage GSLB Members.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_member_v1" "member_1" {
+resource "sci_gslb_member_v1" "member_1" {
   address        = "192.168.0.1"
   admin_state_up = true
   datacenter_id  = "datacenter-uuid"
@@ -65,5 +65,5 @@ In addition to the arguments listed above, the following computed attributes are
 Members can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_member_v1.member_1 63c4c7fa-a90f-4fa1-8f21-ed8dbba6bc4b
+$ terraform import sci_gslb_member_v1.member_1 63c4c7fa-a90f-4fa1-8f21-ed8dbba6bc4b
 ```

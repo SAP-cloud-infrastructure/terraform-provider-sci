@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_billing_domain_masterdata"
-sidebar_current: "docs-ccloud-datasource-billing-domain-masterdata"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_billing_domain_masterdata"
+sidebar_current: "docs-sci-datasource-billing-domain-masterdata"
 description: |-
   Get information on the Billing Domain Masterdata
 ---
 
-# ccloud\_billing\_domain\_masterdata
+# sci\_billing\_domain\_masterdata
 
 Use this data source to get the Billing Domain Masterdata.
 
@@ -16,12 +16,12 @@ this resource.
 ## Example Usage
 
 ```hcl
-data "ccloud_billing_domain_masterdata" "masterdata" {
+data "sci_billing_domain_masterdata" "masterdata" {
   domain_id = "01482666f9004d4ea6b3458205642c30"
 }
 
 output "cost_object" {
-  value = data.ccloud_billing_domain_masterdata.masterdata.cost_object
+  value = data.sci_billing_domain_masterdata.masterdata.cost_object
 }
 ```
 
@@ -38,5 +38,5 @@ The following arguments are supported:
 ## Attributes Reference
 
 In addition to arguments above, extra attributes are exported. Please refer
-to the `ccloud_billing_domain_masterdata` resource arguments and attributes
+to the `sci_billing_domain_masterdata` resource arguments and attributes
 [documentation](../resources/billing_domain_masterdata.html) for more information.

@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_quota_v1"
-sidebar_current: "docs-ccloud-resource-gslb-quota-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_quota_v1"
+sidebar_current: "docs-sci-resource-gslb-quota-v1"
 description: |-
   Manage GSLB Quotas
 ---
 
-# ccloud\_gslb\_quota\_v1
+# sci\_gslb\_quota\_v1
 
 This resource allows you to manage GSLB Quotas.
 
@@ -18,7 +18,7 @@ zero.
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_quota_v1" "quota_1" {
+resource "sci_gslb_quota_v1" "quota_1" {
   datacenter = 10
   domain     = 20
   member     = 30
@@ -66,5 +66,5 @@ are exported:
 Quotas can be imported using the project `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_quota_v1.quota_1 ea3b508ba36142d9888dc087b014ef78
+$ terraform import sci_gslb_quota_v1.quota_1 ea3b508ba36142d9888dc087b014ef78
 ```

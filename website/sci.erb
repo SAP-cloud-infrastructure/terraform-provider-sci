@@ -1,0 +1,154 @@
+<% wrap_layout :inner do %>
+  <% content_for :sidebar do %>
+    <div class="docs-sidebar hidden-print affix-top" role="complementary">
+      <ul class="nav docs-sidenav">
+        <li<%= sidebar_current("docs-sci-index") %>>
+          <%= link_to 'SAP Cloud Infrastructure Provider', '/docs/providers/sci/index.html', :relative => true %>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-datasource") %>>
+          <a href="#">Data Sources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-datasource-arc-agent-v1") %>>
+              <%= link_to 'sci_arc_agent_v1', '/docs/providers/sci/d/arc_agent_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-arc-agent-ids-v1") %>>
+              <%= link_to 'sci_arc_agent_ids_v1', '/docs/providers/sci/d/arc_agent_ids_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-arc-job-v1") %>>
+              <%= link_to 'sci_arc_job_v1', '/docs/providers/sci/d/arc_job_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-arc-job-ids-v1") %>>
+              <%= link_to 'sci_arc_job_ids_v1', '/docs/providers/sci/d/arc_job_ids_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-automation-v1") %>>
+              <%= link_to 'sci_automation_v1', '/docs/providers/sci/d/automation_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-billing-domain-masterdata") %>>
+              <%= link_to 'sci_billing_domain_masterdata', '/docs/providers/sci/d/billing_domain_masterdata.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-billing-project-masterdata") %>>
+              <%= link_to 'sci_billing_project_masterdata', '/docs/providers/sci/d/billing_project_masterdata.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-gslb-services-v1") %>>
+              <%= link_to 'sci_gslb_services_v1', '/docs/providers/sci/d/gslb_services_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-data-source-endpoint-service-v1") %>>
+              <%= link_to 'sci_endpoint_service_v1', '/docs/providers/sci/d/endpoint_service_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-datasource-networking-router-v2") %>>
+              <%= link_to 'sci_networking_router_v2', '/docs/providers/sci/d/networking_router_v2.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-arc") %>>
+          <a href="#">Arc Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-arc-agent-bootstrap-v1") %>>
+              <%= link_to 'sci_arc_agent_bootstrap_v1', '/docs/providers/sci/r/arc_agent_bootstrap_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-arc-agent-v1") %>>
+              <%= link_to 'sci_arc_agent_v1', '/docs/providers/sci/r/arc_agent_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-arc-job-v1") %>>
+              <%= link_to 'sci_arc_job_v1', '/docs/providers/sci/r/arc_job_v1.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-automation") %>>
+          <a href="#">Automation Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-automation-v1") %>>
+              <%= link_to 'sci_automation_v1', '/docs/providers/sci/r/automation_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-automation-run-v1") %>>
+              <%= link_to 'sci_automation_run_v1', '/docs/providers/sci/r/automation_run_v1.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-kubernetes") %>>
+          <a href="#">Kubernetes as a Service Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-kubernetes-v1") %>>
+              <%= link_to 'sci_kubernetes_v1', '/docs/providers/sci/r/kubernetes_v1.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-billing") %>>
+          <a href="#">Billing Management Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-billing-domain-masterdata") %>>
+              <%= link_to 'sci_billing_domain_masterdata', '/docs/providers/sci/r/billing_domain_masterdata.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-billing-project-masterdata") %>>
+              <%= link_to 'sci_billing_project_masterdata', '/docs/providers/sci/r/billing_project_masterdata.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-interconnection") %>>
+          <a href="#">BGP VPN Cross-Region Interconnections</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-bgpvpn-interconnection-v2") %>>
+              <%= link_to 'sci_bgpvpn_interconnection_v2', '/docs/providers/sci/r/bgpvpn_interconnection_v2.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-gslb") %>>
+          <a href="#">Andromeda GSLB Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-gslb-datacenter-v1") %>>
+              <%= link_to 'sci_gslb_datacenter', '/docs/providers/sci/r/gslb_datacenter_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-domain-v1") %>>
+              <%= link_to 'sci_gslb_domain_v1', '/docs/providers/sci/r/gslb_domain_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-geomap-v1") %>>
+              <%= link_to 'sci_gslb_geomap_v1', '/docs/providers/sci/r/gslb_geomap_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-member-v1") %>>
+              <%= link_to 'sci_gslb_member_v1', '/docs/providers/sci/r/gslb_member_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-monitor-v1") %>>
+              <%= link_to 'sci_gslb_monitor_v1', '/docs/providers/sci/r/gslb_monitor_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-pool-v1") %>>
+              <%= link_to 'sci_gslb_pool_v1', '/docs/providers/sci/r/gslb_pool_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-gslb-quota-v1") %>>
+              <%= link_to 'sci_gslb_quota_v1', '/docs/providers/sci/r/gslb_quota_v1.html', :relative => true %>
+            </li>
+          </ul>
+        </li>
+
+        <li class="active"<%= sidebar_current("docs-sci-resource-endpoint") %>>
+          <a href="#">Archer Endpoint Resources</a>
+          <ul class="nav nav-visible">
+            <li<%= sidebar_current("docs-sci-resource-endpoint-service-v1") %>>
+              <%= link_to 'sci_endpoint_service_v1', '/docs/providers/sci/r/endpoint_service_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-endpoint-quota-v1") %>>
+              <%= link_to 'sci_endpoint_quota_v1', '/docs/providers/sci/r/endpoint_quota_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-endpoint-accept-v1") %>>
+              <%= link_to 'sci_endpoint_accept_v1', '/docs/providers/sci/r/endpoint_accept_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-endpoint-v1") %>>
+	      <%= link_to 'sci_endpoint_v1', '/docs/providers/sci/r/endpoint_v1.html', :relative => true %>
+            </li>
+            <li<%= sidebar_current("docs-sci-resource-endpoint-rbac-policy-v1") %>>
+	      <%= link_to 'sci_endpoint_rbac_policy_v1', '/docs/providers/sci/r/endpoint_rbac_policy_v1.html', :relative => true %>
+	    </li>
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+  <% end %>
+  <%= yield %>
+<% end %>

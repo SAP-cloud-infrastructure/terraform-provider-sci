@@ -1,18 +1,18 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_agent_bootstrap_v1"
-sidebar_current: "docs-ccloud-resource-arc-agent-bootstrap-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_agent_bootstrap_v1"
+sidebar_current: "docs-sci-resource-arc-agent-bootstrap-v1"
 description: |-
   Get the bootstrap information for a new Arc Agent.
 ---
 
-# ccloud\_arc\_agent\_bootstrap\_v1
+# sci\_arc\_agent\_bootstrap\_v1
 
 Use this resource to get the initialize data for a new Arc Agent. This data
 could be used as an OpenStack user data, executed by cloud-init system on
 compute instance boot.
 
-The `terraform destroy` command destroys the `ccloud_arc_agent_bootstrap_v1`
+The `terraform destroy` command destroys the `sci_arc_agent_bootstrap_v1`
 state, but not the remote object, since the bootstrap data is a PKI token, not a
 real resource.
 
@@ -24,13 +24,13 @@ from the Terraform state.
 ### Get an Arc Agent bootstrap script for Linux cloud-init
 
 ```hcl
-resource "ccloud_arc_agent_bootstrap_v1" "agent_1" {}
+resource "sci_arc_agent_bootstrap_v1" "agent_1" {}
 
 resource "openstack_compute_instance_v2" "node" {
   name        = "linux-vm"
   image_name  = "ubuntu-16.04-amd64"
   flavor_name = "m1.small"
-  user_data   = ccloud_arc_agent_bootstrap_v1.agent_1.user_data
+  user_data   = sci_arc_agent_bootstrap_v1.agent_1.user_data
 
   network {
     name = "private_network"
@@ -41,7 +41,7 @@ resource "openstack_compute_instance_v2" "node" {
 ### Get an Arc Agent bootstrap script for Windows cloud-init
 
 ```hcl
-resource "ccloud_arc_agent_bootstrap_v1" "agent_1" {
+resource "sci_arc_agent_bootstrap_v1" "agent_1" {
   type = "windows"
 }
 
@@ -49,7 +49,7 @@ resource "openstack_compute_instance_v2" "node" {
   name        = "win-vm"
   image_name  = "windows-2016-amd64"
   flavor_name = "m1.large"
-  user_data   = ccloud_arc_agent_bootstrap_v1.agent_1.user_data
+  user_data   = sci_arc_agent_bootstrap_v1.agent_1.user_data
 
   network {
     name = "private_network"
@@ -60,7 +60,7 @@ resource "openstack_compute_instance_v2" "node" {
 ### Get an extended Arc Agent bootstrap script for Windows cloud-init
 
 ```hcl
-resource "ccloud_arc_agent_bootstrap_v1" "agent_1" {
+resource "sci_arc_agent_bootstrap_v1" "agent_1" {
   type = "json"
 }
 
@@ -75,10 +75,10 @@ net user Administrator $${admin_passwd}
 EOF
 
   vars = {
-    token        = lookup(ccloud_arc_agent_bootstrap_v1.agent_1.raw_map, "token")
-    reg_url      = lookup(ccloud_arc_agent_bootstrap_v1.agent_1.raw_map, "url")
-    endpoint_url = lookup(ccloud_arc_agent_bootstrap_v1.agent_1.raw_map, "endpoint_url")
-    update_url   = lookup(ccloud_arc_agent_bootstrap_v1.agent_1.raw_map, "update_url")
+    token        = lookup(sci_arc_agent_bootstrap_v1.agent_1.raw_map, "token")
+    reg_url      = lookup(sci_arc_agent_bootstrap_v1.agent_1.raw_map, "url")
+    endpoint_url = lookup(sci_arc_agent_bootstrap_v1.agent_1.raw_map, "endpoint_url")
+    update_url   = lookup(sci_arc_agent_bootstrap_v1.agent_1.raw_map, "update_url")
     admin_passwd = var.password
   }
 }

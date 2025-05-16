@@ -1,15 +1,15 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_bgpvpn_interconnection_v2"
-sidebar_current: "docs-ccloud-resource-bgpvpn-interconnection-v2"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_bgpvpn_interconnection_v2"
+sidebar_current: "docs-sci-resource-bgpvpn-interconnection-v2"
 description: |-
   Manage a BGP VPN interconnection between regions.
 ---
 
-# ccloud\_bgpvpn\_interconnection\_v2
+# sci\_bgpvpn\_interconnection\_v2
 
 Use this resource to manage a BGP VPN interconnection between two regions
-within the Converged Cloud environment.
+within the SAP Cloud Infrastructure environment.
 
 ## Example Usage
 
@@ -20,7 +20,7 @@ provider "openstack" {
   alias    = "region1"
 }
 
-provider "ccloud" {
+provider "sci" {
   auth_url = "http://identity.region1/v3"
   region   = "region1"
   alias    = "region1"
@@ -32,7 +32,7 @@ provider "openstack" {
   alias    = "region2"
 }
 
-provider "ccloud" {
+provider "sci" {
   auth_url = "https://identity.region2/v3"
   region   = "region2"
   alias    = "region2"
@@ -51,8 +51,8 @@ resource "openstack_bgpvpn_router_associate_v2" "router_associate_1" {
   router_id = "f490f377-fcd5-4ec7-ba47-e3787d2b7cec"
 }
 
-resource "ccloud_bgpvpn_interconnection_v2" "interconnection_1" {
-  provider = ccloud.region1
+resource "sci_bgpvpn_interconnection_v2" "interconnection_1" {
+  provider = sci.region1
 
   name               = "remote"
   local_resource_id  = openstack_bgpvpn_v2.bgpvpn_1.id
@@ -73,14 +73,14 @@ resource "openstack_bgpvpn_router_associate_v2" "router_associate_2" {
   router_id = "07d4ec98-f0eb-4cad-b5b0-518c133610ac"
 }
 
-resource "ccloud_bgpvpn_interconnection_v2" "interconnection_2" {
-  provider = ccloud.region2
+resource "sci_bgpvpn_interconnection_v2" "interconnection_2" {
+  provider = sci.region2
 
   name                      = "remote"
   local_resource_id         = openstack_bgpvpn_v2.bgpvpn_2.id
   remote_resource_id        = openstack_bgpvpn_v2.bgpvpn_1.id
   remote_region             = "region1"
-  remote_interconnection_id = ccloud_bgpvpn_interconnection_v2.interconnection_1.id
+  remote_interconnection_id = sci_bgpvpn_interconnection_v2.interconnection_1.id
 }
 ```
 
@@ -126,5 +126,5 @@ In addition to all arguments above, the following attributes are exported:
 A BGP VPN interconnection can be imported using the `id`, e.g.
 
 ```
-$ terraform import ccloud_bgpvpn_interconnection_v2.interconnection_1 8dff01b4-d6c2-4509-b872-5be4e93ad8ef
+$ terraform import sci_bgpvpn_interconnection_v2.interconnection_1 8dff01b4-d6c2-4509-b872-5be4e93ad8ef
 ```

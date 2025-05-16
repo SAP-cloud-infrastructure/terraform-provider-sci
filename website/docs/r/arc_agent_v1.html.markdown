@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_agent_v1"
-sidebar_current: "docs-ccloud-resource-arc-agent-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_agent_v1"
+sidebar_current: "docs-sci-resource-arc-agent-v1"
 description: |-
   Bring the Arc Agent resource under Terraform management
 ---
 
-# ccloud\_arc\_agent\_v1
+# sci\_arc\_agent\_v1
 
 Use this resource to bring the existing Arc Agent resource under Terraform
 management.
@@ -41,7 +41,7 @@ The example below will be completed once it finds the exact one agent
 satisfying the specified filter.
 
 ```hcl
-resource "ccloud_arc_agent_v1" "agent_1" {
+resource "sci_arc_agent_v1" "agent_1" {
   filter = "@metadata_name = 'hostname'"
 
   timeouts {
@@ -61,20 +61,20 @@ locals {
   hostname = "linux-vm"
 }
 
-resource "ccloud_arc_agent_bootstrap_v1" "agent_1" {}
+resource "sci_arc_agent_bootstrap_v1" "agent_1" {}
 
 resource "openstack_compute_instance_v2" "node" {
   name        = local.hostname
   image_name  = "ubuntu-16.04-amd64"
   flavor_name = "m1.small"
-  user_data   = ccloud_arc_agent_bootstrap_v1.agent_1.user_data
+  user_data   = sci_arc_agent_bootstrap_v1.agent_1.user_data
 
   network {
     name = "private_network"
   }
 }
 
-resource "ccloud_arc_agent_v1" "agent_1" {
+resource "sci_arc_agent_v1" "agent_1" {
   # implicit dependency to avoid the deadlock during the destroy
   filter       = "@metadata_name = '${local.hostname}'"
   force_delete = "false"
@@ -133,7 +133,7 @@ are exported:
 An Arc Agent can be imported using the `id`, e.g.
 
 ```
-$ terraform import ccloud_arc_agent_v1.agent_1 4107c3ea-0755-4a01-bfc4-cc4fe777ac98
+$ terraform import sci_arc_agent_v1.agent_1 4107c3ea-0755-4a01-bfc4-cc4fe777ac98
 ```
 
 The filter argument should be set to an empty value during the import.

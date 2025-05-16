@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_domain_v1"
-sidebar_current: "docs-ccloud-resource-gslb-domain-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_domain_v1"
+sidebar_current: "docs-sci-resource-gslb-domain-v1"
 description: |-
   Manage GSLB domains
 ---
 
-# ccloud\_gslb\_domain\_v1
+# sci\_gslb\_domain\_v1
 
 This resource allows you to manage GSLB domains.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_domain_v1" "domain_1" {
+resource "sci_gslb_domain_v1" "domain_1" {
   admin_state_up    = true
   fqdn              = "example.com"
   mode              = "ROUND_ROBIN"
@@ -74,5 +74,5 @@ In addition to the arguments listed above, the following computed attributes are
 Domains can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_domain_v1.domain_1 f0f599a9-3a0d-4b4c-88d2-40c4fb071bba
+$ terraform import sci_gslb_domain_v1.domain_1 f0f599a9-3a0d-4b4c-88d2-40c4fb071bba
 ```

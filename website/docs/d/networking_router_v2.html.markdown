@@ -1,22 +1,22 @@
 ---
-layout: "ccloud"
-page_title: "CCloud: ccloud_networking_router_v2"
-sidebar_current: "docs-ccloud-datasource-networking-router-v2"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_networking_router_v2"
+sidebar_current: "docs-sci-datasource-networking-router-v2"
 description: |-
-  Get information about a CCloud router.
+  Get information about a SAP Cloud Infrastructure router.
 ---
 
-# ccloud\_networking\_router\_v2
+# sci\_networking\_router\_v2
 
 This is based on the [openstack_netwroking_router_v2 data
 source](https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest/docs/data-sources/networking_router_v2)
-to add additional CCloud specific fields. Use this data source to get the ID of
-an available CCloud router and more.
+to add additional SAP Cloud Infrastructure specific fields. Use this data
+source to get the ID of an available SAP Cloud Infrastructure router and more.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_networking_router_v2" "router" {
+data "sci_networking_router_v2" "router" {
   name = "router_1"
 }
 ```

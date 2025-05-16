@@ -1,17 +1,17 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_arc_job_v1"
-sidebar_current: "docs-ccloud-resource-arc-job-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_arc_job_v1"
+sidebar_current: "docs-sci-resource-arc-job-v1"
 description: |-
   Create an Arc Job.
 ---
 
-# ccloud\_arc\_job\_v1
+# sci\_arc\_job\_v1
 
 Use this resource to schedule an Arc Job on the desired Arc Agent. The resource
 will wait for the final Job status: `failed` or `complete`.
 
-The `terraform destroy` command destroys the `ccloud_arc_job_v1` state, but not
+The `terraform destroy` command destroys the `sci_arc_job_v1` state, but not
 the remote Arc Job object.
 
 ## Example Usage
@@ -19,7 +19,7 @@ the remote Arc Job object.
 ### Execute a script
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   filter  = "@metadata_name = 'hostname'"
 
   timeouts {
@@ -27,8 +27,8 @@ data "ccloud_arc_agent_v1" "agent_1" {
   }
 }
 
-resource "ccloud_arc_job_v1" "job_1" {
-  to = ccloud_arc_agent_v1.agent_1.id
+resource "sci_arc_job_v1" "job_1" {
+  to = sci_arc_agent_v1.agent_1.id
 
   execute {
     script = <<EOF
@@ -43,14 +43,14 @@ EOF
 }
 
 output "job_status" {
-  value = ccloud_arc_job_v1.job_1.status
+  value = sci_arc_job_v1.job_1.status
 }
 ```
 
 ### Enable Chef agent
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   filter  = "@metadata_name = 'hostname'"
 
   timeouts {
@@ -58,8 +58,8 @@ data "ccloud_arc_agent_v1" "agent_1" {
   }
 }
 
-resource "ccloud_arc_job_v1" "job_1" {
-  to = ccloud_arc_agent_v1.agent_1.id
+resource "sci_arc_job_v1" "job_1" {
+  to = sci_arc_agent_v1.agent_1.id
 
   chef {
     enable {}
@@ -67,14 +67,14 @@ resource "ccloud_arc_job_v1" "job_1" {
 }
 
 output "job_status" {
-  value = ccloud_arc_job_v1.job_1.status
+  value = sci_arc_job_v1.job_1.status
 }
 ```
 
 ### Execute Chef Zero
 
 ```hcl
-data "ccloud_arc_agent_v1" "agent_1" {
+data "sci_arc_agent_v1" "agent_1" {
   filter  = "@metadata_name = 'hostname'"
 
   timeouts {
@@ -82,8 +82,8 @@ data "ccloud_arc_agent_v1" "agent_1" {
   }
 }
 
-resource "ccloud_arc_job_v1" "job_1" {
-  to = ccloud_arc_agent_v1.agent_1.id
+resource "sci_arc_job_v1" "job_1" {
+  to = sci_arc_agent_v1.agent_1.id
 
   chef {
     zero {
@@ -99,7 +99,7 @@ EOF
 }
 
 output "job_status" {
-  value = ccloud_arc_job_v1.job_1.status
+  value = sci_arc_job_v1.job_1.status
 }
 ```
 

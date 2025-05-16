@@ -1,4 +1,4 @@
-module github.com/sapcc/terraform-provider-ccloud
+module github.com/SAP-cloud-infrastructure/terraform-provider-sci
 
 go 1.24.0
 

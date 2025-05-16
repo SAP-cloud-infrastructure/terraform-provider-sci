@@ -1,14 +1,14 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_endpoint_quota_v1"
-sidebar_current: "docs-ccloud-resource-endpoint-quota-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_endpoint_quota_v1"
+sidebar_current: "docs-sci-resource-endpoint-quota-v1"
 description: |-
   Manage quotas for Archer endpoints and services.
 ---
 
-# ccloud\_endpoint\_quota\_v1
+# sci\_endpoint\_quota\_v1
 
-Use this resource to create, manage, and delete quotas for endpoints and services within the Converged Cloud environment.
+Use this resource to create, manage, and delete quotas for endpoints and services within the SAP Cloud Infrastructure environment.
 
 ~> **Note:** This resource can be used only by OpenStack cloud administrators.
 
@@ -18,7 +18,7 @@ zero.
 ## Example Usage
 
 ```hcl
-resource "ccloud_endpoint_quota_v1" "quota_1" {
+resource "sci_endpoint_quota_v1" "quota_1" {
   project_id = "08c49418f7274a57864cd468ebbfb062"
   endpoint   = 10
   service    = 5
@@ -54,5 +54,5 @@ In addition to all arguments above, the following attributes are exported:
 A quota can be imported using the project `id`, e.g.
 
 ```shell
-$ terraform import ccloud_endpoint_quota_v1.quota_1 08c49418f7274a57864cd468ebbfb062
+$ terraform import sci_endpoint_quota_v1.quota_1 08c49418f7274a57864cd468ebbfb062
 ```

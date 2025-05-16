@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_billing_project_masterdata"
-sidebar_current: "docs-ccloud-datasource-billing-project-masterdata"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_billing_project_masterdata"
+sidebar_current: "docs-sci-datasource-billing-project-masterdata"
 description: |-
   Get information on the Billing Project Masterdata
 ---
 
-# ccloud\_billing\_project\_masterdata
+# sci\_billing\_project\_masterdata
 
 Use this data source to get the Billing Project Masterdata.
 
@@ -16,12 +16,12 @@ this resource for other tenant projects.
 ## Example Usage
 
 ```hcl
-data "ccloud_billing_project_masterdata" "masterdata" {
+data "sci_billing_project_masterdata" "masterdata" {
   project_id = "30dd31bcac8748daaa75720dab7e019a"
 }
 
 output "cost_object" {
-  value = data.ccloud_billing_project_masterdata.masterdata.cost_object
+  value = data.sci_billing_project_masterdata.masterdata.cost_object
 }
 ```
 
@@ -39,5 +39,5 @@ The following arguments are supported:
 ## Attributes Reference
 
 In addition to arguments above, extra attributes are exported. Please refer
-to the `ccloud_billing_project_masterdata` resource arguments and attributes
+to the `sci_billing_project_masterdata` resource arguments and attributes
 [documentation](../resources/billing_project_masterdata.html) for more information.

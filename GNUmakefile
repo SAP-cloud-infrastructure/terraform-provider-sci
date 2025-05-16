@@ -1,7 +1,7 @@
 TEST?=$$(go list ./...)
 GOFMT_FILES?=$$(find . -name '*.go')
 WEBSITE_REPO=github.com/hashicorp/terraform-website
-PKG_NAME=ccloud
+PKG_NAME=sci
 
 default: build
 

@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 
+	"github.com/SAP-cloud-infrastructure/terraform-provider-sci/sci"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/sapcc/terraform-provider-ccloud/ccloud"
 )
 
-const providerAddr = "registry.terraform.io/sapcc/ccloud"
+const providerAddr = "registry.terraform.io/SAP-cloud-infrastructure/sci"
 
 func main() {
 	// added debugMode to enable debugging for provider per https://www.terraform.io/plugin/sdkv2/debugging
@@ -18,6 +18,6 @@ func main() {
 	plugin.Serve(&plugin.ServeOpts{
 		Debug:        debugMode,
 		ProviderAddr: providerAddr,
-		ProviderFunc: ccloud.Provider,
+		ProviderFunc: sci.Provider,
 	})
 }

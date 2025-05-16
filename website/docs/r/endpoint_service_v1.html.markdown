@@ -1,20 +1,20 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_endpoint_service_v1"
-sidebar_current: "docs-ccloud-resource-endpoint-service-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_endpoint_service_v1"
+sidebar_current: "docs-sci-resource-endpoint-service-v1"
 description: |-
   Manage an Archer endpoint service.
 ---
 
-# ccloud\_endpoint\_service\_v1
+# sci\_endpoint\_service\_v1
 
 Use this resource to create, manage, and delete an endpoint service within the
-Converged Cloud environment.
+SAP Cloud Infrastructure environment.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_endpoint_service_v1" "service_1" {
+resource "sci_endpoint_service_v1" "service_1" {
   availability_zone = "region1a"
   name              = "service1"
   ip_addresses      = ["192.168.1.1"]
@@ -84,5 +84,5 @@ In addition to all arguments above, the following attributes are exported:
 An Archer endpoint service can be imported using the `id`, e.g.
 
 ```shell
-$ terraform import ccloud_endpoint_service_v1.service_1 069d36b0-125c-4c34-994d-849693805980
+$ terraform import sci_endpoint_service_v1.service_1 069d36b0-125c-4c34-994d-849693805980
 ```

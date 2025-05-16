@@ -1,20 +1,20 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_endpoint_v1"
-sidebar_current: "docs-ccloud-resource-endpoint-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_endpoint_v1"
+sidebar_current: "docs-sci-resource-endpoint-v1"
 description: |-
   Manage an Archer endpoint.
 ---
 
-# ccloud\_endpoint\_v1
+# sci\_endpoint\_v1
 
 Use this resource to create, manage, and delete an Archer endpoint within the
-Converged Cloud environment.
+SAP Cloud Infrastructure environment.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_endpoint_service_v1" "service_1" {
+data "sci_endpoint_service_v1" "service_1" {
   name    = "service_1"
   status  = "AVAILABLE"
   enabled = true
@@ -22,9 +22,9 @@ data "ccloud_endpoint_service_v1" "service_1" {
   availability_zone = "zone1"
 }
 
-resource "ccloud_endpoint_v1" "endpoint_1" {
+resource "sci_endpoint_v1" "endpoint_1" {
   name        = "endpoint_1"
-  service_id  = data.ccloud_endpoint_service_v1.service_1.id
+  service_id  = data.sci_endpoint_service_v1.service_1.id
   tags        = ["tag1", "tag2"]
 
   target {
@@ -79,5 +79,5 @@ In addition to all arguments above, the following attributes are exported:
 An Archer endpoint can be imported using the `id`, e.g.
 
 ```shell
-$ terraform import ccloud_endpoint_v1.endpoint_1 5f955108-5d6a-422d-b460-b7de087953b3
+$ terraform import sci_endpoint_v1.endpoint_1 5f955108-5d6a-422d-b460-b7de087953b3
 ```

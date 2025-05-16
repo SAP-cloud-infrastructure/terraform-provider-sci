@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_datacenter_v1"
-sidebar_current: "docs-ccloud-resource-gslb-datacenter-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_datacenter_v1"
+sidebar_current: "docs-sci-resource-gslb-datacenter-v1"
 description: |-
   Manage GSLB datacenters
 ---
 
-# ccloud\_gslb\_datacenter\_v1
+# sci\_gslb\_datacenter\_v1
 
 This resource allows you to manage GSLB datacenters.
 
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_datacenter_v1" "datacenter_1" {
+resource "sci_gslb_datacenter_v1" "datacenter_1" {
   admin_state_up    = true
   city              = "City Name"
   continent         = "Continent Name"
@@ -78,5 +78,5 @@ In addition to the arguments listed above, the following computed attributes are
 Datacenters can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_datacenter_v1.datacenter_1 041053d5-e1ce-4724-bf96-aeeda1df2465
+$ terraform import sci_gslb_datacenter_v1.datacenter_1 041053d5-e1ce-4724-bf96-aeeda1df2465
 ```

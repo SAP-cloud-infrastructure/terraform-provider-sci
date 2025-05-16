@@ -1,17 +1,17 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_billing_project_masterdata"
-sidebar_current: "docs-ccloud-resource-billing-project-masterdata"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_billing_project_masterdata"
+sidebar_current: "docs-sci-resource-billing-project-masterdata"
 description: |-
   Manages Billing Project Masterdata
 ---
 
-# ccloud\_billing\_project\_masterdata
+# sci\_billing\_project\_masterdata
 
 Manages Billing Project masterdata.
 
 ~> **Note:** The `terraform destroy` command destroys the
-`ccloud_billing_project_masterdata` state, but not the actual billing project
+`sci_billing_project_masterdata` state, but not the actual billing project
 masterdata.
 
 ~> **Note:** You _must_ have admin privileges in your OpenStack cloud to use
@@ -20,7 +20,7 @@ this resource for other tenant projects.
 ## Example Usage
 
 ```hcl
-resource "ccloud_billing_project_masterdata" "masterdata" {
+resource "sci_billing_project_masterdata" "masterdata" {
   responsible_primary_contact_id    = "D123456"
   responsible_primary_contact_email = "mail@example.com"
 
@@ -174,5 +174,5 @@ In addition to all arguments above, the following attributes are exported:
 Billing Project Masterdata can be imported with a `project_id` argument, e.g.
 
 ```
-$ terraform import ccloud_billing_project_masterdata.demo 30dd31bcac8748daaa75720dab7e019a
+$ terraform import sci_billing_project_masterdata.demo 30dd31bcac8748daaa75720dab7e019a
 ```

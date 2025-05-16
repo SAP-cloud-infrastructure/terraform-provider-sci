@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_automation_v1"
-sidebar_current: "docs-ccloud-resource-automation-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_automation_v1"
+sidebar_current: "docs-sci-resource-automation-v1"
 description: |-
   Create a Lyra Automation.
 ---
 
-# ccloud\_automation\_v1
+# sci\_automation\_v1
 
 Use this resource to create a Lyra Automation.
 
@@ -19,7 +19,7 @@ be stored in the raw state as plaintext.
 ### Chef automation
 
 ```hcl
-resource "ccloud_automation_v1" "chef_automation_1" {
+resource "sci_automation_v1" "chef_automation_1" {
   name            = "automation"
   repository      = "https://example.com/org/repo.git"
   type            = "Chef"
@@ -33,7 +33,7 @@ EOF
 ### Script automation
 
 ```hcl
-resource "ccloud_automation_v1" "script_automation_1" {
+resource "sci_automation_v1" "script_automation_1" {
   name        = "automation"
   repository  = "https://example.com/org/repo.git"
   type        = "Script"
@@ -48,7 +48,7 @@ resource "ccloud_automation_v1" "script_automation_1" {
 ### Using repository credentials
 
 ```hcl
-resource "ccloud_automation_v1" "chef_automation_1" {
+resource "sci_automation_v1" "chef_automation_1" {
   name                   = "automation"
   repository             = "https://example.com/org/repo.git"
   repository_credentials = "githubToken"
@@ -129,5 +129,5 @@ attributes are exported:
 An Automation can be imported using the `id`, e.g.
 
 ```
-$ terraform import ccloud_automation_v1.chef_automation_1 3dcd5f53-ea76-43f8-bf80-36ddd6ddf5a2
+$ terraform import sci_automation_v1.chef_automation_1 3dcd5f53-ea76-43f8-bf80-36ddd6ddf5a2
 ```

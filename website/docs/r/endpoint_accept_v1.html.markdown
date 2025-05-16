@@ -1,15 +1,15 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_endpoint_accept_v1"
-sidebar_current: "docs-ccloud-resource-endpoint-accept-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_endpoint_accept_v1"
+sidebar_current: "docs-sci-resource-endpoint-accept-v1"
 description: |-
   Accept an Archer endpoint request.
 ---
 
-# ccloud\_endpoint\_accept\_v1
+# sci\_endpoint\_accept\_v1
 
 Use this resource to accept an Archer endpoint connection request within the
-Converged Cloud environment. This is typically used in scenarios where services
+SAP Cloud Infrastructure environment. This is typically used in scenarios where services
 are shared across projects and require explicit acceptance to establish
 connectivity.
 
@@ -19,17 +19,17 @@ connection.
 ## Example Usage
 
 ```hcl
-provider "ccloud" {
+provider "sci" {
   alias = "remote"
 
   tenant_name = "remote-project"
 }
 
-resource "ccloud_endpoint_v1" "endpoint_1" {
-  provider = ccloud.remote
+resource "sci_endpoint_v1" "endpoint_1" {
+  provider = sci.remote
 
   name = "ep1"
-  service_id = ccloud_endpoint_service_v1.service_1.id
+  service_id = sci_endpoint_service_v1.service_1.id
   target {
    network = "8cd158e4-7b10-43ad-9b92-4251b10b5ee8"
   }
@@ -37,7 +37,7 @@ resource "ccloud_endpoint_v1" "endpoint_1" {
   tags = ["tag1","tag2"]
 }
 
-resource "ccloud_endpoint_service_v1" "service_1" {
+resource "sci_endpoint_service_v1" "service_1" {
   name             = "svc1"
   visibility       = "public"
   require_approval = true
@@ -46,9 +46,9 @@ resource "ccloud_endpoint_service_v1" "service_1" {
   port             = 80
 }
 
-resource "ccloud_endpoint_accept_v1" "accept_1" {
-  service_id  = ccloud_endpoint_service_v1.service_1.id
-  endpoint_id = ccloud_endpoint_v1.endpoint_1.id
+resource "sci_endpoint_accept_v1" "accept_1" {
+  service_id  = sci_endpoint_service_v1.service_1.id
+  endpoint_id = sci_endpoint_v1.endpoint_1.id
 }
 ```
 
@@ -78,5 +78,5 @@ An Archer endpoint consumer can be imported using the endpoint `id` and
 `service_id` separated by a slash, e.g.:
 
 ```shell
-$ terraform import ccloud_endpoint_accept_v1.accept_1 301317d8-9067-439f-b90f-9916beaf087c/74931fd2-90ff-41c0-93f2-f536eb3c2412
+$ terraform import sci_endpoint_accept_v1.accept_1 301317d8-9067-439f-b90f-9916beaf087c/74931fd2-90ff-41c0-93f2-f536eb3c2412
 ```

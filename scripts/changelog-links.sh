@@ -24,7 +24,7 @@ else
   SED="sed -i.bak -r -e"
 fi
 
-PROVIDER_URL="https:\/\/github.com\/sapcc\/terraform-provider-ccloud\/issues"
+PROVIDER_URL="https:\/\/github.com\/SAP-cloud-infrastructure\/terraform-provider-sci\/issues"
 
 $SED "s/GH-([0-9]+)/\[#\1\]\($PROVIDER_URL\/\1\)/g" -e 's/\[\[#(.+)([0-9])\)]$/(\[#\1\2))/g' CHANGELOG.md
 

@@ -1,12 +1,12 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_gslb_geomap_v1"
-sidebar_current: "docs-ccloud-resource-gslb-geomap-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_gslb_geomap_v1"
+sidebar_current: "docs-sci-resource-gslb-geomap-v1"
 description: |-
   Manage GSLB geographical maps
 ---
 
-# ccloud\_gslb\_geomap\_v1
+# sci\_gslb\_geomap\_v1
 
 ~> **Note:** This kind of resources is experimental in Andromeda.
 
@@ -15,7 +15,7 @@ This resource allows to manage GSLB geographical maps.
 ## Example Usage
 
 ```hcl
-resource "ccloud_gslb_geomap_v1" "geomap_1" {
+resource "sci_gslb_geomap_v1" "geomap_1" {
   default_datacenter = "5c978d3c-a6c8-4322-9788-81a24212e958"
   name               = "geomap1"
   service_provider   = "akamai"
@@ -71,5 +71,5 @@ In addition to the arguments listed above, the following computed attributes are
 Geographical map can be imported using the `id`, e.g.
 
 ```hcl
-$ terraform import ccloud_gslb_geomap_v1.geomap_1 24404021-e95a-4362-af9c-0e0cf8c6b856
+$ terraform import sci_gslb_geomap_v1.geomap_1 24404021-e95a-4362-af9c-0e0cf8c6b856
 ```

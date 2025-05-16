@@ -1,27 +1,27 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_endpoint_service_v1"
-sidebar_current: "docs-ccloud-data-source-endpoint-service-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_endpoint_service_v1"
+sidebar_current: "docs-sci-data-source-endpoint-service-v1"
 description: |-
   Retrieve information about an Archer endpoint service.
 ---
 
-# ccloud\_endpoint\_service\_v1
+# sci\_endpoint\_service\_v1
 
 Use this data source to get information about an Archer endpoint service within
-the Converged Cloud environment. This can be used to fetch details of a
+the SAP Cloud Infrastructure environment. This can be used to fetch details of a
 specific service by various selectors like name, project ID, or tags.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_endpoint_service_v1" "service_1" {
+data "sci_endpoint_service_v1" "service_1" {
   name        = "my-service"
   project_id  = "fa84c217f361441986a220edf9b1e337"
 }
 
 output "service_ip_addresses" {
-  value = data.ccloud_endpoint_service_v1.service_1.ip_addresses
+  value = data.sci_endpoint_service_v1.service_1.ip_addresses
 }
 ```
 

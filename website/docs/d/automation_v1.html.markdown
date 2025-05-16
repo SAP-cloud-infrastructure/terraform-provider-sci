@@ -1,19 +1,19 @@
 ---
-layout: "ccloud"
-page_title: "Converged Cloud: ccloud_automation_v1"
-sidebar_current: "docs-ccloud-datasource-automation-v1"
+layout: "sci"
+page_title: "SAP Cloud Infrastructure: sci_automation_v1"
+sidebar_current: "docs-sci-datasource-automation-v1"
 description: |-
   Get information on a Lyra Automation.
 ---
 
-# ccloud\_automation\_v1
+# sci\_automation\_v1
 
 Use this data source to get the ID and other attributes of a Lyra Automation.
 
 ## Example Usage
 
 ```hcl
-data "ccloud_automation_v1" "automation_1" {
+data "sci_automation_v1" "automation_1" {
   name = "chef-automation"
 }
 ```
