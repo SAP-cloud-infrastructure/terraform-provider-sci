@@ -150,6 +150,8 @@ github.com/rogpeppe/go-internal v1.13.1 h1:KvO1DLK/DRN07sQ1LQKScxyZJuNnedQ5/wKSR
 github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=
 github.com/sapcc/andromeda v1.0.3 h1:UV1O/HC3+yUOGQAF7t6N7FeoCKiq+U+75xnwm1BHMk0=
 github.com/sapcc/andromeda v1.0.3/go.mod h1:ruppZiZL8jLUKh82d1pGRKQpaMMqyfB+8Je3kD6iQrk=
+github.com/sapcc/andromeda v1.1.1 h1:Xf+7Si2F6czaKZYf3e6CFOYEQuKWyY9yMI8tXgMUhNk=
+github.com/sapcc/andromeda v1.1.1/go.mod h1:8kqq58fCOx5rG+hKwxdEgSfrlAuBEbFPGAFurBe3bMo=
 github.com/sapcc/archer v1.3.1 h1:ni3NAPI0WuEEEEdabWj4NONV1lqE8nfsK3o/tWgZvOE=
 github.com/sapcc/archer v1.3.1/go.mod h1:IAbP9UNksbC5HyE8Tq5ZJ8BgwbTnqxNC7lMHYVsMh1M=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.3 h1:w6xb4mLvYBIzfHctLqw/FpMi+FSDt7Cq26qL6xPDRAE=
@@ -208,6 +210,8 @@ golang.org/x/net v0.0.0-20210226172049-e18ecbb05110/go.mod h1:m0MpNAwzfU5UDzcl9v
 golang.org/x/net v0.0.0-20220722155237-a158d28d115b/go.mod h1:XRhObCWvk6IyKnWLug+ECip1KBveYUHfp+8e9klMJ9c=
 golang.org/x/net v0.39.0 h1:ZCu7HMWDxpXpaiKdhzIfaltL9Lp31x/3fCP11bc6/fY=
 golang.org/x/net v0.39.0/go.mod h1:X7NRbYVEA+ewNkCNyJ513WmMdQ3BineSwVtN2zD/d+E=
+golang.org/x/net v0.40.0 h1:79Xs7wF06Gbdcg4kdCCIQArK11Z1hr5POQ6+fIYHNuY=
+golang.org/x/net v0.40.0/go.mod h1:y0hY0exeL2Pku80/zKK7tpntoX23cqL3Oa6njdgRtds=
 golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
