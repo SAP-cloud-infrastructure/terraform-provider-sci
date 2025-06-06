@@ -20,6 +20,15 @@ func resourceSCIGSLBQuotaV1() *schema.Resource {
 			StateContext: schema.ImportStatePassthroughContext,
 		},
 
+		SchemaVersion: 1,
+		StateUpgraders: []schema.StateUpgrader{
+			{
+				Type:    resourceSCIGSLBQuotaV1V0().CoreConfigSchema().ImpliedType(),
+				Upgrade: resourceSCIGSLBQuotaV1StateUpgradeV0,
+				Version: 0,
+			},
+		},
+
 		Schema: map[string]*schema.Schema{
 			"region": {
 				Type:     schema.TypeString,
@@ -33,6 +42,17 @@ func resourceSCIGSLBQuotaV1() *schema.Resource {
 				Computed: true,
 			},
 			"domain": {
+				Type:       schema.TypeInt,
+				Optional:   true,
+				Computed:   true,
+				Deprecated: "Use domain_akamai and domain_f5 instead.",
+			},
+			"domain_akamai": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"domain_f5": {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
@@ -64,6 +84,17 @@ func resourceSCIGSLBQuotaV1() *schema.Resource {
 				Computed: true,
 			},
 			"in_use_domain": {
+				Type:       schema.TypeInt,
+				Optional:   true,
+				Computed:   true,
+				Deprecated: "Use in_use_domain_akamai and in_use_domain_f5 instead.",
+			},
+			"in_use_domain_akamai": {
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"in_use_domain_f5": {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
@@ -98,19 +129,22 @@ func resourceSCIGSLBQuotaV1Create(ctx context.Context, d *schema.ResourceData, m
 	projectID := d.Get("project_id").(string)
 
 	quota := &models.Quota{}
-	if v, ok := d.GetOk("datacenter"); ok && v != "" {
+	if v, ok := getOkExists(d, "datacenter"); ok && v != "" {
 		quota.Datacenter = ptr(int64(v.(int)))
 	}
-	if v, ok := d.GetOk("domain"); ok && v != "" {
-		quota.Domain = ptr(int64(v.(int)))
+	if v, ok := getOkExists(d, "domain_akamai"); ok && v != "" {
+		quota.DomainAkamai = ptr(int64(v.(int)))
 	}
-	if v, ok := d.GetOk("member"); ok && v != "" {
+	if v, ok := getOkExists(d, "domain_f5"); ok && v != "" {
+		quota.DomainF5 = ptr(int64(v.(int)))
+	}
+	if v, ok := getOkExists(d, "member"); ok && v != "" {
 		quota.Member = ptr(int64(v.(int)))
 	}
-	if v, ok := d.GetOk("monitor"); ok && v != "" {
+	if v, ok := getOkExists(d, "monitor"); ok && v != "" {
 		quota.Monitor = ptr(int64(v.(int)))
 	}
-	if v, ok := d.GetOk("pool"); ok && v != "" {
+	if v, ok := getOkExists(d, "pool"); ok && v != "" {
 		quota.Pool = ptr(int64(v.(int)))
 	}
 
@@ -184,9 +218,13 @@ func resourceSCIGSLBQuotaV1Update(ctx context.Context, d *schema.ResourceData, m
 		v := d.Get("datacenter").(int)
 		quota.Datacenter = ptr(int64(v))
 	}
-	if d.HasChange("domain") {
-		v := d.Get("domain").(int)
-		quota.Domain = ptr(int64(v))
+	if d.HasChange("domain_akamai") {
+		v := d.Get("domain_akamai").(int)
+		quota.DomainAkamai = ptr(int64(v))
+	}
+	if d.HasChange("domain_f5") {
+		v := d.Get("domain_f5").(int)
+		quota.DomainF5 = ptr(int64(v))
 	}
 	if d.HasChange("member") {
 		v := d.Get("member").(int)
@@ -245,14 +283,16 @@ func resourceSCIGSLBQuotaV1Delete(ctx context.Context, d *schema.ResourceData, m
 
 func andromedaSetQuotaResource(d *schema.ResourceData, config *Config, q *administrative.GetQuotasProjectIDOKBody) {
 	_ = d.Set("datacenter", ptrValue(q.Quota.Datacenter))
-	_ = d.Set("domain", ptrValue(q.Quota.Domain))
+	_ = d.Set("domain_akamai", ptrValue(q.Quota.DomainAkamai))
+	_ = d.Set("domain_f5", ptrValue(q.Quota.DomainF5))
 	_ = d.Set("member", ptrValue(q.Quota.Member))
 	_ = d.Set("monitor", ptrValue(q.Quota.Monitor))
 	_ = d.Set("pool", ptrValue(q.Quota.Pool))
 
 	// computed
 	_ = d.Set("in_use_datacenter", q.Quota.InUseDatacenter)
-	_ = d.Set("in_use_domain", q.Quota.InUseDomain)
+	_ = d.Set("in_use_domain_akamai", q.Quota.InUseDomainAkamai)
+	_ = d.Set("in_use_domain_f5", q.Quota.InUseDomainF5)
 	_ = d.Set("in_use_member", q.Quota.InUseMember)
 	_ = d.Set("in_use_monitor", q.Quota.InUseMonitor)
 	_ = d.Set("in_use_pool", q.Quota.InUsePool)

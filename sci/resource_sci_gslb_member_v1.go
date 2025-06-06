@@ -94,7 +94,7 @@ func resourceSCIGSLBMemberV1Create(ctx context.Context, d *schema.ResourceData, 
 
 	// Create the member
 	adminStateUp := d.Get("admin_state_up").(bool)
-	address := strfmt.IPv4(d.Get("address").(string))
+	address := d.Get("address").(string)
 	port := int64(d.Get("port").(int))
 	member := &models.Member{
 		Address:      &address,
@@ -182,7 +182,7 @@ func resourceSCIGSLBMemberV1Update(ctx context.Context, d *schema.ResourceData, 
 
 	id := d.Id()
 	member := &models.Member{
-		Address:      ptr(strfmt.IPv4(d.Get("address").(string))),
+		Address:      ptr(d.Get("address").(string)),
 		DatacenterID: ptr(strfmt.UUID(d.Get("datacenter_id").(string))),
 		Port:         ptr(int64(d.Get("port").(int))),
 	}
