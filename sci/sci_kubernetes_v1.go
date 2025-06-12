@@ -13,6 +13,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/sapcc/kubernikus/pkg/api/client/operations"
 	"github.com/sapcc/kubernikus/pkg/api/models"
@@ -43,6 +44,23 @@ func kubernikusValidatePoolName(v interface{}, k string) (ws []string, errors []
 			fmt.Errorf("%q must be 1 to 20 characters with lowercase and uppercase letters, numbers, hyphens and dots", k))
 	}
 	return
+}
+
+func kubernikusValidateAuthConf(v any, k string) ([]string, []error) {
+	if v == nil {
+		return nil, nil
+	}
+	authConf, ok := v.(string)
+	if !ok {
+		return nil, []error{fmt.Errorf("expected string for %s, got %T", k, v)}
+	}
+
+	err := models.AuthenticationConfiguration(authConf).Validate(strfmt.Default)
+	if err != nil {
+		return nil, []error{fmt.Errorf("invalid authentication_configuration: %s", err)}
+	}
+
+	return nil, nil
 }
 
 func kubernikusFlattenOpenstackSpecV1(spec *models.OpenstackSpec) []map[string]interface{} {

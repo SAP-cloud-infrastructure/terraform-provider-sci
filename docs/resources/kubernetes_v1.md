@@ -149,12 +149,19 @@ The following arguments are supported:
   `false`. Changing this forces a new resource to be created.
 
 * `dex` - (Optional) Enable dex installation to Kubernetes cluster. It is possible
-   to enable for all supported Kubernetes versions. Disabling is not supported in
-   Kubernikus API. Defaults to `true`.
+  to enable for all supported Kubernetes versions. Disabling is not supported in
+  Kubernikus API. Defaults to `false`. Conflicts with
+  `authentication_configuration` argument.
+
+* `authentication_configuration` - (Optional) Enables structured authentication
+  for the cluster by specifying a valid AuthenticationConfiguration YAML
+  resource. This configuration is passed directly to the API server via the
+  --authentication-config flag. Conflicts with `dex` argument. Requires
+  Kubernetes version 1.30 or later.
 
 * `dashboard` - (Optional) Enable Kubernetes dashboard installation to Kubernetes
-   cluster. It is possible to enable for Kubernetes versions >= 1.11.9. Disabling
-   is not supported in Kubernikus API. Defaults to `true`.
+  cluster. It is possible to enable for Kubernetes versions >= 1.11.9. Disabling
+  is not supported in Kubernikus API. Defaults to `true`.
 
 * `backup` - (Optional) Configures the etcd database backup behaviour. Can
   either be `on`, `off` or `externalAWS`. `externalAWS` option is available only
@@ -244,8 +251,13 @@ In addition to all arguments above, the following attributes are exported:
 * `dns_address` - See Argument Reference above.
 * `dns_domain` - See Argument Reference above.
 * `ssh_public_key` - See Argument Reference above.
+* `no_cloud` - See Argument Reference above.
+* `dex` - See Argument Reference above.
+* `authentication_configuration` - See Argument Reference above.
 * `node_pools` - See Argument Reference above.
 * `openstack` - See Argument Reference above.
+* `dashboard` - See Argument Reference above.
+* `backup` - See Argument Reference above.
 * `version` - See Argument Reference above.
 * `phase` - The Kubernikus cluster current status. Can either be `Pending`,
   `Creating`, `Running`, `Terminating` or `Upgrading`.
