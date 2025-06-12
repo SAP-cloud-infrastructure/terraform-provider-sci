@@ -14,9 +14,46 @@ with the proper credentials before it can be used.
 
 Use the navigation to the left to read about the available resources.
 
-# Installing the provider
+# CCloud Provider Backward Compatibility
 
-Starting from v1.4.8, you can utilize the provider from a [Terraform Registry](https://registry.terraform.io/providers/SAP-cloud-infrastructure/sci).
+The SAP Cloud Infrastructure provider is the successor to the original CCloud
+provider. It is designed to be backward compatible with the CCloud provider, so
+that existing Terraform configurations using the CCloud provider can be
+migrated to the SAP Cloud Infrastructure provider with minimal changes.
+
+To migrate from the CCloud provider to the SAP Cloud Infrastructure provider,
+you can simply change the provider source in your Terraform configuration from
+`ccloud` to `sci`. For example, change:
+
+```hcl
+terraform {
+  required_providers {
+    ccloud = {
+      source = "sapcc/ccloud"
+    }
+  }
+}
+```
+
+to:
+
+```hcl
+terraform {
+  required_providers {
+    ccloud = {
+      source = "SAP-cloud-infrastructure/sci"
+    }
+  }
+}
+```
+
+and update the state file to reflect the new provider source. You can do this by running the following command:
+
+```shell
+$ terraform state replace-provider sapcc/ccloud SAP-cloud-infrastructure/sci
+```
+
+# Installing the provider
 
 ## Example Usage
 
