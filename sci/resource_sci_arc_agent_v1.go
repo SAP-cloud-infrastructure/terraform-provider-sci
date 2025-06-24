@@ -117,7 +117,7 @@ func resourceSCIArcAgentV1() *schema.Resource {
 	}
 }
 
-func resourceSCIArcAgentV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcAgentV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -143,7 +143,7 @@ func resourceSCIArcAgentV1Create(ctx context.Context, d *schema.ResourceData, me
 	return resourceSCIArcAgentV1Read(ctx, d, meta)
 }
 
-func resourceSCIArcAgentV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcAgentV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -160,7 +160,7 @@ func resourceSCIArcAgentV1Read(ctx context.Context, d *schema.ResourceData, meta
 	return nil
 }
 
-func resourceSCIArcAgentV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcAgentV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -176,7 +176,7 @@ func resourceSCIArcAgentV1Update(ctx context.Context, d *schema.ResourceData, me
 	return resourceSCIArcAgentV1Read(ctx, d, meta)
 }
 
-func resourceSCIArcAgentV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcAgentV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {

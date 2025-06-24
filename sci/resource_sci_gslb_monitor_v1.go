@@ -106,7 +106,7 @@ func resourceSCIGSLBMonitorV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBMonitorV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMonitorV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -184,7 +184,7 @@ func resourceSCIGSLBMonitorV1Create(ctx context.Context, d *schema.ResourceData,
 	return nil
 }
 
-func resourceSCIGSLBMonitorV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMonitorV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -207,7 +207,7 @@ func resourceSCIGSLBMonitorV1Read(ctx context.Context, d *schema.ResourceData, m
 	return nil
 }
 
-func resourceSCIGSLBMonitorV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMonitorV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -285,7 +285,7 @@ func resourceSCIGSLBMonitorV1Update(ctx context.Context, d *schema.ResourceData,
 	return nil
 }
 
-func resourceSCIGSLBMonitorV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMonitorV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -342,7 +342,7 @@ func andromedaWaitForMonitor(ctx context.Context, client monitors.ClientService,
 }
 
 func andromedaGetMonitorStatus(ctx context.Context, client monitors.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		monitor, err := andromedaGetMonitor(ctx, client, id)
 		if err != nil {
 			return nil, "", err

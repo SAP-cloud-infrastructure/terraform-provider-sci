@@ -83,7 +83,7 @@ func resourceSCIGSLBPoolV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -97,7 +97,7 @@ func resourceSCIGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData, me
 		AdminStateUp: &adminStateUp,
 	}
 	if v, ok := d.GetOk("domains"); ok {
-		pool.Domains = expandToStrFmtUUIDSlice(v.([]interface{}))
+		pool.Domains = expandToStrFmtUUIDSlice(v.([]any))
 	}
 	if v, ok := d.GetOk("name"); ok && v != "" {
 		pool.Name = ptr(v.(string))
@@ -139,7 +139,7 @@ func resourceSCIGSLBPoolV1Create(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIGSLBPoolV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBPoolV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -162,7 +162,7 @@ func resourceSCIGSLBPoolV1Read(ctx context.Context, d *schema.ResourceData, meta
 	return nil
 }
 
-func resourceSCIGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -178,7 +178,7 @@ func resourceSCIGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData, me
 		pool.AdminStateUp = &v
 	}
 	if d.HasChange("domains") {
-		v := d.Get("domains").([]interface{})
+		v := d.Get("domains").([]any)
 		pool.Domains = expandToStrFmtUUIDSlice(v)
 	}
 	if d.HasChange("name") {
@@ -216,7 +216,7 @@ func resourceSCIGSLBPoolV1Update(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIGSLBPoolV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBPoolV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -273,7 +273,7 @@ func andromedaWaitForPool(ctx context.Context, client pools.ClientService, id, t
 }
 
 func andromedaGetPoolStatus(ctx context.Context, client pools.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		pool, err := andromedaGetPool(ctx, client, id)
 		if err != nil {
 			return nil, "", err

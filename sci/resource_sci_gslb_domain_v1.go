@@ -112,7 +112,7 @@ func resourceSCIGSLBDomainV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBDomainV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDomainV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -137,7 +137,7 @@ func resourceSCIGSLBDomainV1Create(ctx context.Context, d *schema.ResourceData, 
 		domain.ProjectID = ptr(v.(string))
 	}
 	if v, ok := d.GetOk("pools"); ok {
-		domain.Pools = expandToStrFmtUUIDSlice(v.([]interface{}))
+		domain.Pools = expandToStrFmtUUIDSlice(v.([]any))
 	}
 	if v, ok := d.GetOk("mode"); ok && v != "" {
 		domain.Mode = ptr(v.(string))
@@ -146,7 +146,7 @@ func resourceSCIGSLBDomainV1Create(ctx context.Context, d *schema.ResourceData, 
 		domain.RecordType = ptr(v.(string))
 	}
 	if v, ok := d.GetOk("aliases"); ok {
-		domain.Aliases = expandToStringSlice(v.([]interface{}))
+		domain.Aliases = expandToStringSlice(v.([]any))
 	}
 
 	opts := &domains.PostDomainsParams{
@@ -182,7 +182,7 @@ func resourceSCIGSLBDomainV1Create(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBDomainV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDomainV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -205,7 +205,7 @@ func resourceSCIGSLBDomainV1Read(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIGSLBDomainV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDomainV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -224,7 +224,7 @@ func resourceSCIGSLBDomainV1Update(ctx context.Context, d *schema.ResourceData, 
 		domain.AdminStateUp = &v
 	}
 	if d.HasChange("aliases") {
-		v := d.Get("aliases").([]interface{})
+		v := d.Get("aliases").([]any)
 		domain.Aliases = expandToStringSlice(v)
 	}
 	if d.HasChange("mode") {
@@ -236,7 +236,7 @@ func resourceSCIGSLBDomainV1Update(ctx context.Context, d *schema.ResourceData, 
 		domain.Name = &v
 	}
 	if d.HasChange("pools") {
-		v := d.Get("pools").([]interface{})
+		v := d.Get("pools").([]any)
 		domain.Pools = expandToStrFmtUUIDSlice(v)
 	}
 	if d.HasChange("project_id") {
@@ -274,7 +274,7 @@ func resourceSCIGSLBDomainV1Update(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBDomainV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDomainV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -331,7 +331,7 @@ func andromedaWaitForDomain(ctx context.Context, client domains.ClientService, i
 }
 
 func andromedaGetDomainStatus(ctx context.Context, client domains.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		domain, err := andromedaGetDomain(ctx, client, id)
 		if err != nil {
 			return nil, "", err

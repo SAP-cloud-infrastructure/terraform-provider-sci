@@ -266,7 +266,7 @@ func dataSourceSCIArcJobV1() *schema.Resource {
 	}
 }
 
-func dataSourceSCIArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCIArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {

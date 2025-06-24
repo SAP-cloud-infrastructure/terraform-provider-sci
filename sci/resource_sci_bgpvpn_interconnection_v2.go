@@ -108,7 +108,7 @@ func resourceSCIBGPVPNInterconnectionV2() *schema.Resource {
 	}
 }
 
-func resourceSCIBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -139,7 +139,7 @@ func resourceSCIBGPVPNInterconnectionV2Create(ctx context.Context, d *schema.Res
 	return resourceSCIBGPVPNInterconnectionV2Read(ctx, d, meta)
 }
 
-func resourceSCIBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -168,7 +168,7 @@ func resourceSCIBGPVPNInterconnectionV2Read(ctx context.Context, d *schema.Resou
 	return nil
 }
 
-func resourceSCIBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -211,7 +211,7 @@ func resourceSCIBGPVPNInterconnectionV2Update(ctx context.Context, d *schema.Res
 	return resourceSCIBGPVPNInterconnectionV2Read(ctx, d, meta)
 }
 
-func resourceSCIBGPVPNInterconnectionV2Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBGPVPNInterconnectionV2Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	log.Printf("[DEBUG] Destroy interconnection: %s", d.Id())
 
 	config := meta.(*Config)

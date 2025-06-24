@@ -67,7 +67,7 @@ func resourceSCIEndpointRBACV1() *schema.Resource {
 	}
 }
 
-func resourceSCIEndpointRBACV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointRBACV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -107,7 +107,7 @@ func resourceSCIEndpointRBACV1Create(ctx context.Context, d *schema.ResourceData
 	return nil
 }
 
-func resourceSCIEndpointRBACV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointRBACV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -138,7 +138,7 @@ func resourceSCIEndpointRBACV1Read(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIEndpointRBACV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointRBACV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -175,7 +175,7 @@ func resourceSCIEndpointRBACV1Update(ctx context.Context, d *schema.ResourceData
 	return nil
 }
 
-func resourceSCIEndpointRBACV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointRBACV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {

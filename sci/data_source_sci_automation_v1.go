@@ -133,7 +133,7 @@ func dataSourceSCIAutomationV1() *schema.Resource {
 	}
 }
 
-func dataSourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -155,7 +155,7 @@ func dataSourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	var automations []automations.Automation
-	var v interface{}
+	var v any
 	var debugExists, debug bool
 
 	if v, debugExists = getOkExists(d, "debug"); debugExists {

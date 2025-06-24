@@ -5,21 +5,21 @@ import (
 	"github.com/sapcc/gophercloud-sapcc/v2/billing/masterdata/projects"
 )
 
-func billingProjectFlattenCostObject(co projects.CostObject) []map[string]interface{} {
-	return []map[string]interface{}{{
+func billingProjectFlattenCostObject(co projects.CostObject) []map[string]any {
+	return []map[string]any{{
 		"inherited": co.Inherited,
 		"name":      co.Name,
 		"type":      co.Type,
 	}}
 }
 
-func billingProjectExpandCostObject(raw interface{}) projects.CostObject {
+func billingProjectExpandCostObject(raw any) projects.CostObject {
 	var co projects.CostObject
 
 	if raw != nil {
-		if v, ok := raw.([]interface{}); ok {
+		if v, ok := raw.([]any); ok {
 			for _, v := range v {
-				if v, ok := v.(map[string]interface{}); ok {
+				if v, ok := v.(map[string]any); ok {
 					if v, ok := v["inherited"]; ok {
 						co.Inherited = v.(bool)
 					}
@@ -44,7 +44,7 @@ func billingProjectExpandCostObject(raw interface{}) projects.CostObject {
 // replaceEmptyString is a helper function to replace empty string fields with
 // another field.
 func replaceEmptyString(d *schema.ResourceData, field string, b string) string {
-	var v interface{}
+	var v any
 	var ok bool
 	if v, ok = getOkExists(d, field); !ok {
 		return b
@@ -55,7 +55,7 @@ func replaceEmptyString(d *schema.ResourceData, field string, b string) string {
 // replaceEmptyBool is a helper function to replace empty string fields with
 // another field.
 func replaceEmptyBool(d *schema.ResourceData, field string, b bool) bool {
-	var v interface{}
+	var v any
 	var ok bool
 	if v, ok = getOkExists(d, field); !ok {
 		return b
@@ -63,14 +63,14 @@ func replaceEmptyBool(d *schema.ResourceData, field string, b bool) bool {
 	return v.(bool)
 }
 
-func billingProjectExpandExtCertificationV1(raw interface{}) *projects.ExtCertification {
-	v, ok := raw.([]interface{})
+func billingProjectExpandExtCertificationV1(raw any) *projects.ExtCertification {
+	v, ok := raw.([]any)
 	if !ok {
 		return nil
 	}
 
 	for _, v := range v {
-		v, ok := v.(map[string]interface{})
+		v, ok := v.(map[string]any)
 		if !ok {
 			return nil
 		}
@@ -100,12 +100,12 @@ func billingProjectExpandExtCertificationV1(raw interface{}) *projects.ExtCertif
 	return nil
 }
 
-func billingProjectFlattenExtCertificationV1(extCertification *projects.ExtCertification) []map[string]interface{} {
+func billingProjectFlattenExtCertificationV1(extCertification *projects.ExtCertification) []map[string]any {
 	if extCertification == nil {
 		return nil
 	}
 
-	return []map[string]interface{}{{
+	return []map[string]any{{
 		"c5":   extCertification.C5,
 		"iso":  extCertification.ISO,
 		"pci":  extCertification.PCI,

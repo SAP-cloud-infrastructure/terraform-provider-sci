@@ -26,7 +26,7 @@ const (
 	poolNameRegex    = "^[a-z][-\\.a-z0-9]{0,18}[a-z0-9]?$"
 )
 
-func kubernikusValidateClusterName(v interface{}, k string) (ws []string, errors []error) {
+func kubernikusValidateClusterName(v any, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	if !regexp.MustCompile(klusterNameRegex).MatchString(value) {
@@ -36,7 +36,7 @@ func kubernikusValidateClusterName(v interface{}, k string) (ws []string, errors
 	return
 }
 
-func kubernikusValidatePoolName(v interface{}, k string) (ws []string, errors []error) {
+func kubernikusValidatePoolName(v any, k string) (ws []string, errors []error) {
 	value := v.(string)
 
 	if !regexp.MustCompile(poolNameRegex).MatchString(value) {
@@ -63,14 +63,14 @@ func kubernikusValidateAuthConf(v any, k string) ([]string, []error) {
 	return nil, nil
 }
 
-func kubernikusFlattenOpenstackSpecV1(spec *models.OpenstackSpec) []map[string]interface{} {
-	var res []map[string]interface{}
+func kubernikusFlattenOpenstackSpecV1(spec *models.OpenstackSpec) []map[string]any {
+	var res []map[string]any
 
 	if spec == (&models.OpenstackSpec{}) {
 		return res
 	}
 
-	return append(res, map[string]interface{}{
+	return append(res, map[string]any{
 		"lb_floating_network_id": spec.LBFloatingNetworkID,
 		"lb_subnet_id":           spec.LBSubnetID,
 		"network_id":             spec.NetworkID,
@@ -79,10 +79,10 @@ func kubernikusFlattenOpenstackSpecV1(spec *models.OpenstackSpec) []map[string]i
 	})
 }
 
-func kubernikusFlattenNodePoolsV1(nodePools []models.NodePool) []map[string]interface{} {
-	res := make([]map[string]interface{}, 0, len(nodePools))
+func kubernikusFlattenNodePoolsV1(nodePools []models.NodePool) []map[string]any {
+	res := make([]map[string]any, 0, len(nodePools))
 	for _, p := range nodePools {
-		res = append(res, map[string]interface{}{
+		res = append(res, map[string]any{
 			"availability_zone":     p.AvailabilityZone,
 			"flavor":                p.Flavor,
 			"image":                 p.Image,
@@ -91,7 +91,7 @@ func kubernikusFlattenNodePoolsV1(nodePools []models.NodePool) []map[string]inte
 			"taints":                p.Taints,
 			"labels":                p.Labels,
 			"custom_root_disk_size": p.CustomRootDiskSize,
-			"config": []map[string]interface{}{
+			"config": []map[string]any{
 				{
 					"allow_reboot":  p.Config.AllowReboot,
 					"allow_replace": p.Config.AllowReplace,
@@ -102,11 +102,11 @@ func kubernikusFlattenNodePoolsV1(nodePools []models.NodePool) []map[string]inte
 	return res
 }
 
-func kubernikusExpandOpenstackSpecV1(raw interface{}) *models.OpenstackSpec {
+func kubernikusExpandOpenstackSpecV1(raw any) *models.OpenstackSpec {
 	if raw != nil {
-		if v, ok := raw.([]interface{}); ok {
+		if v, ok := raw.([]any); ok {
 			for _, v := range v {
-				if v, ok := v.(map[string]interface{}); ok {
+				if v, ok := v.(map[string]any); ok {
 					res := new(models.OpenstackSpec)
 
 					if v, ok := v["lb_floating_network_id"]; ok {
@@ -134,15 +134,15 @@ func kubernikusExpandOpenstackSpecV1(raw interface{}) *models.OpenstackSpec {
 	return nil
 }
 
-func kubernikusExpandNodePoolsV1(raw interface{}) ([]models.NodePool, error) {
+func kubernikusExpandNodePoolsV1(raw any) ([]models.NodePool, error) {
 	var names []string
 
 	if raw != nil {
-		if v, ok := raw.([]interface{}); ok {
+		if v, ok := raw.([]any); ok {
 			var res []models.NodePool
 
 			for _, v := range v {
-				if v, ok := v.(map[string]interface{}); ok {
+				if v, ok := v.(map[string]any); ok {
 					var p models.NodePool
 
 					if v, ok := v["name"]; ok {
@@ -165,16 +165,16 @@ func kubernikusExpandNodePoolsV1(raw interface{}) ([]models.NodePool, error) {
 						p.AvailabilityZone = v.(string)
 					}
 					if v, ok := v["taints"]; ok {
-						p.Taints = expandToStringSlice(v.([]interface{}))
+						p.Taints = expandToStringSlice(v.([]any))
 					}
 					if v, ok := v["labels"]; ok {
-						p.Labels = expandToStringSlice(v.([]interface{}))
+						p.Labels = expandToStringSlice(v.([]any))
 					}
 					if v, ok := v["custom_root_disk_size"]; ok {
 						p.CustomRootDiskSize = int64(v.(int))
 					}
 					if v, ok := v["config"]; ok {
-						p.Config = expandToNodePoolConfig(v.([]interface{}))
+						p.Config = expandToNodePoolConfig(v.([]any))
 					}
 
 					res = append(res, p)
@@ -202,7 +202,6 @@ func kubernikusWaitForClusterV1(ctx context.Context, klient *kubernikus, name st
 	}
 
 	_, err := stateConf.WaitForStateContext(ctx)
-
 	if err != nil {
 		if e, ok := err.(*operations.ShowClusterDefault); ok && target == "Terminated" && e.Payload.Message == "Not found" {
 			return nil
@@ -213,7 +212,7 @@ func kubernikusWaitForClusterV1(ctx context.Context, klient *kubernikus, name st
 }
 
 func kubernikusKlusterV1GetPhase(klient *kubernikus, target string, name string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		result, err := klient.ShowCluster(operations.NewShowClusterParams().WithName(name), klient.authFunc())
 		if err != nil {
 			return nil, "", err
@@ -260,7 +259,7 @@ func kubernikusKlusterV1GetPhase(klient *kubernikus, target string, name string)
 	}
 }
 
-func kubernikusUpdateNodePoolsV1(ctx context.Context, klient *kubernikus, cluster *models.Kluster, oldNodePoolsRaw, newNodePoolsRaw interface{}, target string, pending []string, timeout time.Duration) error {
+func kubernikusUpdateNodePoolsV1(ctx context.Context, klient *kubernikus, cluster *models.Kluster, oldNodePoolsRaw, newNodePoolsRaw any, target string, pending []string, timeout time.Duration) error {
 	var poolsToKeep []models.NodePool
 	var poolsToDelete []models.NodePool
 	oldNodePools, err := kubernikusExpandNodePoolsV1(oldNodePoolsRaw)
@@ -395,7 +394,7 @@ func getCredentials(klient *kubernikus, name string, creds string) (string, []ma
 
 func flattenKubernetesClusterKubeConfig(creds string) ([]map[string]string, *x509.Certificate, error) {
 	var cfg clientcmdapi.Config
-	var values = make(map[string]string)
+	values := make(map[string]string)
 	var crt *x509.Certificate
 
 	err := yaml.Unmarshal([]byte(creds), &cfg)

@@ -57,7 +57,7 @@ func resourceSCIEndpointQuotaV1() *schema.Resource {
 	}
 }
 
-func resourceSCIEndpointQuotaV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointQuotaV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -94,7 +94,7 @@ func resourceSCIEndpointQuotaV1Create(ctx context.Context, d *schema.ResourceDat
 	return resourceSCIEndpointQuotaV1Read(ctx, d, meta)
 }
 
-func resourceSCIEndpointQuotaV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointQuotaV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -127,7 +127,7 @@ func resourceSCIEndpointQuotaV1Read(ctx context.Context, d *schema.ResourceData,
 	return nil
 }
 
-func resourceSCIEndpointQuotaV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointQuotaV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -157,7 +157,7 @@ func resourceSCIEndpointQuotaV1Update(ctx context.Context, d *schema.ResourceDat
 	return resourceSCIEndpointQuotaV1Read(ctx, d, meta)
 }
 
-func resourceSCIEndpointQuotaV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointQuotaV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {

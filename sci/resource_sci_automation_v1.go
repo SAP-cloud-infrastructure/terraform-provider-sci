@@ -157,14 +157,14 @@ func resourceSCIAutomationV1() *schema.Resource {
 	}
 }
 
-func resourceSCIAutomationV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
 		return diag.Errorf("Error creating OpenStack Automation client: %s", err)
 	}
 
-	var chefAttributes map[string]interface{}
+	var chefAttributes map[string]any
 
 	// Convert raw string into the map
 	chefAttributesJSON := d.Get("chef_attributes").(string)
@@ -175,10 +175,10 @@ func resourceSCIAutomationV1Create(ctx context.Context, d *schema.ResourceData, 
 		}
 	}
 
-	runList := d.Get("run_list").([]interface{})
-	arguments := d.Get("arguments").([]interface{})
-	environment := d.Get("environment").(map[string]interface{})
-	tags := d.Get("tags").(map[string]interface{})
+	runList := d.Get("run_list").([]any)
+	arguments := d.Get("arguments").([]any)
+	environment := d.Get("environment").(map[string]any)
+	tags := d.Get("tags").(map[string]any)
 
 	createOpts := automations.CreateOpts{
 		Name:                  d.Get("name").(string),
@@ -212,7 +212,7 @@ func resourceSCIAutomationV1Create(ctx context.Context, d *schema.ResourceData, 
 	return resourceSCIAutomationV1Read(ctx, d, meta)
 }
 
-func resourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -254,7 +254,7 @@ func resourceSCIAutomationV1Read(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIAutomationV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -286,17 +286,17 @@ func resourceSCIAutomationV1Update(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	if d.HasChange("tags") {
-		tags := d.Get("tags").(map[string]interface{})
+		tags := d.Get("tags").(map[string]any)
 		updateOpts.Tags = expandToMapStringString(tags)
 	}
 
 	if d.HasChange("run_list") {
-		runList := d.Get("run_list").([]interface{})
+		runList := d.Get("run_list").([]any)
 		updateOpts.RunList = expandToStringSlice(runList)
 	}
 
 	if d.HasChange("chef_attributes") {
-		var chefAttributes map[string]interface{}
+		var chefAttributes map[string]any
 		// Convert raw string into the map
 		chefAttributesJSON := d.Get("chef_attributes").(string)
 		if len(chefAttributesJSON) > 0 {
@@ -330,12 +330,12 @@ func resourceSCIAutomationV1Update(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	if d.HasChange("arguments") {
-		arguments := d.Get("arguments").([]interface{})
+		arguments := d.Get("arguments").([]any)
 		updateOpts.Arguments = expandToStringSlice(arguments)
 	}
 
 	if d.HasChange("environment") {
-		environment := d.Get("environment").(map[string]interface{})
+		environment := d.Get("environment").(map[string]any)
 		updateOpts.Environment = expandToMapStringString(environment)
 	}
 
@@ -347,7 +347,7 @@ func resourceSCIAutomationV1Update(ctx context.Context, d *schema.ResourceData, 
 	return resourceSCIAutomationV1Read(ctx, d, meta)
 }
 
-func resourceSCIAutomationV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {

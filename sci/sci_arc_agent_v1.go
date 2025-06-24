@@ -36,7 +36,7 @@ func arcSCIArcAgentV1ReadAgent(ctx context.Context, d *schema.ResourceData, arcC
 
 	_ = d.Set("facts", expandToMapStringString(agent.Facts))
 	factsAgents := agent.Facts["agents"]
-	if v, ok := factsAgents.(map[string]interface{}); ok {
+	if v, ok := factsAgents.(map[string]any); ok {
 		_ = d.Set("facts_agents", expandToMapStringString(v))
 	} else {
 		_ = d.Set("facts_agents", map[string]string{})
@@ -46,7 +46,7 @@ func arcSCIArcAgentV1ReadAgent(ctx context.Context, d *schema.ResourceData, arcC
 }
 
 func arcSCIArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) (*agents.Agent, error) {
-	var agent interface{}
+	var agent any
 	var msg string
 	var err error
 
@@ -80,7 +80,7 @@ func arcSCIArcAgentV1WaitForAgent(ctx context.Context, arcClient *gophercloud.Se
 }
 
 func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID, filter string, timeout time.Duration) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		var agent *agents.Agent
 		var err error
 
@@ -130,10 +130,10 @@ func arcSCIArcAgentV1GetAgent(ctx context.Context, arcClient *gophercloud.Servic
 	}
 }
 
-func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID string, oldTagsRaw, newTagsRaw interface{}) error {
+func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceClient, agentID string, oldTagsRaw, newTagsRaw any) error {
 	var tagsToDelete []string
-	oldTags, _ := oldTagsRaw.(map[string]interface{})
-	newTags, _ := newTagsRaw.(map[string]interface{})
+	oldTags, _ := oldTagsRaw.(map[string]any)
+	newTags, _ := newTagsRaw.(map[string]any)
 
 	// Determine if any tag keys were removed from the configuration.
 	// Then request those keys to be deleted.
@@ -171,10 +171,10 @@ func updateArcAgentTagsV1(ctx context.Context, arcClient *gophercloud.ServiceCli
 	return nil
 }
 
-func arcAgentV1ParseTimeout(raw interface{}) (time.Duration, error) {
-	if list, ok := raw.([]interface{}); ok {
+func arcAgentV1ParseTimeout(raw any) (time.Duration, error) {
+	if list, ok := raw.([]any); ok {
 		for _, t := range list {
-			if timeout, ok := t.(map[string]interface{}); ok {
+			if timeout, ok := t.(map[string]any); ok {
 				if v, ok := timeout["read"]; ok {
 					return time.ParseDuration(v.(string))
 				}
@@ -186,7 +186,7 @@ func arcAgentV1ParseTimeout(raw interface{}) (time.Duration, error) {
 }
 
 func serverV2StateRefreshFunc(ctx context.Context, client *gophercloud.ServiceClient, instanceID string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		s, err := servers.Get(ctx, client, instanceID).Extract()
 		if err != nil {
 			if gophercloud.ResponseCodeIs(err, http.StatusNotFound) {

@@ -112,7 +112,7 @@ func dataSourceSCINetworkingRouterV2() *schema.Resource {
 	}
 }
 
-func dataSourceSCINetworkingRouterV2Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCINetworkingRouterV2Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	networkingClient, err := config.NetworkingV2Client(ctx, GetRegion(d, config))
 	if err != nil {

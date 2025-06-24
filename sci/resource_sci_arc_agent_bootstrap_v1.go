@@ -16,8 +16,8 @@ import (
 func resourceSCIArcAgentBootstrapV1() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceSCIArcAgentBootstrapV1Create,
-		ReadContext:   func(context.Context, *schema.ResourceData, interface{}) diag.Diagnostics { return nil },
-		DeleteContext: func(context.Context, *schema.ResourceData, interface{}) diag.Diagnostics { return nil },
+		ReadContext:   func(context.Context, *schema.ResourceData, any) diag.Diagnostics { return nil },
+		DeleteContext: func(context.Context, *schema.ResourceData, any) diag.Diagnostics { return nil },
 
 		Schema: map[string]*schema.Schema{
 			"region": {
@@ -57,7 +57,7 @@ func resourceSCIArcAgentBootstrapV1() *schema.Resource {
 	}
 }
 
-func resourceSCIArcAgentBootstrapV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcAgentBootstrapV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {

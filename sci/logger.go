@@ -27,14 +27,14 @@ type logger struct {
 	svc string
 }
 
-func (l logger) Printf(format string, args ...interface{}) {
+func (l logger) Printf(format string, args ...any) {
 	if len(format) == 0 || format[len(format)-1] != '\n' {
 		format += "\n"
 	}
 	fmt.Fprintf(os.Stderr, format, args...)
 }
 
-func (l logger) Debugf(format string, args ...interface{}) {
+func (l logger) Debugf(format string, args ...any) {
 	for _, arg := range args {
 		v, ok := arg.(string)
 		if !ok {
@@ -103,14 +103,14 @@ func printHeaders(name, cycle string, printed *bool) {
 // formatJSON is a function to pretty-format a JSON body.
 // It will also mask known fields which contain sensitive information.
 func formatJSON(raw []byte) (string, error) {
-	var rawData interface{}
+	var rawData any
 
 	err := json.Unmarshal(raw, &rawData)
 	if err != nil {
 		return string(raw), fmt.Errorf("unable to parse OpenStack JSON: %s", err)
 	}
 
-	data, ok := rawData.(map[string]interface{})
+	data, ok := rawData.(map[string]any)
 	if !ok {
 		pretty, err := json.MarshalIndent(rawData, "", "  ")
 		if err != nil {

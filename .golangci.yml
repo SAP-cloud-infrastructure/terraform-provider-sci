@@ -26,29 +26,22 @@ linters:
     - unconvert
     - unused
     - whitespace
-  exclusions:
-    generated: lax
-    presets:
-      - comments
-      - common-false-positives
-      - legacy
-      - std-error-handling
-    rules:
-      - linters:
-          - staticcheck
-        text: "SA1019: (x509.EncryptPEMBlock|strings.Title)"
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
 formatters:
   enable:
     - gofmt
     - goimports
     - gci
-  exclusions:
-    generated: lax
-    paths:
-      - third_party$
-      - builtin$
-      - examples$
+    - gofumpt
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+      no-inline-comments: true
+      no-prefix-comments: true
+    gofmt:
+      rewrite-rules:
+        - pattern: 'interface{}'
+          replacement: 'any'
+        - pattern: 'a[b:len(a)]'
+          replacement: 'a[b:]'

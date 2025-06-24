@@ -19,7 +19,7 @@ func resourceSCIAutomationRunV1() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceSCIAutomationRunV1Create,
 		ReadContext:   resourceSCIAutomationRunV1Read,
-		DeleteContext: func(context.Context, *schema.ResourceData, interface{}) diag.Diagnostics { return nil },
+		DeleteContext: func(context.Context, *schema.ResourceData, any) diag.Diagnostics { return nil },
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(10 * time.Minute),
@@ -135,7 +135,7 @@ func resourceSCIAutomationRunV1() *schema.Resource {
 	}
 }
 
-func resourceSCIAutomationRunV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationRunV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -173,7 +173,7 @@ func resourceSCIAutomationRunV1Create(ctx context.Context, d *schema.ResourceDat
 	return resourceSCIAutomationRunV1Read(ctx, d, meta)
 }
 
-func resourceSCIAutomationRunV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIAutomationRunV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	automationClient, err := config.automationV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -209,8 +209,8 @@ func resourceSCIAutomationRunV1Read(ctx context.Context, d *schema.ResourceData,
 	return nil
 }
 
-func flattenAutomationiOwnerV1(owner runs.Owner) []interface{} {
-	return []interface{}{map[string]interface{}{
+func flattenAutomationiOwnerV1(owner runs.Owner) []any {
+	return []any{map[string]any{
 		"id":          owner.ID,
 		"name":        owner.Name,
 		"domain_id":   owner.DomainID,
@@ -236,7 +236,7 @@ func waitForAutomationRunV1(ctx context.Context, automationClient *gophercloud.S
 }
 
 func automationRunV1GetState(ctx context.Context, automationClient *gophercloud.ServiceClient, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		run, err := runs.Get(ctx, automationClient, id).Extract()
 		if err != nil {
 			return nil, "", fmt.Errorf("enable to retrieve %s sci_automation_run_v1: %v", id, err)

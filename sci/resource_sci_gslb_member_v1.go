@@ -84,7 +84,7 @@ func resourceSCIGSLBMemberV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBMemberV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMemberV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -149,7 +149,7 @@ func resourceSCIGSLBMemberV1Create(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBMemberV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMemberV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -172,7 +172,7 @@ func resourceSCIGSLBMemberV1Read(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIGSLBMemberV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMemberV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -230,7 +230,7 @@ func resourceSCIGSLBMemberV1Update(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBMemberV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBMemberV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -287,7 +287,7 @@ func andromedaWaitForMember(ctx context.Context, client members.ClientService, i
 }
 
 func andromedaGetMemberStatus(ctx context.Context, client members.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		member, err := andromedaGetMember(ctx, client, id)
 		if err != nil {
 			return nil, "", err

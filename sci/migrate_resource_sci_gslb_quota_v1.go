@@ -75,7 +75,7 @@ func resourceSCIGSLBQuotaV1V0() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBQuotaV1StateUpgradeV0(ctx context.Context, rawState map[string]interface{}, meta interface{}) (map[string]interface{}, error) {
+func resourceSCIGSLBQuotaV1StateUpgradeV0(ctx context.Context, rawState map[string]any, meta any) (map[string]any, error) {
 	rawState["domain_akamai"] = rawState["domain"]
 	rawState["in_use_domain_akamai"] = rawState["in_use_domain"]
 

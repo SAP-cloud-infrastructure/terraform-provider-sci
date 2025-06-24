@@ -130,7 +130,7 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 	}
 }
 
-func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -140,7 +140,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 
 	// List the services
 	listOpts := &service.GetServiceParams{
-		Tags: expandToStringSlice(d.Get("tags").([]interface{})),
+		Tags: expandToStringSlice(d.Get("tags").([]any)),
 	}
 	if v, ok := d.GetOk("project_id"); ok {
 		v := v.(string)
@@ -204,7 +204,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	}
 
 	if v, ok := d.GetOk("ip_addresses"); ok {
-		ipAddresses = expandToStringSlice(v.([]interface{}))
+		ipAddresses = expandToStringSlice(v.([]any))
 	}
 
 ItemsLoop:

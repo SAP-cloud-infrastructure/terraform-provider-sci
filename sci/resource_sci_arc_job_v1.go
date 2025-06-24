@@ -15,7 +15,7 @@ func resourceSCIArcJobV1() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: resourceSCIArcJobV1Create,
 		ReadContext:   resourceSCIArcJobV1Read,
-		DeleteContext: func(context.Context, *schema.ResourceData, interface{}) diag.Diagnostics { return nil },
+		DeleteContext: func(context.Context, *schema.ResourceData, any) diag.Diagnostics { return nil },
 
 		Timeouts: &schema.ResourceTimeout{
 			Create: schema.DefaultTimeout(10 * time.Minute),
@@ -309,7 +309,7 @@ func resourceSCIArcJobV1() *schema.Resource {
 	}
 }
 
-func resourceSCIArcJobV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcJobV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -320,11 +320,11 @@ func resourceSCIArcJobV1Create(ctx context.Context, d *schema.ResourceData, meta
 
 	if v, ok := getOkExists(d, "execute"); ok {
 		agent = "execute"
-		action, payload, err = arcSCIArcJobV1BuildPayload(v.([]interface{}))
+		action, payload, err = arcSCIArcJobV1BuildPayload(v.([]any))
 	}
 	if v, ok := getOkExists(d, "chef"); ok {
 		agent = "chef"
-		action, payload, err = arcSCIArcJobV1BuildPayload(v.([]interface{}))
+		action, payload, err = arcSCIArcJobV1BuildPayload(v.([]any))
 	}
 	if err != nil {
 		return diag.Errorf("Failed to detect an agent: %v", err)
@@ -376,7 +376,7 @@ func resourceSCIArcJobV1Create(ctx context.Context, d *schema.ResourceData, meta
 	return resourceSCIArcJobV1Read(ctx, d, meta)
 }
 
-func resourceSCIArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIArcJobV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	arcClient, err := config.arcV1Client(ctx, GetRegion(d, config))
 	if err != nil {

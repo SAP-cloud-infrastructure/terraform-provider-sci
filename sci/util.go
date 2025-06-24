@@ -60,7 +60,7 @@ func strSliceContains(sl []string, str string) bool {
 	return false
 }
 
-func expandToMapStringString(v map[string]interface{}) map[string]string {
+func expandToMapStringString(v map[string]any) map[string]string {
 	m := make(map[string]string)
 	for key, val := range v {
 		if strVal, ok := val.(string); ok {
@@ -74,7 +74,7 @@ func expandToMapStringString(v map[string]interface{}) map[string]string {
 	return m
 }
 
-func expandToStringSlice(v []interface{}) []string {
+func expandToStringSlice(v []any) []string {
 	s := make([]string, len(v))
 	for i, val := range v {
 		if strVal, ok := val.(string); ok {
@@ -85,7 +85,7 @@ func expandToStringSlice(v []interface{}) []string {
 	return s
 }
 
-func expandToStrFmtUUIDSlice(v []interface{}) []strfmt.UUID {
+func expandToStrFmtUUIDSlice(v []any) []strfmt.UUID {
 	s := make([]strfmt.UUID, len(v))
 	for i, val := range v {
 		if strVal, ok := val.(string); ok {
@@ -96,10 +96,10 @@ func expandToStrFmtUUIDSlice(v []interface{}) []strfmt.UUID {
 	return s
 }
 
-func expandToNodePoolConfig(v []interface{}) *models.NodePoolConfig {
+func expandToNodePoolConfig(v []any) *models.NodePoolConfig {
 	c := new(models.NodePoolConfig)
 	for _, val := range v {
-		if mapVal, ok := val.(map[string]interface{}); ok {
+		if mapVal, ok := val.(map[string]any); ok {
 			if v, ok := mapVal["allow_reboot"].(bool); ok {
 				c.AllowReboot = &v
 			}
@@ -124,12 +124,12 @@ func expandObjectTags(d *schema.ResourceData) []string {
 	return tags
 }
 
-func normalizeJSONString(v interface{}) string {
+func normalizeJSONString(v any) string {
 	json, _ := structure.NormalizeJsonString(v)
 	return json
 }
 
-func validateURL(v interface{}, k string) (ws []string, errors []error) {
+func validateURL(v any, k string) (ws []string, errors []error) {
 	value := v.(string)
 	_, err := url.ParseRequestURI(value)
 	if err != nil {
@@ -138,12 +138,12 @@ func validateURL(v interface{}, k string) (ws []string, errors []error) {
 	return
 }
 
-func validateJSONObject(v interface{}, k string) ([]string, []error) {
+func validateJSONObject(v any, k string) ([]string, []error) {
 	if v == nil || v.(string) == "" {
 		return nil, []error{fmt.Errorf("%q value must not be empty", k)}
 	}
 
-	var j map[string]interface{}
+	var j map[string]any
 	s := v.(string)
 
 	err := json.Unmarshal([]byte(s), &j)
@@ -154,12 +154,12 @@ func validateJSONObject(v interface{}, k string) ([]string, []error) {
 	return nil, nil
 }
 
-func validateJSONArray(v interface{}, k string) ([]string, []error) {
+func validateJSONArray(v any, k string) ([]string, []error) {
 	if v == nil || v.(string) == "" {
 		return nil, []error{fmt.Errorf("%q value must not be empty", k)}
 	}
 
-	var j []interface{}
+	var j []any
 	s := v.(string)
 
 	err := json.Unmarshal([]byte(s), &j)
@@ -170,7 +170,7 @@ func validateJSONArray(v interface{}, k string) ([]string, []error) {
 	return nil, nil
 }
 
-func validateTimeout(v interface{}, k string) ([]string, []error) {
+func validateTimeout(v any, k string) ([]string, []error) {
 	if v == nil || v.(string) == "" {
 		return nil, []error{fmt.Errorf("%q value must not be empty", k)}
 	}
@@ -199,7 +199,7 @@ func diffSuppressJSONArray(k, old, new string, d *schema.ResourceData) bool {
 	return false
 }
 
-func validateKubernetesVersion(v interface{}, k string) ([]string, []error) {
+func validateKubernetesVersion(v any, k string) ([]string, []error) {
 	if err := validate.Pattern("version", "", v.(string), `^[0-9]+\.[0-9]+\.[0-9]+$`); err != nil {
 		return nil, []error{fmt.Errorf("invalid version (%s) specified for Kubernikus cluster: %v", v.(string), err)}
 	}
@@ -219,7 +219,7 @@ func removePrefixIPAddress(ip string) string {
 	return res.String()
 }
 
-func expandToStrFmtIPv4Slice(v []interface{}) []strfmt.IPv4 {
+func expandToStrFmtIPv4Slice(v []any) []strfmt.IPv4 {
 	s := make([]strfmt.IPv4, len(v))
 	for i, val := range v {
 		if strVal, ok := val.(string); ok {
@@ -266,7 +266,7 @@ func parsePairedIDs(id string, res string) (string, string, error) {
 // getOkExists is a helper function that replaces the deprecated GetOkExists
 // schema method. It returns the value of the key if it exists in the
 // configuration, along with a boolean indicating if the key exists.
-func getOkExists(d *schema.ResourceData, key string) (interface{}, bool) {
+func getOkExists(d *schema.ResourceData, key string) (any, bool) {
 	v := d.GetRawConfig().GetAttr(key)
 	if v.IsNull() {
 		return nil, false

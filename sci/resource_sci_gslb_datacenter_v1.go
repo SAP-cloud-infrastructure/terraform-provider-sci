@@ -111,7 +111,7 @@ func resourceSCIGSLBDatacenterV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBDatacenterV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDatacenterV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -183,7 +183,7 @@ func resourceSCIGSLBDatacenterV1Create(ctx context.Context, d *schema.ResourceDa
 	return nil
 }
 
-func resourceSCIGSLBDatacenterV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDatacenterV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -206,7 +206,7 @@ func resourceSCIGSLBDatacenterV1Read(ctx context.Context, d *schema.ResourceData
 	return nil
 }
 
-func resourceSCIGSLBDatacenterV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDatacenterV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -288,7 +288,7 @@ func resourceSCIGSLBDatacenterV1Update(ctx context.Context, d *schema.ResourceDa
 	return nil
 }
 
-func resourceSCIGSLBDatacenterV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBDatacenterV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -345,7 +345,7 @@ func andromedaWaitForDatacenter(ctx context.Context, client datacenters.ClientSe
 }
 
 func andromedaGetDatacenterStatus(ctx context.Context, client datacenters.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		datacenter, err := andromedaGetDatacenter(ctx, client, id)
 		if err != nil {
 			return nil, "", err

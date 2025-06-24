@@ -124,7 +124,7 @@ func resourceSCIBillingDomainMasterdata() *schema.Resource {
 	}
 }
 
-func resourceSCIBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {
@@ -189,7 +189,7 @@ func resourceSCIBillingDomainMasterdataCreateOrUpdate(ctx context.Context, d *sc
 	return resourceSCIBillingDomainMasterdataRead(ctx, d, meta)
 }
 
-func resourceSCIBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {

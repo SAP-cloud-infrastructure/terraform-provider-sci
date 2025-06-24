@@ -14,12 +14,12 @@ import (
 )
 
 type chefZeroPayload struct {
-	RunList    []string                 `json:"run_list"`
-	RecipeURL  string                   `json:"recipe_url"`
-	Attributes map[string]interface{}   `json:"attributes,omitempty"`
-	Debug      bool                     `json:"debug,omitempty"`
-	Nodes      []map[string]interface{} `json:"nodes,omitempty"`
-	NodeName   string                   `json:"name,omitempty"`
+	RunList    []string         `json:"run_list"`
+	RecipeURL  string           `json:"recipe_url"`
+	Attributes map[string]any   `json:"attributes,omitempty"`
+	Debug      bool             `json:"debug,omitempty"`
+	Nodes      []map[string]any `json:"nodes,omitempty"`
+	NodeName   string           `json:"name,omitempty"`
 }
 
 type chefEnableOptions struct {
@@ -34,29 +34,29 @@ type tarballPayload struct {
 	Environment map[string]string `json:"environment,omitempty"`
 }
 
-func arcSCIArcJobV1BuildPayload(v []interface{}) (string, string, error) {
+func arcSCIArcJobV1BuildPayload(v []any) (string, string, error) {
 	var payload string
 
 	for _, a := range v {
 		if a != nil {
-			action := a.(map[string]interface{})
+			action := a.(map[string]any)
 
 			if v, ok := action["script"]; ok && len(v.(string)) > 0 {
 				return "script", v.(string), nil
 			}
 
-			if v, ok := action["tarball"]; ok && len(v.([]interface{})) > 0 {
-				v, err := arcSCIArcJobV1ParseTarball(v.([]interface{}))
+			if v, ok := action["tarball"]; ok && len(v.([]any)) > 0 {
+				v, err := arcSCIArcJobV1ParseTarball(v.([]any))
 				return "tarball", v, err
 			}
 
-			if v, ok := action["enable"]; ok && len(v.([]interface{})) > 0 {
-				v, err := arcSCIArcJobV1ParseChefEnable(v.([]interface{}))
+			if v, ok := action["enable"]; ok && len(v.([]any)) > 0 {
+				v, err := arcSCIArcJobV1ParseChefEnable(v.([]any))
 				return "enable", v, err
 			}
 
-			if v, ok := action["zero"]; ok && len(v.([]interface{})) > 0 {
-				v, err := arcSCIArcJobV1ParseChefZero(v.([]interface{}))
+			if v, ok := action["zero"]; ok && len(v.([]any)) > 0 {
+				v, err := arcSCIArcJobV1ParseChefZero(v.([]any))
 				return "zero", v, err
 			}
 		}
@@ -65,13 +65,13 @@ func arcSCIArcJobV1BuildPayload(v []interface{}) (string, string, error) {
 	return "", payload, nil
 }
 
-func arcSCIArcJobV1ParseTarball(v []interface{}) (string, error) {
+func arcSCIArcJobV1ParseTarball(v []any) (string, error) {
 	var payload string
 
 	for _, t := range v {
 		if t != nil {
 			var tarball tarballPayload
-			tmp := t.(map[string]interface{})
+			tmp := t.(map[string]any)
 
 			if val, ok := tmp["url"]; ok {
 				tarball.URL = val.(string)
@@ -80,10 +80,10 @@ func arcSCIArcJobV1ParseTarball(v []interface{}) (string, error) {
 				tarball.Path = val.(string)
 			}
 			if val, ok := tmp["arguments"]; ok {
-				tarball.Arguments = expandToStringSlice(val.([]interface{}))
+				tarball.Arguments = expandToStringSlice(val.([]any))
 			}
 			if val, ok := tmp["environment"]; ok {
-				tarball.Environment = expandToMapStringString(val.(map[string]interface{}))
+				tarball.Environment = expandToMapStringString(val.(map[string]any))
 			}
 
 			bytes, err := json.Marshal(tarball)
@@ -97,13 +97,13 @@ func arcSCIArcJobV1ParseTarball(v []interface{}) (string, error) {
 	return payload, nil
 }
 
-func arcSCIArcJobV1ParseChefEnable(v []interface{}) (string, error) {
+func arcSCIArcJobV1ParseChefEnable(v []any) (string, error) {
 	var payload string
 
 	for _, c := range v {
 		if c != nil {
 			var chefEnable chefEnableOptions
-			chef := c.(map[string]interface{})
+			chef := c.(map[string]any)
 
 			if val, ok := chef["omnitruck_url"]; ok {
 				chefEnable.OmnitruckURL = val.(string)
@@ -123,7 +123,7 @@ func arcSCIArcJobV1ParseChefEnable(v []interface{}) (string, error) {
 	return payload, nil
 }
 
-func arcSCIArcJobV1ParseChefZero(v []interface{}) (string, error) {
+func arcSCIArcJobV1ParseChefZero(v []any) (string, error) {
 	var payload string
 
 	for _, c := range v {
@@ -132,10 +132,10 @@ func arcSCIArcJobV1ParseChefZero(v []interface{}) (string, error) {
 				chefZeroPayload
 				chefEnableOptions
 			}
-			chef := c.(map[string]interface{})
+			chef := c.(map[string]any)
 
 			if val, ok := chef["run_list"]; ok {
-				chefZero.RunList = expandToStringSlice(val.([]interface{}))
+				chefZero.RunList = expandToStringSlice(val.([]any))
 			}
 			if val, ok := chef["recipe_url"]; ok {
 				chefZero.RecipeURL = val.(string)
@@ -176,15 +176,15 @@ func arcSCIArcJobV1ParseChefZero(v []interface{}) (string, error) {
 	return payload, nil
 }
 
-func arcSCIArcJobV1FlattenExecute(job *jobs.Job) ([]map[string]interface{}, error) {
+func arcSCIArcJobV1FlattenExecute(job *jobs.Job) ([]map[string]any, error) {
 	if !strSliceContains([]string{"tarball", "script"}, job.Action) {
-		return []map[string]interface{}{}, nil
+		return []map[string]any{}, nil
 	}
 
 	if job.Action == "script" {
-		return []map[string]interface{}{{
+		return []map[string]any{{
 			"script":  job.Payload,
-			"tarball": []map[string]interface{}{},
+			"tarball": []map[string]any{},
 		}}, nil
 	}
 
@@ -195,9 +195,9 @@ func arcSCIArcJobV1FlattenExecute(job *jobs.Job) ([]map[string]interface{}, erro
 		return nil, fmt.Errorf("failed to unmarshal execute %s payload: %v", job.Action, err)
 	}
 
-	return []map[string]interface{}{{
+	return []map[string]any{{
 		"script": "",
-		"tarball": []map[string]interface{}{{
+		"tarball": []map[string]any{{
 			"url":         tarball.URL,
 			"path":        tarball.Path,
 			"arguments":   tarball.Arguments,
@@ -206,9 +206,9 @@ func arcSCIArcJobV1FlattenExecute(job *jobs.Job) ([]map[string]interface{}, erro
 	}}, nil
 }
 
-func arcSCIArcJobV1FlattenChef(job *jobs.Job) ([]map[string]interface{}, error) {
+func arcSCIArcJobV1FlattenChef(job *jobs.Job) ([]map[string]any, error) {
 	if !strSliceContains([]string{"zero", "enable"}, job.Action) {
-		return []map[string]interface{}{}, nil
+		return []map[string]any{}, nil
 	}
 
 	var chef struct {
@@ -222,12 +222,12 @@ func arcSCIArcJobV1FlattenChef(job *jobs.Job) ([]map[string]interface{}, error) 
 	}
 
 	if job.Action == "enable" {
-		return []map[string]interface{}{{
-			"enable": []map[string]interface{}{{
+		return []map[string]any{{
+			"enable": []map[string]any{{
 				"omnitruck_url": chef.OmnitruckURL,
 				"chef_version":  chef.ChefVersion,
 			}},
-			"zero": []map[string]interface{}{},
+			"zero": []map[string]any{},
 		}}, nil
 	}
 
@@ -240,9 +240,9 @@ func arcSCIArcJobV1FlattenChef(job *jobs.Job) ([]map[string]interface{}, error) 
 		return nil, fmt.Errorf("failed to marshal chef nodes: %v", err)
 	}
 
-	return []map[string]interface{}{{
-		"enable": []map[string]interface{}{},
-		"zero": []map[string]interface{}{{
+	return []map[string]any{{
+		"enable": []map[string]any{},
+		"zero": []map[string]any{{
 			"run_list":      chef.RunList,
 			"recipe_url":    chef.RecipeURL,
 			"attributes":    string(attributes[:]),
@@ -300,8 +300,8 @@ func arcSCIArcJobV1Filter(ctx context.Context, d *schema.ResourceData, arcClient
 	return jobs, nil
 }
 
-func flattenArcJobUserV1(user jobs.User) []interface{} {
-	return []interface{}{map[string]interface{}{
+func flattenArcJobUserV1(user jobs.User) []any {
+	return []any{map[string]any{
 		"id":          user.ID,
 		"name":        user.Name,
 		"domain_id":   user.DomainID,
@@ -328,7 +328,7 @@ func waitForArcJobV1(ctx context.Context, arcClient *gophercloud.ServiceClient, 
 }
 
 func arcJobV1GetStatus(ctx context.Context, arcClient *gophercloud.ServiceClient, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		job, err := jobs.Get(ctx, arcClient, id).Extract()
 		if err != nil {
 			return nil, "", fmt.Errorf("unable to retrieve %s sci_arc_job_v1: %v", id, err)

@@ -105,7 +105,7 @@ func resourceSCIEndpointV1() *schema.Resource {
 	}
 }
 
-func resourceSCIEndpointV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -119,8 +119,8 @@ func resourceSCIEndpointV1Create(ctx context.Context, d *schema.ResourceData, me
 		Description: d.Get("description").(string),
 		ProjectID:   models.Project(d.Get("project_id").(string)),
 		ServiceID:   strfmt.UUID(d.Get("service_id").(string)),
-		Tags:        expandToStringSlice(d.Get("tags").([]interface{})),
-		Target:      flattenEndpointTarget(d.Get("target").([]interface{})),
+		Tags:        expandToStringSlice(d.Get("tags").([]any)),
+		Target:      flattenEndpointTarget(d.Get("target").([]any)),
 	}
 
 	opts := &endpoint.PostEndpointParams{
@@ -157,7 +157,7 @@ func resourceSCIEndpointV1Create(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIEndpointV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -179,7 +179,7 @@ func resourceSCIEndpointV1Read(ctx context.Context, d *schema.ResourceData, meta
 	return nil
 }
 
-func resourceSCIEndpointV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -197,7 +197,7 @@ func resourceSCIEndpointV1Update(ctx context.Context, d *schema.ResourceData, me
 		ept.Description = ptr(d.Get("description").(string))
 	}
 	if d.HasChange("tags") {
-		ept.Tags = expandToStringSlice(d.Get("tags").([]interface{}))
+		ept.Tags = expandToStringSlice(d.Get("tags").([]any))
 	}
 
 	opts := &endpoint.PutEndpointEndpointIDParams{
@@ -218,7 +218,7 @@ func resourceSCIEndpointV1Update(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIEndpointV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -275,7 +275,7 @@ func archerWaitForEndpoint(ctx context.Context, c *archer, id string, target []s
 }
 
 func archerGetEndpointStatus(ctx context.Context, c *archer, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		endpoint, err := archerGetEndpoint(ctx, c, id)
 		if err != nil {
 			return nil, "", err
@@ -328,10 +328,10 @@ func expandEndpointTarget(target models.EndpointTarget) []map[string]string {
 	}
 }
 
-func flattenEndpointTarget(targets []interface{}) models.EndpointTarget {
+func flattenEndpointTarget(targets []any) models.EndpointTarget {
 	res := models.EndpointTarget{}
 	for _, t := range targets {
-		m := t.(map[string]interface{})
+		m := t.(map[string]any)
 		if v, ok := m["network"].(string); ok && v != "" {
 			res.Network = ptr(strfmt.UUID(v))
 		}

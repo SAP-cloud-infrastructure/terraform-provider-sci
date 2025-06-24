@@ -50,7 +50,7 @@ func resourceSCIEndpointAcceptV1() *schema.Resource {
 	}
 }
 
-func resourceSCIEndpointAcceptV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointAcceptV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -102,7 +102,7 @@ func resourceSCIEndpointAcceptV1Create(ctx context.Context, d *schema.ResourceDa
 	return nil
 }
 
-func resourceSCIEndpointAcceptV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointAcceptV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -128,7 +128,7 @@ func resourceSCIEndpointAcceptV1Read(ctx context.Context, d *schema.ResourceData
 	return nil
 }
 
-func resourceSCIEndpointAcceptV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointAcceptV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -199,7 +199,7 @@ func archerWaitForServiceEndpointConsumer(ctx context.Context, c *archer, id, se
 }
 
 func archerGetServiceEndpointConsumerStatus(ctx context.Context, c *archer, id, serviceID string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		ec, err := archerGetServiceEndpointConsumer(ctx, c, id, serviceID)
 		if err != nil {
 			return nil, "", err

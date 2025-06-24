@@ -128,7 +128,7 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 	}
 }
 
-func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -146,7 +146,7 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 		Enabled:     &enabled,
 		NetworkID:   &networkID,
 		Port:        int32(d.Get("port").(int)),
-		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]interface{})),
+		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]any)),
 	}
 	if v, ok := getOkExists(d, "proxy_protocol"); ok {
 		svc.ProxyProtocol = ptr(v.(bool))
@@ -164,7 +164,7 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 		svc.Visibility = ptr(v.(string))
 	}
 	if v, ok := d.GetOk("tags"); ok {
-		svc.Tags = expandToStringSlice(v.([]interface{}))
+		svc.Tags = expandToStringSlice(v.([]any))
 	}
 
 	opts := &service.PostServiceParams{
@@ -198,7 +198,7 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 	return nil
 }
 
-func resourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -220,7 +220,7 @@ func resourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceDat
 	return nil
 }
 
-func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -230,8 +230,8 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 
 	id := d.Id()
 	svc := &models.ServiceUpdatable{
-		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]interface{})),
-		Tags:        expandToStringSlice(d.Get("tags").([]interface{})),
+		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]any)),
+		Tags:        expandToStringSlice(d.Get("tags").([]any)),
 	}
 
 	if d.HasChange("enabled") {
@@ -287,7 +287,7 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 	return nil
 }
 
-func resourceSCIEndpointServiceV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIEndpointServiceV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -344,7 +344,7 @@ func archerWaitForService(ctx context.Context, c *archer, id, target, pending st
 }
 
 func archerGetServiceStatus(ctx context.Context, c *archer, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		service, err := archerGetService(ctx, c, id)
 		if err != nil {
 			return nil, "", err

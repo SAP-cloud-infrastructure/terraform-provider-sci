@@ -105,7 +105,7 @@ func dataSourceSCIBillingDomainMasterdata() *schema.Resource {
 	}
 }
 
-func dataSourceSCIBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCIBillingDomainMasterdataRead(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	billing, err := config.billingClient(ctx, GetRegion(d, config))
 	if err != nil {

@@ -67,7 +67,7 @@ func dataSourceSCIGSLBServicesV1() *schema.Resource {
 	}
 }
 
-func dataSourceSCIGSLBServicesV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func dataSourceSCIGSLBServicesV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -94,10 +94,10 @@ func dataSourceSCIGSLBServicesV1Read(ctx context.Context, d *schema.ResourceData
 	return diag.FromErr(err)
 }
 
-func andromedaFlattenServices(services []*models.Service) []map[string]interface{} {
-	res := make([]map[string]interface{}, len(services))
+func andromedaFlattenServices(services []*models.Service) []map[string]any {
+	res := make([]map[string]any, len(services))
 	for i, service := range services {
-		res[i] = map[string]interface{}{
+		res[i] = map[string]any{
 			"heartbeat":   service.Heartbeat.String(),
 			"host":        service.Host,
 			"id":          service.ID,

@@ -118,7 +118,7 @@ func resourceSCIGSLBQuotaV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBQuotaV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBQuotaV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -170,7 +170,7 @@ func resourceSCIGSLBQuotaV1Create(ctx context.Context, d *schema.ResourceData, m
 	return resourceSCIGSLBQuotaV1Read(ctx, d, meta)
 }
 
-func resourceSCIGSLBQuotaV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBQuotaV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -203,7 +203,7 @@ func resourceSCIGSLBQuotaV1Read(ctx context.Context, d *schema.ResourceData, met
 	return nil
 }
 
-func resourceSCIGSLBQuotaV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBQuotaV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -257,7 +257,7 @@ func resourceSCIGSLBQuotaV1Update(ctx context.Context, d *schema.ResourceData, m
 	return resourceSCIGSLBQuotaV1Read(ctx, d, meta)
 }
 
-func resourceSCIGSLBQuotaV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBQuotaV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {

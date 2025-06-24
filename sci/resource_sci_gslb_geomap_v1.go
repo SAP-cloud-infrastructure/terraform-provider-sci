@@ -96,7 +96,7 @@ func resourceSCIGSLBGeoMapV1() *schema.Resource {
 	}
 }
 
-func resourceSCIGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -120,7 +120,7 @@ func resourceSCIGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceData, 
 		geomap.ProjectID = ptr(v.(string))
 	}
 	if v, ok := d.GetOk("assignments"); ok {
-		geomap.Assignments = andromedaExpandGeoMapAssignments(v.([]interface{}))
+		geomap.Assignments = andromedaExpandGeoMapAssignments(v.([]any))
 	}
 
 	opts := &geomaps.PostGeomapsParams{
@@ -156,7 +156,7 @@ func resourceSCIGSLBGeoMapV1Create(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBGeoMapV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBGeoMapV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -179,7 +179,7 @@ func resourceSCIGSLBGeoMapV1Read(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -208,7 +208,7 @@ func resourceSCIGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceData, 
 		geomap.Scope = &v
 	}
 	if d.HasChange("assignments") {
-		v := d.Get("assignments").([]interface{})
+		v := d.Get("assignments").([]any)
 		geomap.Assignments = andromedaExpandGeoMapAssignments(v)
 	}
 
@@ -238,7 +238,7 @@ func resourceSCIGSLBGeoMapV1Update(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIGSLBGeoMapV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIGSLBGeoMapV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.andromedaV1Client(ctx, GetRegion(d, config))
 	if err != nil {
@@ -295,7 +295,7 @@ func andromedaWaitForGeoMap(ctx context.Context, client geomaps.ClientService, i
 }
 
 func andromedaGetGeoMapStatus(ctx context.Context, client geomaps.ClientService, id string) retry.StateRefreshFunc {
-	return func() (interface{}, string, error) {
+	return func() (any, string, error) {
 		geomap, err := andromedaGetGeoMap(ctx, client, id)
 		if err != nil {
 			return nil, "", err
@@ -348,10 +348,10 @@ func andromedaFlattenGeoMapAssignments(assignments []*models.GeomapAssignmentsIt
 	return res
 }
 
-func andromedaExpandGeoMapAssignments(v []interface{}) []*models.GeomapAssignmentsItems0 {
+func andromedaExpandGeoMapAssignments(v []any) []*models.GeomapAssignmentsItems0 {
 	res := make([]*models.GeomapAssignmentsItems0, len(v))
 	for i, v := range v {
-		v := v.(map[string]interface{})
+		v := v.(map[string]any)
 		country := v["country"].(string)
 		datacenter := v["datacenter"].(string)
 		res[i] = &models.GeomapAssignmentsItems0{

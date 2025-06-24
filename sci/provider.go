@@ -323,7 +323,7 @@ func Provider() *schema.Provider {
 		},
 	}
 
-	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+	provider.ConfigureContextFunc = func(ctx context.Context, d *schema.ResourceData) (any, diag.Diagnostics) {
 		terraformVersion := provider.TerraformVersion
 		if terraformVersion == "" {
 			// Terraform 0.12 introduced this field to the protocol
@@ -424,7 +424,7 @@ func getSDKVersion() string {
 	return ""
 }
 
-func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVersion string) (interface{}, diag.Diagnostics) {
+func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVersion string) (any, diag.Diagnostics) {
 	enableLogging := d.Get("enable_logging").(bool)
 	if !enableLogging {
 		// enforce logging (similar to OS_DEBUG) when TF_LOG is 'DEBUG' or 'TRACE'
@@ -448,7 +448,7 @@ func configureProvider(ctx context.Context, d *schema.ResourceData, terraformVer
 			DefaultDomain:               d.Get("default_domain").(string),
 			DomainID:                    d.Get("domain_id").(string),
 			DomainName:                  d.Get("domain_name").(string),
-			EndpointOverrides:           d.Get("endpoint_overrides").(map[string]interface{}),
+			EndpointOverrides:           d.Get("endpoint_overrides").(map[string]any),
 			EndpointType:                d.Get("endpoint_type").(string),
 			IdentityEndpoint:            d.Get("auth_url").(string),
 			Password:                    d.Get("password").(string),

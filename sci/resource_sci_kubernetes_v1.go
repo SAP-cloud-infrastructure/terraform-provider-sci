@@ -89,7 +89,7 @@ func resourceSCIKubernetesV1() *schema.Resource {
 				Optional: true,
 				ForceNew: true,
 				Default:  "100.100.0.0/16",
-				ValidateFunc: func(v interface{}, k string) ([]string, []error) {
+				ValidateFunc: func(v any, k string) ([]string, []error) {
 					if v == nil || v.(string) == "" {
 						return nil, nil
 					}
@@ -354,7 +354,7 @@ func resourceSCIKubernetesV1() *schema.Resource {
 	}
 }
 
-func resourceSCIKubernetesV1Create(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIKubernetesV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Creating Kubernikus Kluster in project %s", config.TenantID)
 
@@ -434,7 +434,7 @@ func resourceSCIKubernetesV1Create(ctx context.Context, d *schema.ResourceData, 
 	return resourceSCIKubernetesV1Read(ctx, d, meta)
 }
 
-func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Reading Kubernikus Kluster in project %s", config.TenantID)
 
@@ -496,7 +496,7 @@ func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, me
 	return nil
 }
 
-func resourceSCIKubernetesV1Update(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIKubernetesV1Update(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Updating Kubernikus Kluster in project %s", config.TenantID)
 
@@ -570,7 +570,7 @@ func resourceSCIKubernetesV1Update(ctx context.Context, d *schema.ResourceData, 
 	return resourceSCIKubernetesV1Read(ctx, d, meta)
 }
 
-func resourceSCIKubernetesV1Delete(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
+func resourceSCIKubernetesV1Delete(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	log.Printf("[KUBERNETES] Deleting Kubernikus Kluster in project %s", config.TenantID)
 
@@ -602,7 +602,7 @@ func resourceSCIKubernetesV1Delete(ctx context.Context, d *schema.ResourceData, 
 	return nil
 }
 
-func resourceSCIKubernetesV1Import(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+func resourceSCIKubernetesV1Import(ctx context.Context, d *schema.ResourceData, meta any) ([]*schema.ResourceData, error) {
 	parts := strings.SplitN(d.Id(), "/", 2)
 	name := parts[0]
 
