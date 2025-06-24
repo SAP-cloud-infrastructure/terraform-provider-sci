@@ -150,14 +150,19 @@ The following arguments are supported:
 
 * `dex` - (Optional) Enable dex installation to Kubernetes cluster. It is possible
   to enable for all supported Kubernetes versions. Disabling is not supported in
-  Kubernikus API. Defaults to `false`. Conflicts with
-  `authentication_configuration` argument.
+  Kubernikus API. Defaults to `false`. Conflicts with `oidc` and
+  `authentication_configuration` arguments.
+
+* `oidc` - (Optional) Enables OpenID Connect (OIDC) authentication for the
+  cluster by specifying valid OIDC configuration. The `oidc` object structure
+  is documented below. Conflicts with `dex` and `authentication_configuration`
+  arguments.
 
 * `authentication_configuration` - (Optional) Enables structured authentication
   for the cluster by specifying a valid AuthenticationConfiguration YAML
   resource. This configuration is passed directly to the API server via the
-  --authentication-config flag. Conflicts with `dex` argument. Requires
-  Kubernetes version 1.30 or later.
+  --authentication-config flag. Conflicts with `dex` and `oidc` arguments.
+  Requires Kubernetes version 1.30 or later.
 
 * `dashboard` - (Optional) Enable Kubernetes dashboard installation to Kubernetes
   cluster. It is possible to enable for Kubernetes versions >= 1.11.9. Disabling
@@ -237,6 +242,12 @@ The `openstack` block supports:
 * `security_group_name` - (Optional) The security group name to associate with
   the compute instance, created within the node pool.
 
+The `oidc` block supports:
+
+* `issuer_url` - (Required) The URL of the OIDC issuer.
+
+* `client_id` - (Required) The client ID of the OIDC client.
+
 ## Attributes Reference
 
 In addition to all arguments above, the following attributes are exported:
@@ -253,6 +264,7 @@ In addition to all arguments above, the following attributes are exported:
 * `ssh_public_key` - See Argument Reference above.
 * `no_cloud` - See Argument Reference above.
 * `dex` - See Argument Reference above.
+* `oidc` - See Argument Reference above.
 * `authentication_configuration` - See Argument Reference above.
 * `node_pools` - See Argument Reference above.
 * `openstack` - See Argument Reference above.

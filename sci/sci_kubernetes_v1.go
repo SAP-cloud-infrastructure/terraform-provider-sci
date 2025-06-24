@@ -432,6 +432,50 @@ func flattenKubernetesClusterKubeConfig(creds string) ([]map[string]string, *x50
 	return []map[string]string{values}, crt, nil
 }
 
+func kubernikusFlattenOIDCV1(oidc *models.OIDC) []map[string]string {
+	values := make(map[string]string)
+
+	if oidc == nil || *oidc == (models.OIDC{}) {
+		return nil
+	}
+
+	values["client_id"] = oidc.ClientID
+	values["issuer_url"] = oidc.IssuerURL
+
+	return []map[string]string{values}
+}
+
+func kubernikusExpandOIDCV1(raw any) *models.OIDC {
+	v := raw.([]any)
+
+	if len(v) == 0 {
+		return nil
+	}
+
+	if len(v) > 1 {
+		log.Printf("[WARN] More than one OIDC configuration found, using the first one.")
+	}
+
+	if v[0] == nil {
+		return nil
+	}
+
+	if m, ok := v[0].(map[string]any); ok {
+		res := &models.OIDC{
+			ClientID:  m["client_id"].(string),
+			IssuerURL: m["issuer_url"].(string),
+		}
+
+		if res.ClientID == "" || res.IssuerURL == "" {
+			return nil
+		}
+
+		return res
+	}
+
+	return nil
+}
+
 func downloadCredentials(klient *kubernikus, name string) (string, []map[string]string, error) {
 	credentials, err := klient.GetClusterCredentials(operations.NewGetClusterCredentialsParams().WithName(name), klient.authFunc())
 	if err != nil {

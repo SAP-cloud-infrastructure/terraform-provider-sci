@@ -139,6 +139,24 @@ func resourceSCIKubernetesV1() *schema.Resource {
 				Default:  true,
 			},
 
+			"oidc": {
+				Type:     schema.TypeList,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"issuer_url": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"client_id": {
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+					},
+				},
+			},
+
 			"authentication_configuration": {
 				Type:         schema.TypeString,
 				Optional:     true,
@@ -387,6 +405,9 @@ func resourceSCIKubernetesV1Create(ctx context.Context, d *schema.ResourceData, 
 	if v, ok := d.Get("dex").(bool); ok {
 		cluster.Spec.Dex = &v
 	}
+	if v, ok := d.GetOk("oidc"); ok {
+		cluster.Spec.Oidc = kubernikusExpandOIDCV1(v.([]any))
+	}
 	if v, ok := d.Get("authentication_configuration").(string); ok && v != "" {
 		cluster.Spec.AuthenticationConfiguration = models.AuthenticationConfiguration(v)
 	}
@@ -469,6 +490,7 @@ func resourceSCIKubernetesV1Read(ctx context.Context, d *schema.ResourceData, me
 	_ = d.Set("ssh_public_key", result.Payload.Spec.SSHPublicKey)
 	_ = d.Set("no_cloud", result.Payload.Spec.NoCloud)
 	_ = d.Set("dex", result.Payload.Spec.Dex)
+	_ = d.Set("oidc", kubernikusFlattenOIDCV1(result.Payload.Spec.Oidc))
 	_ = d.Set("authentication_configuration", result.Payload.Spec.AuthenticationConfiguration)
 	_ = d.Set("dashboard", result.Payload.Spec.Dashboard)
 	_ = d.Set("backup", result.Payload.Spec.Backup)
@@ -530,6 +552,10 @@ func resourceSCIKubernetesV1Update(ctx context.Context, d *schema.ResourceData, 
 
 	if v, ok := d.Get("dex").(bool); ok {
 		cluster.Spec.Dex = &v
+	}
+
+	if v, ok := d.GetOk("oidc"); ok {
+		cluster.Spec.Oidc = kubernikusExpandOIDCV1(v.([]any))
 	}
 
 	if v, ok := d.Get("authentication_configuration").(string); ok && v != "" {
