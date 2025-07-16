@@ -15,7 +15,7 @@ require (
 	github.com/sapcc/archer v1.3.1
 	github.com/sapcc/gophercloud-sapcc/v2 v2.0.3
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
-	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250711121431-9f547d42b55c
+	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250716121629-738e4d5edfff
 	k8s.io/client-go v0.33.3
 	sigs.k8s.io/yaml v1.5.0
 )
