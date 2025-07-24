@@ -17,7 +17,7 @@ require (
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
 	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717163156-83cd74412d2e
 	k8s.io/client-go v0.33.3
-	sigs.k8s.io/yaml v1.5.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
