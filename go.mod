@@ -8,12 +8,12 @@ require (
 	github.com/go-openapi/runtime v0.28.0
 	github.com/go-openapi/strfmt v0.23.0
 	github.com/go-openapi/validate v0.24.0
-	github.com/gophercloud/gophercloud/v2 v2.7.1-0.20250416153453-3eff99bf6fe8
-	github.com/gophercloud/utils/v2 v2.0.0-20250711132455-9770683b100a
+	github.com/gophercloud/gophercloud/v2 v2.8.0
+	github.com/gophercloud/utils/v2 v2.0.0-20250819195638-e4fc39f0eda4
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.37.0
 	github.com/sapcc/andromeda v1.1.1
 	github.com/sapcc/archer v1.3.1
-	github.com/sapcc/gophercloud-sapcc/v2 v2.0.4
+	github.com/sapcc/gophercloud-sapcc/v2 v2.0.5
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
 	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717163156-83cd74412d2e
 	k8s.io/client-go v0.33.3
@@ -95,12 +95,12 @@ require (
 	go.opentelemetry.io/otel/trace v1.34.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.2 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/mod v0.25.0 // indirect
-	golang.org/x/net v0.41.0 // indirect
+	golang.org/x/mod v0.26.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.34.0 // indirect
-	golang.org/x/text v0.27.0 // indirect
-	golang.org/x/tools v0.34.0 // indirect
+	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/tools v0.35.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250218202821-56aae31c358a // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250218202821-56aae31c358a // indirect
