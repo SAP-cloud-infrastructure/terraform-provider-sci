@@ -91,6 +91,8 @@ github.com/gophercloud/utils/v2 v2.0.0-20250711132455-9770683b100a h1:erVLycqmez
 github.com/gophercloud/utils/v2 v2.0.0-20250711132455-9770683b100a/go.mod h1:1mckc18GQSFLRhDy2BjPGkkpbrjxY5iwX/oxpdTE2kw=
 github.com/gophercloud/utils/v2 v2.0.0-20250819195638-e4fc39f0eda4 h1:AjEgLZlPwlXQvWpJJcgfb/1MfIm4NcSV4PkBmW0im4Q=
 github.com/gophercloud/utils/v2 v2.0.0-20250819195638-e4fc39f0eda4/go.mod h1:LzITNtOz9eRj/Yt4vheymXTHGC1ksIsKNtLXhaX8+I0=
+github.com/gophercloud/utils/v2 v2.0.0-20250908160916-88fadeedd0ca h1:v0D+BdqT7FRorCsVUgqbdRGqGuoMwdPWaAnV6MTvSOQ=
+github.com/gophercloud/utils/v2 v2.0.0-20250908160916-88fadeedd0ca/go.mod h1:LzITNtOz9eRj/Yt4vheymXTHGC1ksIsKNtLXhaX8+I0=
 github.com/hashicorp/go-cty v1.5.0 h1:EkQ/v+dDNUqnuVpmS5fPqyY71NXVgT5gf32+57xY8g0=
 github.com/hashicorp/go-cty v1.5.0/go.mod h1:lFUCG5kd8exDobgSfyj4ONE/dc822kiYMguVKdHGMLM=
 github.com/hashicorp/go-hclog v1.6.3 h1:Qr2kF+eVWjTiYmU7Y31tYlP1h0q/X3Nl3tPGdaB11/k=
