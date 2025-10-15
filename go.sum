@@ -207,6 +207,8 @@ github.com/sapcc/andromeda v1.1.1 h1:Xf+7Si2F6czaKZYf3e6CFOYEQuKWyY9yMI8tXgMUhNk
 github.com/sapcc/andromeda v1.1.1/go.mod h1:8kqq58fCOx5rG+hKwxdEgSfrlAuBEbFPGAFurBe3bMo=
 github.com/sapcc/archer v1.4.2-0.20260227040729-980e65649766 h1:fxqI42+uQOJ6lQ1oFihvDPz8gx8Fo7VCBk7k2RM1UzI=
 github.com/sapcc/archer v1.4.2-0.20260227040729-980e65649766/go.mod h1:KGMBoth+Smy6PrNQdyMjfYcZKlIOEvM37foADdi8Mo4=
+github.com/sapcc/go-api-declarations v1.22.0 h1:nU/eJ6OO54Z9YSo1gWinD0A2etrfZObCwYdB9xA0VWE=
+github.com/sapcc/go-api-declarations v1.22.0/go.mod h1:x3V8bzg7Y4kmbA+DeWWwKteFEdCCSiVQdwRXj4fGAYY=
 github.com/sapcc/gophercloud-sapcc/v2 v2.1.0 h1:6Y8VOsZCeIL6rpzbU4jIv+Jva9Hu8neT6/XA1DcVLz8=
 github.com/sapcc/gophercloud-sapcc/v2 v2.1.0/go.mod h1:h4fike9u3QmUlcXsbnLKn8TKt4MTgGUAWmBmIgS2SMw=
 github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8 h1:9WMqMoLoCLs15+bXl+KCI2yTl3GOeofLIuzShBzw8Ls=
@@ -258,6 +260,8 @@ go.opentelemetry.io/otel/trace v1.43.0 h1:BkNrHpup+4k4w+ZZ86CZoHHEkohws8AY+WTX09
 go.opentelemetry.io/otel/trace v1.43.0/go.mod h1:/QJhyVBUUswCphDVxq+8mld+AvhXZLhe+8WVFxiFff0=
 go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
 go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=
+go.xyrillian.de/gg v1.8.1 h1:qfxSUMA59Zb9ZWdrHXkDsN4CxBKadCNepwhrKR9sm74=
+go.xyrillian.de/gg v1.8.1/go.mod h1:dj+ZhCwC6JKWyFvImhVNXQAErrRcYMUkXu6vwWYNrzQ=
 go.yaml.in/yaml/v2 v2.4.3 h1:6gvOSjQoTB3vt1l+CU+tSyi/HOjfOjRLJ4YwYZGwRO0=
 go.yaml.in/yaml/v2 v2.4.3/go.mod h1:zSxWcmIDjOzPXpjlTTbAsKokqkDNAVtZO0WOMiT90s8=
 go.yaml.in/yaml/v3 v3.0.4 h1:tfq32ie2Jv2UxXFdLJdh3jXuOzWiL1fo0bu/FbuKpbc=
