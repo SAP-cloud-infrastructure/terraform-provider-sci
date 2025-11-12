@@ -62,6 +62,10 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ports": {
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"network_id": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -239,8 +243,17 @@ ItemsLoop:
 		if requireApproval != nil && *requireApproval != ptrValue(svc.RequireApproval) {
 			continue
 		}
-		if port != nil && *port != svc.Port {
-			continue
+		if port != nil {
+			found := false
+			for p := range svc.Ports {
+				if p == int(*port) {
+					found = true
+					break
+				}
+			}
+			if !found {
+				continue
+			}
 		}
 		if host != nil && *host != ptrValue(svc.Host) {
 			continue
@@ -273,7 +286,7 @@ ItemsLoop:
 	_ = d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
-	_ = d.Set("port", svc.Port)
+	_ = d.Set("ports", svc.Ports)
 	_ = d.Set("network_id", ptrValue(svc.NetworkID))
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("all_tags", svc.Tags)

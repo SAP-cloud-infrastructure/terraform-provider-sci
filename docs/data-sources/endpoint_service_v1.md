@@ -65,6 +65,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the found endpoint service.
 * `all_ip_addresses` - A list of all IP addresses associated with the service.
 * `all_tags` - A list of all tags assigned to the service.
+* `ports` - A list of ports on which the service is exposed.
 * `host` - The host of the service owner.
 * `status` - The current status of the service.
 * `created_at` - The timestamp when the service was created.
