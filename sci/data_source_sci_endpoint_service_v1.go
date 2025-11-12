@@ -2,6 +2,7 @@ package sci
 
 import (
 	"context"
+	"slices"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -57,8 +58,12 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 				},
 				Computed: true,
 			},
-			"port": {
-				Type:     schema.TypeInt,
+			"ports": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type:         schema.TypeInt,
+					ValidateFunc: validation.IsPortNumber,
+				},
 				Optional: true,
 				Computed: true,
 			},
@@ -161,7 +166,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	// define filter values
 	var name, description, availabilityZone, networkID, provider, visibility, host, status *string
 	var enabled, proxyProtocol, requireApproval *bool
-	var port *int32
+	var ports []int32
 	var ipAddresses []string
 
 	if v, ok := d.GetOk("name"); ok {
@@ -199,8 +204,8 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 		requireApproval = ptr(v.(bool))
 	}
 
-	if v, ok := d.GetOk("port"); ok {
-		port = ptr(int32(v.(int)))
+	if v, ok := d.GetOk("ports"); ok {
+		ports = v.([]int32)
 	}
 
 	if v, ok := d.GetOk("ip_addresses"); ok {
@@ -239,7 +244,7 @@ ItemsLoop:
 		if requireApproval != nil && *requireApproval != ptrValue(svc.RequireApproval) {
 			continue
 		}
-		if port != nil && *port != svc.Port {
+		if !slices.Equal(ports, svc.Ports) {
 			continue
 		}
 		if host != nil && *host != ptrValue(svc.Host) {
@@ -273,7 +278,7 @@ ItemsLoop:
 	_ = d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
-	_ = d.Set("port", svc.Port)
+	_ = d.Set("ports", svc.Ports)
 	_ = d.Set("network_id", ptrValue(svc.NetworkID))
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("all_tags", svc.Tags)
