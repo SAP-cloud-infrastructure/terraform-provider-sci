@@ -227,6 +227,8 @@ github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717152707-c1c6dcf6a
 github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717152707-c1c6dcf6a23a/go.mod h1:+QIVEo1bjR7v797mcW0ebuak7yi7enUGwQTr+Itt8rQ=
 github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717163156-83cd74412d2e h1:57CFV+CNuEV2md5AgyuPD6goPEq1itzRQPMAI43kKPI=
 github.com/terraform-provider-openstack/utils/v2 v2.0.0-20250717163156-83cd74412d2e/go.mod h1:+QIVEo1bjR7v797mcW0ebuak7yi7enUGwQTr+Itt8rQ=
+github.com/terraform-provider-openstack/utils/v2 v2.0.0-20251008071556-6ca14d74255d h1:fnGtVQAKkL3FUlyklO754jVu5q+0RN8H1evEHUZfNq4=
+github.com/terraform-provider-openstack/utils/v2 v2.0.0-20251008071556-6ca14d74255d/go.mod h1:uLfRC2Pe3C1wOqA6q+fFbq5XyYI+i+fm/BTiOs73JPo=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
 github.com/vmihailenco/msgpack v4.0.4+incompatible h1:dSLoQfGFAo3F6OoNhwUmLwVgaUXK79GlxNBwueZn0xI=
 github.com/vmihailenco/msgpack v4.0.4+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
