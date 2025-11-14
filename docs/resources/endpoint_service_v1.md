@@ -46,7 +46,10 @@ The following arguments are supported:
 * `ip_addresses` - (Required) A list of IP addresses associated with the
   service.
 
-* `port` - (Required) The port on which the service is exposed.
+* `port` - (Optional) The port on which the service is exposed. (Deprecated in
+  favor of `ports`).
+
+* `ports` - (Required) A list of ports on which the service is exposed.
 
 * `network_id` - (Required) The network ID associated with the service.
   Changing this forces a new resource to be created.
