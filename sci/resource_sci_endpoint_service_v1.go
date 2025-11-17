@@ -2,6 +2,7 @@ package sci
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"time"
@@ -59,8 +60,18 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 				Required: true,
 			},
 			"port": {
-				Type:     schema.TypeInt,
-				Required: true,
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IsPortNumber,
+				Optional:     true,
+				Deprecated:   "Remove 'port' attribute and use 'ports' attribute instead.",
+			},
+			"ports": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type:         schema.TypeInt,
+					ValidateFunc: validation.IsPortNumber,
+				},
+				Optional: true, // todo: make required once 'port' is removed
 			},
 			"network_id": {
 				Type:     schema.TypeString,
@@ -128,6 +139,26 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 	}
 }
 
+func getPorts(d *schema.ResourceData) (ports []int32, err error) {
+	if configuredPorts, ok := d.GetOk("ports"); ok && len(configuredPorts.([]any)) > 0 {
+		for _, p := range configuredPorts.([]any) {
+			ports = append(ports, int32(p.(int)))
+		}
+	}
+
+	if port, ok := d.GetOk("port"); ok {
+		if len(ports) > 0 {
+			return nil, errors.New("error creating Archer service: only one of 'port' or 'ports' can be specified")
+		}
+
+		if err = d.Set("ports", []any{port.(int)}); err != nil {
+			return nil, fmt.Errorf("error creating Archer service: %w", err)
+		}
+		ports = []int32{int32(port.(int))}
+	}
+	return ports, nil
+}
+
 func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceData, meta any) diag.Diagnostics {
 	config := meta.(*Config)
 	c, err := config.archerV1Client(ctx, GetRegion(d, config))
@@ -139,13 +170,18 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 	// Create the service
 	enabled := d.Get("enabled").(bool)
 	networkID := strfmt.UUID(d.Get("network_id").(string))
+	ports, err := getPorts(d)
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	svc := &models.Service{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		ProjectID:   models.Project(d.Get("project_id").(string)),
 		Enabled:     &enabled,
 		NetworkID:   &networkID,
-		Port:        int32(d.Get("port").(int)),
+		Ports:       ports,
 		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]any)),
 	}
 	if v, ok := getOkExists(d, "proxy_protocol"); ok {
@@ -246,9 +282,17 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 		v := d.Get("description").(string)
 		svc.Description = &v
 	}
-	if d.HasChange("port") {
-		v := int32(d.Get("port").(int))
-		svc.Port = &v
+	if d.HasChanges("port", "ports") {
+		if port, ok := d.GetOk("port"); ok {
+			if ports, ok := d.GetOk("ports"); ok && len(ports.([]any)) > 0 {
+				return diag.Errorf("error updating Archer service: only one of 'port' or 'ports' can be specified")
+			}
+			svc.Ports = []int32{int32(port.(int))}
+		} else if ports, ok := d.GetOk("ports"); ok {
+			svc.Ports = ports.([]int32)
+		} else {
+			diag.Errorf("error updating Archer service: port or ports must be specified")
+		}
 	}
 	if d.HasChange("proxy_protocol") {
 		v := d.Get("proxy_protocol").(bool)
@@ -375,7 +419,7 @@ func archerSetServiceResource(d *schema.ResourceData, config *Config, svc *model
 	_ = d.Set("ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
-	_ = d.Set("port", svc.Port)
+	_ = d.Set("ports", svc.Ports)
 	_ = d.Set("network_id", ptrValue(svc.NetworkID))
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("tags", svc.Tags)
