@@ -8,8 +8,8 @@ require (
 	github.com/go-openapi/runtime v0.29.2
 	github.com/go-openapi/strfmt v0.25.0
 	github.com/go-openapi/validate v0.25.1
-	github.com/gophercloud/gophercloud/v2 v2.8.0
-	github.com/gophercloud/utils/v2 v2.0.0-20251103115625-7dba497d90f8
+	github.com/gophercloud/gophercloud/v2 v2.9.0
+	github.com/gophercloud/utils/v2 v2.0.0-20251121145439-0a38d66a3d88
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
 	github.com/sapcc/andromeda v1.1.1
 	github.com/sapcc/archer v1.3.1

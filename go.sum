@@ -129,6 +129,8 @@ github.com/gophercloud/gophercloud/v2 v2.7.1-0.20250416153453-3eff99bf6fe8 h1:QF
 github.com/gophercloud/gophercloud/v2 v2.7.1-0.20250416153453-3eff99bf6fe8/go.mod h1:Ki/ILhYZr/5EPebrPL9Ej+tUg4lqx71/YH2JWVeU+Qk=
 github.com/gophercloud/gophercloud/v2 v2.8.0 h1:of2+8tT6+FbEYHfYC8GBu8TXJNsXYSNm9KuvpX7Neqo=
 github.com/gophercloud/gophercloud/v2 v2.8.0/go.mod h1:Ki/ILhYZr/5EPebrPL9Ej+tUg4lqx71/YH2JWVeU+Qk=
+github.com/gophercloud/gophercloud/v2 v2.9.0 h1:Y9OMrwKF9EDERcHFSOTpf/6XGoAI0yOxmsLmQki4LPM=
+github.com/gophercloud/gophercloud/v2 v2.9.0/go.mod h1:Ki/ILhYZr/5EPebrPL9Ej+tUg4lqx71/YH2JWVeU+Qk=
 github.com/gophercloud/utils/v2 v2.0.0-20250710092215-8f6f0255f600 h1:rBoVQBAhVK73CSUvkl6NPFGaz7lV3M1loFPMBEr6Kas=
 github.com/gophercloud/utils/v2 v2.0.0-20250710092215-8f6f0255f600/go.mod h1:1mckc18GQSFLRhDy2BjPGkkpbrjxY5iwX/oxpdTE2kw=
 github.com/gophercloud/utils/v2 v2.0.0-20250711132455-9770683b100a h1:erVLycqmezd0+eukgQ4xgLxGsByDKvqJxLXVc35tUYI=
@@ -137,6 +139,8 @@ github.com/gophercloud/utils/v2 v2.0.0-20250819195638-e4fc39f0eda4 h1:AjEgLZlPwl
 github.com/gophercloud/utils/v2 v2.0.0-20250819195638-e4fc39f0eda4/go.mod h1:LzITNtOz9eRj/Yt4vheymXTHGC1ksIsKNtLXhaX8+I0=
 github.com/gophercloud/utils/v2 v2.0.0-20251103115625-7dba497d90f8 h1:F3kGkwROpZHylGYJjecvx0+OQWMCSCjHmbazzeoeukc=
 github.com/gophercloud/utils/v2 v2.0.0-20251103115625-7dba497d90f8/go.mod h1:2e2v79VFnqidqjhRr7hmJOsoJkeaU1mEoDd1p9c1eaU=
+github.com/gophercloud/utils/v2 v2.0.0-20251121145439-0a38d66a3d88 h1:zyPxc6TsfPYsE903357+LpZ3P6vxbIMejXnrkXFY5bw=
+github.com/gophercloud/utils/v2 v2.0.0-20251121145439-0a38d66a3d88/go.mod h1:V71HTEkIqYH/FsQle8lMzA/5iCcCAYyGHURSgVhpOu0=
 github.com/hashicorp/go-cty v1.5.0 h1:EkQ/v+dDNUqnuVpmS5fPqyY71NXVgT5gf32+57xY8g0=
 github.com/hashicorp/go-cty v1.5.0/go.mod h1:lFUCG5kd8exDobgSfyj4ONE/dc822kiYMguVKdHGMLM=
 github.com/hashicorp/go-hclog v1.6.3 h1:Qr2kF+eVWjTiYmU7Y31tYlP1h0q/X3Nl3tPGdaB11/k=
