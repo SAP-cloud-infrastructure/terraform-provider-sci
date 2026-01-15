@@ -2,7 +2,7 @@ module github.com/SAP-cloud-infrastructure/terraform-provider-sci
 
 go 1.25.0
 
-toolchain go1.25.5
+toolchain go1.25.6
 
 require (
 	github.com/go-openapi/runtime v0.29.2
