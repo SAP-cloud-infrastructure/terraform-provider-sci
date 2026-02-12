@@ -42,7 +42,10 @@ The following arguments are supported:
 
 * `ip_addresses` - (Optional) A list of IP addresses associated with the service.
 
-* `port` - (Optional) The port on which the service is exposed.
+* `port` - (Optional) The port on which the service is exposed. Deprecated in
+  favor of `ports`.
+
+* `ports` - (Optional) A list of ports on which the service is exposed.
 
 * `network_id` - (Optional) The network ID associated with the service.
 
@@ -64,6 +67,7 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the found endpoint service.
 * `all_ip_addresses` - A list of all IP addresses associated with the service.
+* `all_ports` - A list of all ports on which the service is exposed.
 * `all_tags` - A list of all tags assigned to the service.
 * `host` - The host of the service owner.
 * `status` - The current status of the service.

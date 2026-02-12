@@ -112,6 +112,34 @@ func expandToNodePoolConfig(v []any) *models.NodePoolConfig {
 	return c
 }
 
+func expandToInt32Slice(v []any) []int32 {
+	s := make([]int32, len(v))
+	for i, val := range v {
+		if intVal, ok := val.(int); ok {
+			s[i] = int32(intVal)
+		}
+	}
+
+	return s
+}
+
+// isSubset is a function that checks whether all elements in the subset slice
+// are present in the set slice.
+func isSubset[T comparable](subset []T, set []T) bool {
+	setMap := make(map[T]struct{}, len(set))
+	for _, item := range set {
+		setMap[item] = struct{}{}
+	}
+
+	for _, item := range subset {
+		if _, exists := setMap[item]; !exists {
+			return false
+		}
+	}
+
+	return true
+}
+
 // from https://github.com/terraform-provider-openstack/terraform-provider-openstack/blob/74d82f6ce503df74a5e63ac2491e837dc296a82b/openstack/util.go#L153
 func expandObjectTags(d *schema.ResourceData) []string {
 	rawTags := d.Get("tags").(*schema.Set).List()
