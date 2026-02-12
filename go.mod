@@ -10,7 +10,7 @@ require (
 	github.com/gophercloud/utils/v2 v2.0.0-20260107124036-1d7954eb9711
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.2
 	github.com/sapcc/andromeda v1.1.1
-	github.com/sapcc/archer v1.4.2-0.20260205164216-fb6af3ce50cf
+	github.com/sapcc/archer v1.4.2-0.20260212150051-a2d3ae6351bc
 	github.com/sapcc/gophercloud-sapcc/v2 v2.0.5
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
 	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20251008071556-6ca14d74255d
@@ -102,12 +102,12 @@ require (
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
-	golang.org/x/mod v0.31.0 // indirect
-	golang.org/x/net v0.48.0 // indirect
+	golang.org/x/mod v0.32.0 // indirect
+	golang.org/x/net v0.50.0 // indirect
 	golang.org/x/sync v0.19.0 // indirect
-	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/text v0.33.0 // indirect
-	golang.org/x/tools v0.40.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/tools v0.41.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250929231259-57b25ae835d4 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250929231259-57b25ae835d4 // indirect
