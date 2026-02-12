@@ -58,9 +58,22 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 				Computed: true,
 			},
 			"port": {
-				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Type:          schema.TypeInt,
+				ValidateFunc:  validation.IsPortNumber,
+				Optional:      true,
+				Computed:      true,
+				Deprecated:    "Use 'port' instead of 'ports'",
+				ConflictsWith: []string{"ports"},
+			},
+			"ports": {
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type:         schema.TypeInt,
+					ValidateFunc: validation.IsPortNumber,
+				},
+				Optional:      true,
+				Computed:      true,
+				ConflictsWith: []string{"port"},
 			},
 			"network_id": {
 				Type:     schema.TypeString,
@@ -106,7 +119,12 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 			"all_tags": {
 				Type:     schema.TypeList,
 				Elem:     &schema.Schema{Type: schema.TypeString},
-				Optional: true,
+				Computed: true,
+			},
+			"all_ports": {
+				Type:     schema.TypeList,
+				Elem:     &schema.Schema{Type: schema.TypeInt},
+				Computed: true,
 			},
 			"host": {
 				Type:     schema.TypeString,
@@ -161,7 +179,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	// define filter values
 	var name, description, availabilityZone, networkID, provider, visibility, host, status *string
 	var enabled, proxyProtocol, requireApproval *bool
-	var port *int32
+	var ports []int32
 	var ipAddresses []string
 
 	if v, ok := d.GetOk("name"); ok {
@@ -199,15 +217,18 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 		requireApproval = ptr(v.(bool))
 	}
 
-	if v, ok := d.GetOk("port"); ok {
-		port = ptr(int32(v.(int)))
+	if v, ok := getOkExists(d, "port"); ok {
+		ports = []int32{int32(v.(int))}
+	}
+
+	if v, ok := getOkExists(d, "ports"); ok {
+		ports = expandToInt32Slice(v.([]any))
 	}
 
 	if v, ok := d.GetOk("ip_addresses"); ok {
 		ipAddresses = expandToStringSlice(v.([]any))
 	}
 
-ItemsLoop:
 	for _, svc := range services.Payload.Items {
 		if svc == nil {
 			continue
@@ -239,7 +260,7 @@ ItemsLoop:
 		if requireApproval != nil && *requireApproval != ptrValue(svc.RequireApproval) {
 			continue
 		}
-		if port != nil && *port != svc.Port {
+		if len(ports) > 0 && !isSubset(ports, svc.Ports) {
 			continue
 		}
 		if host != nil && *host != ptrValue(svc.Host) {
@@ -248,11 +269,8 @@ ItemsLoop:
 		if status != nil && *status != svc.Status {
 			continue
 		}
-		svcIPAddresses := flattenToStrFmtIPv4Slice(svc.IPAddresses)
-		for _, ip := range ipAddresses {
-			if !sliceContains(svcIPAddresses, ip) {
-				continue ItemsLoop
-			}
+		if len(ipAddresses) > 0 && !isSubset(ipAddresses, flattenToStrFmtIPv4Slice(svc.IPAddresses)) {
+			continue
 		}
 		filteredServices = append(filteredServices, *svc)
 	}
@@ -273,7 +291,7 @@ ItemsLoop:
 	_ = d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
-	_ = d.Set("port", svc.Port)
+	_ = d.Set("all_ports", svc.Ports)
 	_ = d.Set("network_id", ptrValue(svc.NetworkID))
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("all_tags", svc.Tags)

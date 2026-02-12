@@ -18,7 +18,7 @@ resource "sci_endpoint_service_v1" "service_1" {
   availability_zone = "region1a"
   name              = "service1"
   ip_addresses      = ["192.168.1.1"]
-  port              = 8080
+  ports             = [8080]
   network_id        = "982d8699-b1a0-4933-8b65-7f1cd8a0f78b"
   visibility        = "private"
   tags              = ["tag1", "tag2"]
@@ -46,7 +46,10 @@ The following arguments are supported:
 * `ip_addresses` - (Required) A list of IP addresses associated with the
   service.
 
-* `port` - (Required) The port on which the service is exposed.
+* `port` - (Optional) The port on which the service is exposed. Deprecated in
+  favor of `ports`.
+
+* `ports` - (Required) A list of ports on which the service is exposed.
 
 * `network_id` - (Required) The network ID associated with the service.
   Changing this forces a new resource to be created.
