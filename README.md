@@ -14,8 +14,8 @@ This provider plugin is maintained by:
 Requirements
 ------------
 
-- [Terraform](https://www.terraform.io/downloads.html) 1.0.x
-- [Go](https://golang.org/doc/install) 1.24 (to build the provider plugin)
+- [Terraform](https://developer.hashicorp.com/terraform/install) 1.x
+- [Go](https://go.dev/doc/install) 1.26 (to build the provider plugin)
 
 Usage
 ---------------------
@@ -79,7 +79,7 @@ Or you can browse the documentation within this repo [here](https://github.com/S
 Developing the Provider
 ---------------------------
 
-If you wish to work on the provider, you'll first need [Go](https://golang.org) installed on your machine (version 1.20+ is *required*).
+If you wish to work on the provider, you'll first need [Go](https://go.dev/) installed on your machine (version 1.26+ is *required*).
 
 To compile the provider, run `make build`. This will build the provider and put the provider binary in the current directory.
 
@@ -101,7 +101,7 @@ publish assets for release when a tag is pushed that matches the pattern `v*`
 (ie. `v0.1.0`).
 
 A [Gorelaser](https://goreleaser.com/) configuration is provided that produce
-build artifacts matching the [layout required](https://www.terraform.io/docs/registry/providers/publishing.html#manually-preparing-a-release)
+build artifacts matching the [layout required](https://developer.hashicorp.com/terraform#manually-preparing-a-release)
 to publish the provider in the Terraform Registry.
 
 Releases will as drafts. Once marked as published on the GitHub Releases page,
