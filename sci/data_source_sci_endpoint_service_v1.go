@@ -265,7 +265,7 @@ ItemsLoop:
 		return diag.Errorf("found more than one Archer services: %v", filteredServices)
 	}
 
-	svc := services.Payload.Items[0]
+	svc := filteredServices[0]
 
 	d.SetId(string(svc.ID))
 
