@@ -206,6 +206,8 @@ github.com/sapcc/archer v1.4.2-0.20260205164216-fb6af3ce50cf h1:7wBnU1pqy4a206/o
 github.com/sapcc/archer v1.4.2-0.20260205164216-fb6af3ce50cf/go.mod h1:jJJUjLXfOPknbkojjQSHaFFyjPT4itrcSK8p6Byf93Y=
 github.com/sapcc/archer v1.4.2-0.20260212150051-a2d3ae6351bc h1:J2wA7aLGPzJttMx68ZsLiHCUVZqQJjbo7ZraWduZ55U=
 github.com/sapcc/archer v1.4.2-0.20260212150051-a2d3ae6351bc/go.mod h1:kaeYtFi8LYsPWsTw6hkZjkX4Xc84k3qVn6QELmB2qmU=
+github.com/sapcc/archer v1.4.2-0.20260219190131-4c6c7166b187 h1:72pRJjBBp2mIHHwKJWfzQSOZnjgfJx/ob6ORdS2h1RQ=
+github.com/sapcc/archer v1.4.2-0.20260219190131-4c6c7166b187/go.mod h1:OClz6xZP0ULsNxBrMpYKVDxJJew94IY5N0pRanLb3zE=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.5 h1:pWVIM0qP3YYAoZNx8jtfX+8nBSJ03ETDyrrdBmI/b6I=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.5/go.mod h1:ylQgPjcEWI6Kw7GvG5e8iEfIP+p1oiFQgrAImGIGvac=
 github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8 h1:9WMqMoLoCLs15+bXl+KCI2yTl3GOeofLIuzShBzw8Ls=
