@@ -65,7 +65,7 @@ jobs:
         run: yq -i '.project_name = "${{ github.event.inputs.project_name }}"' /tmp/.goreleaser.yml
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@v7
         with:
           version: ${{ github.event.inputs.goreleaser_version }}
           args: release --clean --config /tmp/.goreleaser.yml
