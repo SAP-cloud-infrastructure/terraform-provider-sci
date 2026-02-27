@@ -212,6 +212,8 @@ github.com/sapcc/archer v1.4.2-0.20260205164216-fb6af3ce50cf h1:7wBnU1pqy4a206/o
 github.com/sapcc/archer v1.4.2-0.20260205164216-fb6af3ce50cf/go.mod h1:jJJUjLXfOPknbkojjQSHaFFyjPT4itrcSK8p6Byf93Y=
 github.com/sapcc/archer v1.4.2-0.20260212150051-a2d3ae6351bc h1:J2wA7aLGPzJttMx68ZsLiHCUVZqQJjbo7ZraWduZ55U=
 github.com/sapcc/archer v1.4.2-0.20260212150051-a2d3ae6351bc/go.mod h1:kaeYtFi8LYsPWsTw6hkZjkX4Xc84k3qVn6QELmB2qmU=
+github.com/sapcc/archer v1.4.2-0.20260227040729-980e65649766 h1:fxqI42+uQOJ6lQ1oFihvDPz8gx8Fo7VCBk7k2RM1UzI=
+github.com/sapcc/archer v1.4.2-0.20260227040729-980e65649766/go.mod h1:KGMBoth+Smy6PrNQdyMjfYcZKlIOEvM37foADdi8Mo4=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.5 h1:pWVIM0qP3YYAoZNx8jtfX+8nBSJ03ETDyrrdBmI/b6I=
 github.com/sapcc/gophercloud-sapcc/v2 v2.0.5/go.mod h1:ylQgPjcEWI6Kw7GvG5e8iEfIP+p1oiFQgrAImGIGvac=
 github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8 h1:9WMqMoLoCLs15+bXl+KCI2yTl3GOeofLIuzShBzw8Ls=
@@ -294,6 +296,8 @@ golang.org/x/net v0.48.0 h1:zyQRTTrjc33Lhh0fBgT/H3oZq9WuvRR5gPC70xpDiQU=
 golang.org/x/net v0.48.0/go.mod h1:+ndRgGjkh8FGtu1w1FGbEC31if4VrNVMuKTgcAAnQRY=
 golang.org/x/net v0.50.0 h1:ucWh9eiCGyDR3vtzso0WMQinm2Dnt8cFMuQa9K33J60=
 golang.org/x/net v0.50.0/go.mod h1:UgoSli3F/pBgdJBHCTc+tp3gmrU4XswgGRgtnwWTfyM=
+golang.org/x/net v0.51.0 h1:94R/GTO7mt3/4wIKpcR5gkGmRLOuE/2hNGeWq/GBIFo=
+golang.org/x/net v0.51.0/go.mod h1:aamm+2QF5ogm02fjy5Bb7CQ0WMt1/WVM7FtyaTLlA9Y=
 golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
