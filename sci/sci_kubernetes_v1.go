@@ -64,19 +64,17 @@ func kubernikusValidateAuthConf(v any, k string) ([]string, []error) {
 }
 
 func kubernikusFlattenOpenstackSpecV1(spec *models.OpenstackSpec) []map[string]any {
-	var res []map[string]any
-
 	if spec == (&models.OpenstackSpec{}) {
-		return res
+		return nil
 	}
 
-	return append(res, map[string]any{
+	return []map[string]any{{
 		"lb_floating_network_id": spec.LBFloatingNetworkID,
 		"lb_subnet_id":           spec.LBSubnetID,
 		"network_id":             spec.NetworkID,
 		"router_id":              spec.RouterID,
 		"security_group_name":    spec.SecurityGroupName,
-	})
+	}}
 }
 
 func kubernikusFlattenNodePoolsV1(nodePools []models.NodePool) []map[string]any {
