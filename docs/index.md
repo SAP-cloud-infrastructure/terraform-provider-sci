@@ -223,8 +223,6 @@ configuration:
 provider "sci" {
 
   endpoint_overrides = {
-    "arc"               = "https://arc.example.com/api/v1/"
-    "automation"        = "https://lyra.example.com:8776/api/v1/"
     "gtm"               = "https://gtm.example.com/v1"
     "endpoint-services" = "https://archer.example.com/v1"
   }
@@ -239,8 +237,6 @@ endpoint URL for this to work.
 The service keys are the standard service entries used in the SAP Cloud Infrastructure
 Identity/Keystone service catalog. This provider supports:
 
-* `arc`: Arc / Arc v1
-* `automation`: Automation / Lyra v1
 * `kubernikus`: Kubernetes / Kubernikus
 * `sapcc-billing`: Billing
 * `gtm`: Andromeda a GSLB / GTM (Global Server Load Balancing / Global Traffic Management) service

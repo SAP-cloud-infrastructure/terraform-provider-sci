@@ -252,22 +252,12 @@ func Provider() *schema.Provider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
-			"sci_arc_agent_v1":               dataSourceSCIArcAgentV1(),
-			"sci_arc_agent_ids_v1":           dataSourceSCIArcAgentIDsV1(),
-			"sci_arc_job_v1":                 dataSourceSCIArcJobV1(),
-			"sci_arc_job_ids_v1":             dataSourceSCIArcJobIDsV1(),
-			"sci_automation_v1":              dataSourceSCIAutomationV1(),
 			"sci_billing_domain_masterdata":  dataSourceSCIBillingDomainMasterdata(),
 			"sci_billing_project_masterdata": dataSourceSCIBillingProjectMasterdata(),
 			"sci_gslb_services_v1":           dataSourceSCIGSLBServicesV1(),
 			"sci_endpoint_service_v1":        dataSourceSCIEndpointServiceV1(),
 			"sci_networking_router_v2":       dataSourceSCINetworkingRouterV2(),
 			// old provider names
-			"ccloud_arc_agent_v1":               dataSourceSCIArcAgentV1(),
-			"ccloud_arc_agent_ids_v1":           dataSourceSCIArcAgentIDsV1(),
-			"ccloud_arc_job_v1":                 dataSourceSCIArcJobV1(),
-			"ccloud_arc_job_ids_v1":             dataSourceSCIArcJobIDsV1(),
-			"ccloud_automation_v1":              dataSourceSCIAutomationV1(),
 			"ccloud_billing_domain_masterdata":  dataSourceSCIBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": dataSourceSCIBillingProjectMasterdata(),
 			"ccloud_gslb_services_v1":           dataSourceSCIGSLBServicesV1(),
@@ -276,11 +266,6 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"sci_arc_agent_bootstrap_v1":     resourceSCIArcAgentBootstrapV1(),
-			"sci_arc_agent_v1":               resourceSCIArcAgentV1(),
-			"sci_arc_job_v1":                 resourceSCIArcJobV1(),
-			"sci_automation_v1":              resourceSCIAutomationV1(),
-			"sci_automation_run_v1":          resourceSCIAutomationRunV1(),
 			"sci_billing_domain_masterdata":  resourceSCIBillingDomainMasterdata(),
 			"sci_billing_project_masterdata": resourceSCIBillingProjectMasterdata(),
 			"sci_kubernetes_v1":              resourceSCIKubernetesV1(),
@@ -298,11 +283,6 @@ func Provider() *schema.Provider {
 			"sci_endpoint_quota_v1":          resourceSCIEndpointQuotaV1(),
 			"sci_endpoint_rbac_policy_v1":    resourceSCIEndpointRBACV1(),
 			// old provider names
-			"ccloud_arc_agent_bootstrap_v1":     resourceSCIArcAgentBootstrapV1(),
-			"ccloud_arc_agent_v1":               resourceSCIArcAgentV1(),
-			"ccloud_arc_job_v1":                 resourceSCIArcJobV1(),
-			"ccloud_automation_v1":              resourceSCIAutomationV1(),
-			"ccloud_automation_run_v1":          resourceSCIAutomationRunV1(),
 			"ccloud_billing_domain_masterdata":  resourceSCIBillingDomainMasterdata(),
 			"ccloud_billing_project_masterdata": resourceSCIBillingProjectMasterdata(),
 			"ccloud_kubernetes_v1":              resourceSCIKubernetesV1(),

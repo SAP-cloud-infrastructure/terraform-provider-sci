@@ -26,8 +26,6 @@ It provides resources that allow to use Terraform for SAP Cloud Infrastructure's
 additional services:
 
   * Kubernikus (Kubernetes as a Service)
-  * Arc for Arc resources management
-  * Lyra for Automation management
   * Billing for Billing management
   * Andromeda for GSLB / GTM (Global Server Load Balancing / Global Traffic Management)
   * Archer for Endpoint Services
