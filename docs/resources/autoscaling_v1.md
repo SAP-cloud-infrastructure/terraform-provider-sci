@@ -9,8 +9,8 @@ description: |-
 # sci\_autoscaling\_v1
 
 Manages a [Castellum](https://github.com/sapcc/castellum) autoscaling
-configuration for a resource type within a project. Castellum monitors usage
-metrics and automatically scales resource sizes up or down when configured
+configuration for an asset type within a project. Castellum monitors usage
+metrics and automatically scales asset sizes up or down when configured
 thresholds are crossed.
 
 ## Example Usage
@@ -19,7 +19,7 @@ thresholds are crossed.
 
 ```hcl
 resource "sci_autoscaling_v1" "nfs" {
-  resource_type = "nfs-shares"
+  asset_type = "nfs-shares"
 
   high_threshold {
     usage_percent = 80.0
@@ -45,10 +45,10 @@ resource "sci_autoscaling_v1" "nfs" {
 
 ```hcl
 resource "sci_autoscaling_v1" "server_group" {
-  resource_type = "project-quota"
+  asset_type = "server-group:11111111-2222-3333-4444-555555555555"
 
   low_threshold {
-    metric        = "cores"
+    metric        = "cpu"
     usage_percent = 20.0
     delay_seconds = 3600
   }
@@ -60,7 +60,7 @@ resource "sci_autoscaling_v1" "server_group" {
   }
 
   high_threshold {
-    metric        = "cores"
+    metric        = "cpu"
     usage_percent = 80.0
     delay_seconds = 1800
   }
@@ -72,7 +72,7 @@ resource "sci_autoscaling_v1" "server_group" {
   }
 
   critical_threshold {
-    metric        = "cores"
+    metric        = "cpu"
     usage_percent = 95.0
   }
 
@@ -106,9 +106,9 @@ The following arguments are supported:
   If omitted, the project ID is derived from the provider token scope. Changing
   this forces a new resource to be created.
 
-* `resource_type` - (Required) The Castellum resource type to manage, e.g.
-  `nfs-shares` or `project-quota`. Changing this forces a new resource to be
-  created.
+* `asset_type` - (Required) The Castellum asset type to manage, e.g.
+  `nfs-shares` or `server-group:<server-group-uuid>`. Changing this forces a
+  new resource to be created.
 
 * `low_threshold` - (Optional) One or more threshold blocks defining the low
   usage level that triggers a scale-down. The `low_threshold` block structure
@@ -132,16 +132,20 @@ The following arguments are supported:
 The `low_threshold`, `high_threshold`, and `critical_threshold` blocks support:
 
 * `metric` - (Optional) The usage metric this threshold applies to. Defaults to
-  `singular` for resources with a single usage metric (e.g. NFS shares). For
-  resources with multiple usage metrics (e.g. CPU and RAM), specify one block
-  per metric with the corresponding metric name.
+  `singular` for asset types with a single usage metric (e.g. `nfs-shares`). For
+  asset types with multiple usage metrics (e.g. `server-group:<uuid>` which
+  reports `cpu` and `ram`), specify one block per metric with the corresponding
+  metric name. All blocks belonging to the same threshold must share the same
+  `delay_seconds` value, as Castellum applies one delay per threshold across
+  all metrics.
 
 * `usage_percent` - (Required) The usage percentage at which this threshold is
   triggered.
 
 * `delay_seconds` - (Optional) The number of seconds Castellum must observe the
   usage above this threshold continuously before acting. Defaults to `0`
-  (immediate).
+  (immediate). When multiple metric blocks are provided within the same
+  threshold, all blocks must use the same value.
 
 The `size_constraints` block supports:
 
@@ -171,7 +175,7 @@ The `size_steps` block supports:
 
 In addition to all arguments above, the following attributes are exported:
 
-* `id` - The resource identifier, formatted as `<project_id>/<resource_type>`.
+* `id` - The resource identifier, formatted as `<project_id>/<asset_type>`.
 * `region` - See Argument Reference above.
 * `project_id` - The resolved project ID.
 
@@ -190,8 +194,8 @@ configuration options:
 
 ## Import
 
-Autoscaling configurations can be imported using the project ID and resource
-type (`<project_id>/<resource_type>`), e.g.
+Autoscaling configurations can be imported using the project ID and asset type
+(`<project_id>/<asset_type>`), e.g.
 
 ```shell
 $ terraform import sci_autoscaling_v1.nfs abc123def456/nfs-shares
