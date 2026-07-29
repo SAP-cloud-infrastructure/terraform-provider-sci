@@ -257,20 +257,20 @@ func resourceSCIAutoscalingV1Delete(ctx context.Context, d *schema.ResourceData,
 }
 
 // sciAutoscalingV1BuildOpts constructs CreateOpts from schema data.
-func sciAutoscalingV1BuildOpts(d *schema.ResourceData) (resources.CreateOpts, error) {
+func sciAutoscalingV1BuildOpts(d *schema.ResourceData) (*resources.CreateOpts, error) {
 	low, err := sciAutoscalingV1ExpandThreshold(d.Get("low_threshold"))
 	if err != nil {
-		return resources.CreateOpts{}, fmt.Errorf("low_threshold: %w", err)
+		return nil, fmt.Errorf("low_threshold: %w", err)
 	}
 	high, err := sciAutoscalingV1ExpandThreshold(d.Get("high_threshold"))
 	if err != nil {
-		return resources.CreateOpts{}, fmt.Errorf("high_threshold: %w", err)
+		return nil, fmt.Errorf("high_threshold: %w", err)
 	}
 	critical, err := sciAutoscalingV1ExpandThreshold(d.Get("critical_threshold"))
 	if err != nil {
-		return resources.CreateOpts{}, fmt.Errorf("critical_threshold: %w", err)
+		return nil, fmt.Errorf("critical_threshold: %w", err)
 	}
-	return resources.CreateOpts{
+	return &resources.CreateOpts{
 		LowThreshold:      low,
 		HighThreshold:     high,
 		CriticalThreshold: critical,
@@ -382,11 +382,11 @@ func sciAutoscalingV1FlattenSizeConstraints(sc castellum.SizeConstraints) []map[
 	return []map[string]any{m}
 }
 
-func sciAutoscalingV1FlattenSizeSteps(ss castellum.SizeSteps) []map[string]any {
+func sciAutoscalingV1FlattenSizeSteps(sizeSteps castellum.SizeSteps) []map[string]any {
 	return []map[string]any{
 		{
-			"percent": ss.Percent,
-			"single":  ss.Single,
+			"percent": sizeSteps.Percent,
+			"single":  sizeSteps.Single,
 		},
 	}
 }
