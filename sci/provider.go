@@ -266,6 +266,7 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
+			"sci_castellum_resource_v1":      resourceSCICastellumResourceV1(),
 			"sci_billing_domain_masterdata":  resourceSCIBillingDomainMasterdata(),
 			"sci_billing_project_masterdata": resourceSCIBillingProjectMasterdata(),
 			"sci_kubernetes_v1":              resourceSCIKubernetesV1(),
