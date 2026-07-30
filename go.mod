@@ -10,7 +10,7 @@ require (
 	github.com/gophercloud/utils/v2 v2.0.0-20260626221802-4ae35253ac13
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
 	github.com/sapcc/andromeda v1.1.1
-	github.com/sapcc/archer v1.4.2-0.20260227040729-980e65649766
+	github.com/sapcc/archer/v2 v2.5.3
 	github.com/sapcc/go-api-declarations v1.24.0
 	github.com/sapcc/gophercloud-sapcc/v2 v2.2.0
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
