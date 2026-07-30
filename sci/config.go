@@ -50,6 +50,10 @@ func (c *Config) archerV1Client(ctx context.Context, region string) (*archer, er
 	})
 }
 
+func (c *Config) castellumV1Client(ctx context.Context, region string) (*gophercloud.ServiceClient, error) {
+	return c.CommonServiceClientInit(ctx, clients.NewCastellumV1, region, "castellum")
+}
+
 func (c *Config) billingClient(ctx context.Context, region string) (*gophercloud.ServiceClient, error) {
 	return c.CommonServiceClientInit(ctx, clients.NewBilling, region, "sapcc-billing")
 }
