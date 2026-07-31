@@ -6,8 +6,8 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/archer/client/quota"
-	"github.com/sapcc/archer/models"
+	"github.com/sapcc/archer/v2/client/quota"
+	"github.com/sapcc/archer/v2/models"
 )
 
 func resourceSCIEndpointQuotaV1() *schema.Resource {
