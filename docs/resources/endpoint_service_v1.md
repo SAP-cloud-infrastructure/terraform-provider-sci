@@ -17,9 +17,11 @@ SAP Cloud Infrastructure environment.
 resource "sci_endpoint_service_v1" "service_1" {
   availability_zone = "region1a"
   name              = "service1"
+  protocol          = "TCP"
   ip_addresses      = ["192.168.1.1"]
   ports             = [8080]
   network_id        = "982d8699-b1a0-4933-8b65-7f1cd8a0f78b"
+  snat_pool_size    = 2
   visibility        = "private"
   tags              = ["tag1", "tag2"]
 }
@@ -42,6 +44,9 @@ The following arguments are supported:
 * `name` - (Optional) The name of the endpoint service.
 
 * `description` - (Optional) A description of the endpoint service.
+
+* `protocol` - (Optional) The protocol of the endpoint service (`HTTP` or
+  `TCP`).
 
 * `ip_addresses` - (Required) A list of IP addresses associated with the
   service.
@@ -67,6 +72,9 @@ The following arguments are supported:
 * `require_approval` - (Optional) Specifies if the service requires approval.
   Defaults to `true`.
 
+* `snat_pool_size` - (Optional) The number of SNAT IP addresses allocated for
+  the service. Must be between `1` and `8`.
+
 * `visibility` - (Optional) The visibility of the service (`private` or
   `public`). Defaults to `private`.
 
@@ -79,6 +87,7 @@ In addition to all arguments above, the following attributes are exported:
 * `id` - The ID of the endpoint service.
 * `host` - The host name of the service.
 * `status` - The current status of the service.
+* `health_status` - The current backend health status of the service.
 * `created_at` - The timestamp when the service was created.
 * `updated_at` - The timestamp when the service was last updated.
 

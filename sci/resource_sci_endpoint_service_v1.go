@@ -50,6 +50,14 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"protocol": {
+				Type: schema.TypeString,
+				ValidateFunc: validation.StringInSlice([]string{
+					"HTTP", "TCP",
+				}, false),
+				Optional: true,
+				Computed: true,
+			},
 			"ip_addresses": {
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
@@ -106,6 +114,12 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"snat_pool_size": {
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 8),
+				Optional:     true,
+				Computed:     true,
+			},
 			"visibility": {
 				Type: schema.TypeString,
 				ValidateFunc: validation.StringInSlice([]string{
@@ -127,6 +141,10 @@ func resourceSCIEndpointServiceV1() *schema.Resource {
 				Computed: true,
 			},
 			"status": {
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"health_status": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -173,11 +191,17 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 	if v, ok := getOkExists(d, "require_approval"); ok {
 		svc.RequireApproval = ptr(v.(bool))
 	}
+	if v, ok := getOkExists(d, "snat_pool_size"); ok {
+		svc.SnatPoolSize = ptr(int32(v.(int)))
+	}
 	if v, ok := d.GetOk("availability_zone"); ok && v != "" {
 		svc.AvailabilityZone = ptr(v.(string))
 	}
-	if v, ok := d.GetOk("svc_provider"); ok && v != "" {
+	if v, ok := d.GetOk("service_provider"); ok && v != "" {
 		svc.Provider = ptr(v.(string))
+	}
+	if v, ok := d.GetOk("protocol"); ok && v != "" {
+		svc.Protocol = ptr(v.(string))
 	}
 	if v, ok := d.GetOk("visibility"); ok && v != "" {
 		svc.Visibility = ptr(v.(string))
@@ -283,6 +307,14 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 	if d.HasChange("require_approval") {
 		v := d.Get("require_approval").(bool)
 		svc.RequireApproval = &v
+	}
+	if d.HasChange("protocol") {
+		v := d.Get("protocol").(string)
+		svc.Protocol = &v
+	}
+	if d.HasChange("snat_pool_size") {
+		v := int32(d.Get("snat_pool_size").(int))
+		svc.SnatPoolSize = &v
 	}
 	if d.HasChange("visibility") {
 		v := d.Get("visibility").(string)
@@ -411,13 +443,16 @@ func archerSetServiceResource(d *schema.ResourceData, config *Config, svc *model
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("tags", svc.Tags)
 	_ = d.Set("service_provider", ptrValue(svc.Provider))
+	_ = d.Set("protocol", ptrValue(svc.Protocol))
 	_ = d.Set("proxy_protocol", ptrValue(svc.ProxyProtocol))
 	_ = d.Set("require_approval", ptrValue(svc.RequireApproval))
+	_ = d.Set("snat_pool_size", ptrValue(svc.SnatPoolSize))
 	_ = d.Set("visibility", ptrValue(svc.Visibility))
 
 	// computed
 	_ = d.Set("host", ptrValue(svc.Host))
 	_ = d.Set("status", string(svc.Status))
+	_ = d.Set("health_status", ptrValue(svc.HealthStatus))
 	_ = d.Set("created_at", svc.CreatedAt.String())
 	_ = d.Set("updated_at", svc.UpdatedAt.String())
 

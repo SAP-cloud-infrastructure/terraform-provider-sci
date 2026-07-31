@@ -40,6 +40,8 @@ The following arguments are supported:
 
 * `description` - (Optional) A description of the endpoint service.
 
+* `protocol` - (Optional) Filter services by their protocol (`HTTP` or `TCP`).
+
 * `ip_addresses` - (Optional) A list of IP addresses associated with the service.
 
 * `port` - (Optional) The port on which the service is exposed. Deprecated in
@@ -57,6 +59,9 @@ The following arguments are supported:
 
 * `require_approval` - (Optional) Filter services by whether they require approval.
 
+* `snat_pool_size` - (Optional) Filter services by the number of allocated SNAT
+  IP addresses.
+
 * `visibility` - (Optional) Filter services by their visibility (`private` or `public`).
 
 * `tags` - (Optional) A list of tags assigned to the service.
@@ -71,5 +76,6 @@ In addition to all arguments above, the following attributes are exported:
 * `all_tags` - A list of all tags assigned to the service.
 * `host` - The host of the service owner.
 * `status` - The current status of the service.
+* `health_status` - The current backend health status of the service.
 * `created_at` - The timestamp when the service was created.
 * `updated_at` - The timestamp when the service was last updated.
