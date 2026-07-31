@@ -10,8 +10,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/sapcc/archer/client/endpoint"
-	"github.com/sapcc/archer/models"
+	"github.com/sapcc/archer/v2/client/endpoint"
+	"github.com/sapcc/archer/v2/models"
 )
 
 func resourceSCIEndpointV1() *schema.Resource {

@@ -6,8 +6,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/archer/client/service"
-	"github.com/sapcc/archer/models"
+	"github.com/sapcc/archer/v2/client/service"
+	"github.com/sapcc/archer/v2/models"
 )
 
 func dataSourceSCIEndpointServiceV1() *schema.Resource {
@@ -266,10 +266,10 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 		if host != nil && *host != ptrValue(svc.Host) {
 			continue
 		}
-		if status != nil && *status != svc.Status {
+		if status != nil && *status != string(svc.Status) {
 			continue
 		}
-		if len(ipAddresses) > 0 && !isSubset(ipAddresses, flattenToStrFmtIPv4Slice(svc.IPAddresses)) {
+		if len(ipAddresses) > 0 && !isSubset(ipAddresses, flattenToArcherInetAddressSlice(svc.IPAddresses)) {
 			continue
 		}
 		filteredServices = append(filteredServices, *svc)
@@ -288,7 +288,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	d.SetId(string(svc.ID))
 
 	_ = d.Set("enabled", ptrValue(svc.Enabled))
-	_ = d.Set("all_ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
+	_ = d.Set("all_ip_addresses", flattenToArcherInetAddressSlice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
 	_ = d.Set("all_ports", svc.Ports)
@@ -302,7 +302,7 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 
 	// computed
 	_ = d.Set("host", ptrValue(svc.Host))
-	_ = d.Set("status", svc.Status)
+	_ = d.Set("status", string(svc.Status))
 	_ = d.Set("created_at", svc.CreatedAt.String())
 	_ = d.Set("updated_at", svc.UpdatedAt.String())
 

@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/gophercloud/gophercloud/v2"
 	osClient "github.com/gophercloud/utils/v2/client"
-	"github.com/sapcc/archer/client"
+	"github.com/sapcc/archer/v2/client"
 )
 
 type archer struct {

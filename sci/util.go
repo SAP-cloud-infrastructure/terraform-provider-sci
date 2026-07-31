@@ -10,6 +10,7 @@ import (
 	"github.com/go-openapi/validate"
 	"github.com/gophercloud/gophercloud/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	archermodels "github.com/sapcc/archer/v2/models"
 	"github.com/sapcc/kubernikus/pkg/api/models"
 )
 
@@ -144,28 +145,30 @@ func validateKubernetesVersion(v any, k string) ([]string, []error) {
 
 func removePrefixIPAddress(ip string) string {
 	res, _, _ := net.ParseCIDR(ip)
-	if res == nil {
-		ip = ip + "/32"
-		res, _, _ = net.ParseCIDR(ip)
-		if res == nil {
-			return ""
-		}
+	if res != nil {
+		return res.String()
 	}
+
+	res = net.ParseIP(ip)
+	if res == nil {
+		return ""
+	}
+
 	return res.String()
 }
 
-func expandToStrFmtIPv4Slice(v []any) []strfmt.IPv4 {
-	s := make([]strfmt.IPv4, len(v))
+func expandToArcherInetAddressSlice(v []any) []archermodels.InetAddress {
+	s := make([]archermodels.InetAddress, len(v))
 	for i, val := range v {
 		if strVal, ok := val.(string); ok {
-			s[i] = strfmt.IPv4(removePrefixIPAddress(strVal))
+			s[i] = archermodels.InetAddress(removePrefixIPAddress(strVal))
 		}
 	}
 
 	return s
 }
 
-func flattenToStrFmtIPv4Slice(v []strfmt.IPv4) []string {
+func flattenToArcherInetAddressSlice(v []archermodels.InetAddress) []string {
 	s := make([]string, len(v))
 	for i, val := range v {
 		s[i] = removePrefixIPAddress(string(val))

@@ -11,8 +11,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/archer/client/service"
-	"github.com/sapcc/archer/models"
+	"github.com/sapcc/archer/v2/client/service"
+	"github.com/sapcc/archer/v2/models"
 )
 
 func resourceSCIEndpointServiceV1() *schema.Resource {
@@ -159,7 +159,7 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 		ProjectID:   models.Project(d.Get("project_id").(string)),
 		Enabled:     &enabled,
 		NetworkID:   &networkID,
-		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]any)),
+		IPAddresses: expandToArcherInetAddressSlice(d.Get("ip_addresses").([]any)),
 	}
 	if v, ok := getOkExists(d, "port"); ok {
 		svc.Ports = []int32{int32(v.(int))}
@@ -207,7 +207,7 @@ func resourceSCIEndpointServiceV1Create(ctx context.Context, d *schema.ResourceD
 	timeout := d.Timeout(schema.TimeoutCreate)
 	target := models.ServiceStatusAVAILABLE
 	pending := models.ServiceStatusPENDINGCREATE
-	svc, err = archerWaitForService(ctx, c, id, target, pending, timeout)
+	svc, err = archerWaitForService(ctx, c, id, string(target), string(pending), timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -249,7 +249,7 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 
 	id := d.Id()
 	svc := &models.ServiceUpdatable{
-		IPAddresses: expandToStrFmtIPv4Slice(d.Get("ip_addresses").([]any)),
+		IPAddresses: expandToArcherInetAddressSlice(d.Get("ip_addresses").([]any)),
 		Tags:        expandToStringSlice(d.Get("tags").([]any)),
 	}
 
@@ -303,7 +303,7 @@ func resourceSCIEndpointServiceV1Update(ctx context.Context, d *schema.ResourceD
 	timeout := d.Timeout(schema.TimeoutUpdate)
 	target := models.ServiceStatusAVAILABLE
 	pending := models.ServiceStatusPENDINGUPDATE
-	res, err := archerWaitForService(ctx, c, id, target, pending, timeout)
+	res, err := archerWaitForService(ctx, c, id, string(target), string(pending), timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -338,7 +338,7 @@ func resourceSCIEndpointServiceV1Delete(ctx context.Context, d *schema.ResourceD
 	timeout := d.Timeout(schema.TimeoutDelete)
 	target := "DELETED"
 	pending := models.ServiceStatusPENDINGDELETE
-	_, err = archerWaitForService(ctx, c, id, target, pending, timeout)
+	_, err = archerWaitForService(ctx, c, id, target, string(pending), timeout)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -376,7 +376,7 @@ func archerGetServiceStatus(ctx context.Context, c *archer, id string) retry.Sta
 			return nil, "", err
 		}
 
-		return service, service.Status, nil
+		return service, string(service.Status), nil
 	}
 }
 
@@ -398,7 +398,7 @@ func archerGetService(ctx context.Context, c *archer, id string) (*models.Servic
 
 func archerSetServiceResource(d *schema.ResourceData, config *Config, svc *models.Service) {
 	_ = d.Set("enabled", ptrValue(svc.Enabled))
-	_ = d.Set("ip_addresses", flattenToStrFmtIPv4Slice(svc.IPAddresses))
+	_ = d.Set("ip_addresses", flattenToArcherInetAddressSlice(svc.IPAddresses))
 	_ = d.Set("name", svc.Name)
 	_ = d.Set("description", svc.Description)
 	if len(svc.Ports) == 1 {
@@ -417,7 +417,7 @@ func archerSetServiceResource(d *schema.ResourceData, config *Config, svc *model
 
 	// computed
 	_ = d.Set("host", ptrValue(svc.Host))
-	_ = d.Set("status", svc.Status)
+	_ = d.Set("status", string(svc.Status))
 	_ = d.Set("created_at", svc.CreatedAt.String())
 	_ = d.Set("updated_at", svc.UpdatedAt.String())
 

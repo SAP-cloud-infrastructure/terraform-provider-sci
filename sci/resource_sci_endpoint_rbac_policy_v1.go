@@ -8,8 +8,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
-	"github.com/sapcc/archer/client/rbac"
-	"github.com/sapcc/archer/models"
+	"github.com/sapcc/archer/v2/client/rbac"
+	"github.com/sapcc/archer/v2/models"
 )
 
 func resourceSCIEndpointRBACV1() *schema.Resource {
