@@ -39,6 +39,11 @@ func resourceSCIEndpointV1() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"connection_mirroring": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"project_id": {
 				Type:     schema.TypeString,
 				Optional: true,
@@ -122,6 +127,9 @@ func resourceSCIEndpointV1Create(ctx context.Context, d *schema.ResourceData, me
 		Tags:        expandToStringSlice(d.Get("tags").([]any)),
 		Target:      flattenEndpointTarget(d.Get("target").([]any)),
 	}
+	if v, ok := getOkExists(d, "connection_mirroring"); ok {
+		ept.ConnectionMirroring = new(v.(bool))
+	}
 
 	opts := &endpoint.PostEndpointParams{
 		Body:    ept,
@@ -195,6 +203,9 @@ func resourceSCIEndpointV1Update(ctx context.Context, d *schema.ResourceData, me
 	}
 	if d.HasChange("description") {
 		ept.Description = ptr(d.Get("description").(string))
+	}
+	if d.HasChange("connection_mirroring") {
+		ept.ConnectionMirroring = new(d.Get("connection_mirroring").(bool))
 	}
 	if d.HasChange("tags") {
 		ept.Tags = expandToStringSlice(d.Get("tags").([]any))
@@ -306,6 +317,7 @@ func archerSetEndpointResource(d *schema.ResourceData, config *Config, ept *mode
 	_ = d.Set("description", ept.Description)
 	_ = d.Set("service_id", ept.ServiceID)
 	_ = d.Set("project_id", ept.ProjectID)
+	_ = d.Set("connection_mirroring", ptrValue(ept.ConnectionMirroring))
 	_ = d.Set("ip_address", ept.IPAddress)
 	_ = d.Set("tags", ept.Tags)
 	_ = d.Set("target", expandEndpointTarget(ept.Target))

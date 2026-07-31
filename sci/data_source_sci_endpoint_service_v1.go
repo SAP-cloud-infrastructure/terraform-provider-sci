@@ -41,6 +41,14 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"protocol": {
+				Type: schema.TypeString,
+				ValidateFunc: validation.StringInSlice([]string{
+					"HTTP", "TCP",
+				}, false),
+				Optional: true,
+				Computed: true,
+			},
 			"ip_addresses": {
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
@@ -103,6 +111,12 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"snat_pool_size": {
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 8),
+				Optional:     true,
+				Computed:     true,
+			},
 			"visibility": {
 				Type: schema.TypeString,
 				ValidateFunc: validation.StringInSlice([]string{
@@ -134,6 +148,10 @@ func dataSourceSCIEndpointServiceV1() *schema.Resource {
 			"status": {
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
+			},
+			"health_status": {
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"created_at": {
@@ -177,8 +195,9 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	filteredServices := make([]models.Service, 0, len(services.Payload.Items))
 
 	// define filter values
-	var name, description, availabilityZone, networkID, provider, visibility, host, status *string
+	var name, description, availabilityZone, networkID, provider, protocol, visibility, host, status *string
 	var enabled, proxyProtocol, requireApproval *bool
+	var snatPoolSize *int32
 	var ports []int32
 	var ipAddresses []string
 
@@ -197,6 +216,9 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	if v, ok := d.GetOk("service_provider"); ok {
 		provider = ptr(v.(string))
 	}
+	if v, ok := d.GetOk("protocol"); ok {
+		protocol = ptr(v.(string))
+	}
 	if v, ok := d.GetOk("visibility"); ok {
 		visibility = ptr(v.(string))
 	}
@@ -206,7 +228,6 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	if v, ok := d.GetOk("status"); ok {
 		status = ptr(v.(string))
 	}
-
 	if v, ok := d.GetOk("enabled"); ok {
 		enabled = ptr(v.(bool))
 	}
@@ -215,6 +236,10 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	}
 	if v, ok := d.GetOk("require_approval"); ok {
 		requireApproval = ptr(v.(bool))
+	}
+	if v, ok := d.GetOk("snat_pool_size"); ok {
+		v := int32(v.(int))
+		snatPoolSize = &v
 	}
 
 	if v, ok := getOkExists(d, "port"); ok {
@@ -248,6 +273,9 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 		if provider != nil && *provider != ptrValue(svc.Provider) {
 			continue
 		}
+		if protocol != nil && *protocol != ptrValue(svc.Protocol) {
+			continue
+		}
 		if visibility != nil && *visibility != ptrValue(svc.Visibility) {
 			continue
 		}
@@ -258,6 +286,9 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 			continue
 		}
 		if requireApproval != nil && *requireApproval != ptrValue(svc.RequireApproval) {
+			continue
+		}
+		if snatPoolSize != nil && *snatPoolSize != ptrValue(svc.SnatPoolSize) {
 			continue
 		}
 		if len(ports) > 0 && !isSubset(ports, svc.Ports) {
@@ -296,13 +327,16 @@ func dataSourceSCIEndpointServiceV1Read(ctx context.Context, d *schema.ResourceD
 	_ = d.Set("project_id", svc.ProjectID)
 	_ = d.Set("all_tags", svc.Tags)
 	_ = d.Set("service_provider", ptrValue(svc.Provider))
+	_ = d.Set("protocol", ptrValue(svc.Protocol))
 	_ = d.Set("proxy_protocol", ptrValue(svc.ProxyProtocol))
 	_ = d.Set("require_approval", ptrValue(svc.RequireApproval))
+	_ = d.Set("snat_pool_size", ptrValue(svc.SnatPoolSize))
 	_ = d.Set("visibility", ptrValue(svc.Visibility))
 
 	// computed
 	_ = d.Set("host", ptrValue(svc.Host))
 	_ = d.Set("status", string(svc.Status))
+	_ = d.Set("health_status", ptrValue(svc.HealthStatus))
 	_ = d.Set("created_at", svc.CreatedAt.String())
 	_ = d.Set("updated_at", svc.UpdatedAt.String())
 

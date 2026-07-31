@@ -23,9 +23,10 @@ data "sci_endpoint_service_v1" "service_1" {
 }
 
 resource "sci_endpoint_v1" "endpoint_1" {
-  name        = "endpoint_1"
-  service_id  = data.sci_endpoint_service_v1.service_1.id
-  tags        = ["tag1", "tag2"]
+  name                 = "endpoint_1"
+  service_id           = data.sci_endpoint_service_v1.service_1.id
+  connection_mirroring = true
+  tags                 = ["tag1", "tag2"]
 
   target {
     network = "49b6480b-24d3-4376-a4c9-aecbb89e16d9"
@@ -42,6 +43,10 @@ resource "sci_endpoint_v1" "endpoint_1" {
 * `name` - (Optional) The name of the endpoint.
 
 * `description` - (Optional) A description of the endpoint.
+
+* `connection_mirroring` - (Optional) Enables BIG-IP connection mirroring for
+  high availability failover. This currently only affects endpoints for
+  services with provider type `tenant`.
 
 * `project_id` - (Optional) The ID of the project in which to create the
   endpoint. Changing this forces a new resource to be created.
@@ -70,6 +75,8 @@ In addition to all arguments above, the following attributes are exported:
 
 * `id` - The ID of the endpoint.
 * `ip_address` - The IP address assigned to the endpoint.
+* `connection_mirroring` - Whether connection mirroring is enabled for the
+  endpoint.
 * `status` - The current status of the endpoint.
 * `created_at` - The timestamp when the endpoint was created.
 * `updated_at` - The timestamp when the endpoint was last updated.
