@@ -208,6 +208,8 @@ github.com/sapcc/archer/v2 v2.5.3 h1:BvERkZg07OgF69wXpmw0TByQW3sk+ADUmVBVm3c+L04
 github.com/sapcc/archer/v2 v2.5.3/go.mod h1:5Kpt5VlSvMEMldYsgFMBm+BDNvDP8p54pm7mjKc3WDs=
 github.com/sapcc/go-api-declarations v1.24.0 h1:sGBvOMVSM1olJlyvNoQSk7NX5uatXHKkztGDBPnTWMs=
 github.com/sapcc/go-api-declarations v1.24.0/go.mod h1:ZWRTijvgF8o8aHg5stgg7u4DF6jFrd0X97le/uGlZsA=
+github.com/sapcc/go-api-declarations v1.25.0 h1:vLkSVV8oaZExoBMEkwX31AqUjZIjwxKkxXr4q2sAAOg=
+github.com/sapcc/go-api-declarations v1.25.0/go.mod h1:7NrwidCCv/MxwBpb/qqYLbQb/eY6rlnYkXwWMGx/wlI=
 github.com/sapcc/gophercloud-sapcc/v2 v2.2.0 h1:DauTwF+nXrL1UL59P2Aw31IEKWqFjZbMGZlamQzQPrY=
 github.com/sapcc/gophercloud-sapcc/v2 v2.2.0/go.mod h1:LUHIl5thireKS+Vv39H80IbURmPKWT66feC9Kb0gNFs=
 github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8 h1:9WMqMoLoCLs15+bXl+KCI2yTl3GOeofLIuzShBzw8Ls=
