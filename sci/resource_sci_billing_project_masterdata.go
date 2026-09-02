@@ -18,7 +18,7 @@ func resourceSCIBillingProjectMasterdata() *schema.Resource {
 		ReadContext:   resourceSCIBillingProjectMasterdataRead,
 		UpdateContext: resourceSCIBillingProjectMasterdataCreateOrUpdate,
 		CreateContext: resourceSCIBillingProjectMasterdataCreateOrUpdate,
-		Delete:        schema.RemoveFromState,
+		Delete:        schema.RemoveFromState, //nolint:staticcheck // RemoveFromState doesn't have a context variant
 		Importer: &schema.ResourceImporter{
 			StateContext: schema.ImportStatePassthroughContext,
 		},
