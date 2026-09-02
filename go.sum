@@ -204,6 +204,8 @@ github.com/sapcc/andromeda v1.1.1 h1:Xf+7Si2F6czaKZYf3e6CFOYEQuKWyY9yMI8tXgMUhNk
 github.com/sapcc/andromeda v1.1.1/go.mod h1:8kqq58fCOx5rG+hKwxdEgSfrlAuBEbFPGAFurBe3bMo=
 github.com/sapcc/archer/v2 v2.7.1 h1:NWg7Jwzi+zcivPOUI4swsFIipTIp99B1PzYT+KLekMU=
 github.com/sapcc/archer/v2 v2.7.1/go.mod h1:5EsrPUf7g6Vh2CClgIfnyqrU43LIdQfTBZbrCQPEOjM=
+github.com/sapcc/archer/v2 v2.7.2 h1:hA211EAzxU5ft2dkQYdcfU/ecx5j4uVo2+MPs7VssPo=
+github.com/sapcc/archer/v2 v2.7.2/go.mod h1:KartoTzmsUFRg77bxjqUq0LRn7bccGrIh0XODbI8Tgs=
 github.com/sapcc/go-api-declarations v1.25.0 h1:vLkSVV8oaZExoBMEkwX31AqUjZIjwxKkxXr4q2sAAOg=
 github.com/sapcc/go-api-declarations v1.25.0/go.mod h1:7NrwidCCv/MxwBpb/qqYLbQb/eY6rlnYkXwWMGx/wlI=
 github.com/sapcc/gophercloud-sapcc/v2 v2.2.0 h1:DauTwF+nXrL1UL59P2Aw31IEKWqFjZbMGZlamQzQPrY=
