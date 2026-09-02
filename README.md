@@ -15,7 +15,7 @@ Requirements
 ------------
 
 - [Terraform](https://developer.hashicorp.com/terraform/install) 1.x
-- [Go](https://go.dev/doc/install) 1.26 (to build the provider plugin)
+- [Go](https://go.dev/doc/install) 1.27 (to build the provider plugin)
 
 Usage
 ---------------------
