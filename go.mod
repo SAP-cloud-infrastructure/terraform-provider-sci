@@ -16,7 +16,7 @@ require (
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
 	github.com/terraform-provider-openstack/utils/v2 v2.0.0-20260520075407-97524fbad4a0
 	go.xyrillian.de/gg v1.14.0
-	k8s.io/client-go v0.36.3
+	k8s.io/client-go v0.37.0
 	sigs.k8s.io/yaml v1.6.0
 )
 
@@ -116,8 +116,8 @@ require (
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.36.3 // indirect
-	k8s.io/apimachinery v0.36.3 // indirect
+	k8s.io/api v0.37.0 // indirect
+	k8s.io/apimachinery v0.37.0 // indirect
 	k8s.io/apiserver v0.36.3 // indirect
 	k8s.io/component-base v0.36.3 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
