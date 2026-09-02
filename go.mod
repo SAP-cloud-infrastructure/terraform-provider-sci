@@ -1,6 +1,6 @@
 module github.com/SAP-cloud-infrastructure/terraform-provider-sci
 
-go 1.26.0
+go 1.27
 
 require (
 	github.com/go-openapi/runtime v0.33.1
@@ -10,7 +10,7 @@ require (
 	github.com/gophercloud/utils/v2 v2.0.0-20260824073324-42b9474d09d4
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
 	github.com/sapcc/andromeda v1.1.1
-	github.com/sapcc/archer/v2 v2.7.1
+	github.com/sapcc/archer/v2 v2.7.2
 	github.com/sapcc/go-api-declarations v1.25.0
 	github.com/sapcc/gophercloud-sapcc/v2 v2.2.0
 	github.com/sapcc/kubernikus v1.0.1-0.20250603090049-415897d6bcf8
