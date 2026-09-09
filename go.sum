@@ -202,8 +202,6 @@ github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=
 github.com/sapcc/andromeda v1.1.1 h1:Xf+7Si2F6czaKZYf3e6CFOYEQuKWyY9yMI8tXgMUhNk=
 github.com/sapcc/andromeda v1.1.1/go.mod h1:8kqq58fCOx5rG+hKwxdEgSfrlAuBEbFPGAFurBe3bMo=
-github.com/sapcc/archer/v2 v2.7.1 h1:NWg7Jwzi+zcivPOUI4swsFIipTIp99B1PzYT+KLekMU=
-github.com/sapcc/archer/v2 v2.7.1/go.mod h1:5EsrPUf7g6Vh2CClgIfnyqrU43LIdQfTBZbrCQPEOjM=
 github.com/sapcc/archer/v2 v2.7.2 h1:hA211EAzxU5ft2dkQYdcfU/ecx5j4uVo2+MPs7VssPo=
 github.com/sapcc/archer/v2 v2.7.2/go.mod h1:KartoTzmsUFRg77bxjqUq0LRn7bccGrIh0XODbI8Tgs=
 github.com/sapcc/go-api-declarations v1.25.0 h1:vLkSVV8oaZExoBMEkwX31AqUjZIjwxKkxXr4q2sAAOg=
@@ -313,8 +311,8 @@ google.golang.org/genproto/googleapis/api v0.0.0-20260729162451-8efbd57d26e0 h1:
 google.golang.org/genproto/googleapis/api v0.0.0-20260729162451-8efbd57d26e0/go.mod h1:HJ9MpJLeDSstBkx1LILTpd5f41ADSMZcTPypw02qEGw=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20260729162451-8efbd57d26e0 h1:mJiOtnGp0k/BcSgdu03G2NwnscCfCH+h2QKUBZr18KI=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20260729162451-8efbd57d26e0/go.mod h1:4Hqkh8ycfw05ld/3BWL7rJOSfebL2Q+DVDeRgYgxUU8=
-google.golang.org/grpc v1.83.1 h1:HIO0+BEtBP6soyqvqC8sNUjZ7bTs+0hFQuFF+RAy++Y=
-google.golang.org/grpc v1.83.1/go.mod h1:kDyl6SKsiHKt0uylY5gtn5cEjkrIOhQOGDgIc4JGwzQ=
+google.golang.org/grpc v1.83.2 h1:EManeRomTObA0BU7I8vXgg/78uE5MJ9M8B39EX2WscU=
+google.golang.org/grpc v1.83.2/go.mod h1:YPI1hK3kDked6iHvgX3tR0y+nX/qpMFKhPgFsokw1S8=
 google.golang.org/protobuf v1.26.0-rc.1/go.mod h1:jlhhOSvTdKEhbULTjvd4ARK9grFBp09yW+WbY/TyQbw=
 google.golang.org/protobuf v1.26.0/go.mod h1:9q0QmTI4eRPtz6boOQmLYwt+qCgq0jsYwAQnmE0givc=
 google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af h1:+5/Sw3GsDNlEmu7TfklWKPdQ0Ykja5VEmq2i817+jbI=
